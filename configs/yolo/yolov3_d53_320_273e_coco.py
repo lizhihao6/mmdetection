@@ -1,4 +1,4 @@
-_base_ = './yolov3_d53_mstrain-608_273e_coco.py'
+_base_ = './yolov3_d53_mstrain-4032_3024e_iphone_xsmax.py'
 # dataset settings
 img_norm_cfg = dict(mean=[0, 0, 0], std=[255., 255., 255.], to_rgb=True)
 train_pipeline = [

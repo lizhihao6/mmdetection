@@ -59,7 +59,7 @@ Models:
 
   - Name: yolov3_d53_mstrain-608_273e_coco
     In Collection: YOLOv3
-    Config: configs/yolo/yolov3_d53_mstrain-608_273e_coco.py
+    Config: configs/yolo/yolov3_d53_mstrain-4032_3024e_iphone_xsmax.py
     Metadata:
       Training Memory (GB): 7.4
       inference time (ms/im):
