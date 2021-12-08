@@ -1,8 +1,8 @@
 # dataset settings
 _base_ = ['rgb.py']
-data_root = '/lzh/datasets/multiRAW/iphone_xsmax/'
+data_root = '/lzh/datasets/multiRAW/oneplus_5t/'
 subdir = 'camera_isp'
-suffix = 'png'
+suffix = 'jpg'
 data = dict(
     train=dict(
         dataset=dict(

@@ -9,7 +9,7 @@ from mmcv.utils import print_log
 from mmdet.core import eval_map, eval_recalls
 from .builder import DATASETS
 from .xml_style import XMLDataset
-
+import numpy as np
 
 @DATASETS.register_module()
 class MultiRAWDataset(XMLDataset):
@@ -18,6 +18,8 @@ class MultiRAWDataset(XMLDataset):
 
     def __init__(self, **kwargs):
         self.img_suffix = kwargs.pop('img_suffix')
+        self.meta_subdir = kwargs.pop('meta_subdir')
+        self.rearrange_bbox_at_test = kwargs.pop('rearrange_bbox_at_test')
         super(MultiRAWDataset, self).__init__(**kwargs)
 
     def load_annotations(self, ann_file):
@@ -36,6 +38,7 @@ class MultiRAWDataset(XMLDataset):
             filename = osp.join(self.img_subdir, f'{img_id}.{self.img_suffix}')
             xml_path = osp.join(self.img_prefix, self.ann_subdir,
                                 f'{img_id}.xml')
+            meta_path = osp.join(self.img_prefix, self.meta_subdir, f'{img_id}.json')
             tree = ET.parse(xml_path)
             root = tree.getroot()
             size = root.find('size')
@@ -45,7 +48,7 @@ class MultiRAWDataset(XMLDataset):
             else:
                 raise NotImplementedError
             data_infos.append(
-                dict(id=img_id, filename=filename, width=width, height=height))
+                dict(id=img_id, filename=filename, width=width, height=height, meta_path=meta_path))
 
         return data_infos
 
@@ -83,6 +86,9 @@ class MultiRAWDataset(XMLDataset):
         if metric not in allowed_metrics:
             raise KeyError(f'metric {metric} is not supported')
         annotations = [self.get_ann_info(i) for i in range(len(self))]
+        if self.rearrange_bbox_at_test:
+            for ann in annotations:
+                ann['bboxes'] = ann['bboxes']*0.5
         eval_results = OrderedDict()
         iou_thrs = [iou_thr] if isinstance(iou_thr, float) else iou_thr
         if metric == 'mAP':
