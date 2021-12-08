@@ -12,10 +12,10 @@ from mmcv.cnn.utils.weight_init import trunc_normal_
 from mmcv.runner import BaseModule, ModuleList, _load_checkpoint
 from mmcv.utils import to_2tuple
 
-from ...utils import get_root_logger
 from ..builder import BACKBONES
 from ..utils.ckpt_convert import swin_converter
 from ..utils.transformer import PatchEmbed, PatchMerging
+from ...utils import get_root_logger
 
 
 class WindowMSA(BaseModule):
@@ -46,13 +46,12 @@ class WindowMSA(BaseModule):
                  attn_drop_rate=0.,
                  proj_drop_rate=0.,
                  init_cfg=None):
-
         super().__init__()
         self.embed_dims = embed_dims
         self.window_size = window_size  # Wh, Ww
         self.num_heads = num_heads
         head_embed_dims = embed_dims // num_heads
-        self.scale = qk_scale or head_embed_dims**-0.5
+        self.scale = qk_scale or head_embed_dims ** -0.5
         self.init_cfg = init_cfg
 
         # define a parameter table of relative position bias
@@ -96,9 +95,9 @@ class WindowMSA(BaseModule):
 
         relative_position_bias = self.relative_position_bias_table[
             self.relative_position_index.view(-1)].view(
-                self.window_size[0] * self.window_size[1],
-                self.window_size[0] * self.window_size[1],
-                -1)  # Wh*Ww,Wh*Ww,nH
+            self.window_size[0] * self.window_size[1],
+            self.window_size[0] * self.window_size[1],
+            -1)  # Wh*Ww,Wh*Ww,nH
         relative_position_bias = relative_position_bias.permute(
             2, 0, 1).contiguous()  # nH, Wh*Ww, Wh*Ww
         attn = attn + relative_position_bias.unsqueeze(0)
@@ -216,7 +215,7 @@ class ShiftWindowMSA(BaseModule):
             attn_mask = mask_windows.unsqueeze(1) - mask_windows.unsqueeze(2)
             attn_mask = attn_mask.masked_fill(attn_mask != 0,
                                               float(-100.0)).masked_fill(
-                                                  attn_mask == 0, float(0.0))
+                attn_mask == 0, float(0.0))
         else:
             shifted_query = query
             attn_mask = None
@@ -224,7 +223,7 @@ class ShiftWindowMSA(BaseModule):
         # nW*B, window_size, window_size, C
         query_windows = self.window_partition(shifted_query)
         # nW*B, window_size*window_size, C
-        query_windows = query_windows.view(-1, self.window_size**2, C)
+        query_windows = query_windows.view(-1, self.window_size ** 2, C)
 
         # W-MSA/SW-MSA (nW*B, window_size*window_size, C)
         attn_windows = self.w_msa(query_windows, mask=attn_mask)
@@ -632,7 +631,7 @@ class SwinTransformer(BaseModule):
             if downsample:
                 in_channels = downsample.out_channels
 
-        self.num_features = [int(embed_dims * 2**i) for i in range(num_layers)]
+        self.num_features = [int(embed_dims * 2 ** i) for i in range(num_layers)]
         # Add a norm layer for each output
         for i in out_indices:
             layer = build_norm_layer(norm_cfg, self.num_features[i])[1]
@@ -656,7 +655,7 @@ class SwinTransformer(BaseModule):
         for i in range(1, self.frozen_stages + 1):
 
             if (i - 1) in self.out_indices:
-                norm_layer = getattr(self, f'norm{i-1}')
+                norm_layer = getattr(self, f'norm{i - 1}')
                 norm_layer.eval()
                 for param in norm_layer.parameters():
                     param.requires_grad = False
@@ -730,8 +729,8 @@ class SwinTransformer(BaseModule):
                 if nH1 != nH2:
                     logger.warning(f'Error in loading {table_key}, pass')
                 elif L1 != L2:
-                    S1 = int(L1**0.5)
-                    S2 = int(L2**0.5)
+                    S1 = int(L1 ** 0.5)
+                    S2 = int(L2 ** 0.5)
                     table_pretrained_resized = F.interpolate(
                         table_pretrained.permute(1, 0).reshape(1, nH1, S1, S1),
                         size=(S2, S2),

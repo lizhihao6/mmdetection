@@ -9,6 +9,7 @@ from torch.nn.modules.batchnorm import _BatchNorm
 from ..builder import BACKBONES
 from ..utils import InvertedResidual, make_divisible
 
+
 class ResBlock(nn.Module):
     def __init__(self, channel_size: int, negative_slope: float = 0.2):
         super().__init__()
@@ -72,6 +73,7 @@ class Resizer(nn.Module):
         out = out + residual
 
         return out
+
 
 @BACKBONES.register_module()
 class MobileNetV2RAW(BaseModule):

@@ -36,7 +36,7 @@ def test_sabl_retina_head_loss():
         head.cuda()
         # Anchor head expects a multiple levels of features per image
         feat = [
-            torch.rand(1, 3, s // (2**(i + 2)), s // (2**(i + 2))).cuda()
+            torch.rand(1, 3, s // (2 ** (i + 2)), s // (2 ** (i + 2))).cuda()
             for i in range(len(head.approx_anchor_generator.base_anchors))
         ]
         cls_scores, bbox_preds = head.forward(feat)

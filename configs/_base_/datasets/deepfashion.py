@@ -46,7 +46,7 @@ data = dict(
     test=dict(
         type=dataset_type,
         ann_file=data_root +
-        'annotations/DeepFashion_segmentation_gallery.json',
+                 'annotations/DeepFashion_segmentation_gallery.json',
         img_prefix=data_root + 'Img/',
         pipeline=test_pipeline,
         data_root=data_root))

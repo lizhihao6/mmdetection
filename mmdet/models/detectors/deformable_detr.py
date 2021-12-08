@@ -1,6 +1,6 @@
 # Copyright (c) OpenMMLab. All rights reserved.
-from ..builder import DETECTORS
 from .detr import DETR
+from ..builder import DETECTORS
 
 
 @DETECTORS.register_module()

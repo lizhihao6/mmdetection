@@ -3,8 +3,8 @@ import torch
 
 from mmdet.core import bbox2result
 from mmdet.models.builder import DETECTORS
-from ...core.utils import flip_tensor
 from .single_stage import SingleStageDetector
+from ...core.utils import flip_tensor
 
 
 @DETECTORS.register_module()
@@ -85,8 +85,8 @@ class CenterNet(SingleStageDetector):
 
             # Feature map averaging
             center_heatmap_preds[0] = (
-                center_heatmap_preds[0][0:1] +
-                flip_tensor(center_heatmap_preds[0][1:2], flip_direction)) / 2
+                                              center_heatmap_preds[0][0:1] +
+                                              flip_tensor(center_heatmap_preds[0][1:2], flip_direction)) / 2
             wh_preds[0] = (wh_preds[0][0:1] +
                            flip_tensor(wh_preds[0][1:2], flip_direction)) / 2
 

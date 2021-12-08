@@ -4,6 +4,7 @@ import glob
 import os.path as osp
 
 import mmcv
+
 from gather_models import get_final_results
 
 try:

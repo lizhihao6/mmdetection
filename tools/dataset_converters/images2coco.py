@@ -16,7 +16,7 @@ def parse_args():
         'out',
         type=str,
         help='The output annotation json file name, The save dir is in the '
-        'same directory as img_path')
+             'same directory as img_path')
     parser.add_argument(
         '-e',
         '--exclude-extensions',

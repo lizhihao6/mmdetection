@@ -58,8 +58,8 @@ def test_hrnet_backbone():
             num_modules=1,
             num_branches=1,
             block='BOTTLENECK',
-            num_blocks=(4, ),
-            num_channels=(64, )),
+            num_blocks=(4,),
+            num_channels=(64,)),
         stage2=dict(
             num_modules=1,
             num_branches=2,

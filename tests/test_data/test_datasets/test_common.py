@@ -71,7 +71,7 @@ def _create_dummy_coco_json(json_name):
     fake_json = {
         'images': [image],
         'annotations':
-        [annotation_1, annotation_2, annotation_3, annotation_4],
+            [annotation_1, annotation_2, annotation_3, annotation_4],
         'categories': categories
     }
 
@@ -85,10 +85,10 @@ def _create_dummy_custom_pkl(pkl_name):
         'height': 640,
         'ann': {
             'bboxes':
-            np.array([[50, 60, 70, 80], [100, 120, 130, 150],
-                      [150, 160, 190, 200], [250, 260, 350, 360]]),
+                np.array([[50, 60, 70, 80], [100, 120, 130, 150],
+                          [150, 160, 190, 200], [250, 260, 350, 360]]),
             'labels':
-            np.array([0, 0, 0, 0])
+                np.array([0, 0, 0, 0])
         }
     }]
     mmcv.dump(fake_pkl, pkl_name)
@@ -129,7 +129,7 @@ def test_dataset_evaluation():
 
     # test single coco dataset evaluation
     coco_dataset = CocoDataset(
-        ann_file=fake_json_file, classes=('car', ), pipeline=[])
+        ann_file=fake_json_file, classes=('car',), pipeline=[])
     fake_results = _create_dummy_results()
     eval_results = coco_dataset.evaluate(fake_results, classwise=True)
     assert eval_results['bbox_mAP'] == 1
@@ -143,7 +143,7 @@ def test_dataset_evaluation():
     coco_cfg = dict(
         type='CocoDataset',
         ann_file=fake_json_file,
-        classes=('car', ),
+        classes=('car',),
         pipeline=[])
     concat_cfgs = [coco_cfg, coco_cfg]
     concat_dataset = build_dataset(concat_cfgs)
@@ -159,7 +159,7 @@ def test_dataset_evaluation():
     coco_cfg = dict(
         type='CocoDataset',
         ann_file=[fake_json_file, fake_json_file],
-        classes=('car', ),
+        classes=('car',),
         pipeline=[])
     concat_dataset = build_dataset(coco_cfg)
     eval_results = concat_dataset.evaluate(fake_concat_results)
@@ -176,7 +176,7 @@ def test_dataset_evaluation():
 
     # test single custom dataset evaluation
     custom_dataset = CustomDataset(
-        ann_file=fake_pkl_file, classes=('car', ), pipeline=[])
+        ann_file=fake_pkl_file, classes=('car',), pipeline=[])
     fake_results = _create_dummy_results()
     eval_results = custom_dataset.evaluate(fake_results)
     assert eval_results['mAP'] == 1
@@ -188,7 +188,7 @@ def test_dataset_evaluation():
     custom_cfg = dict(
         type='CustomDataset',
         ann_file=fake_pkl_file,
-        classes=('car', ),
+        classes=('car',),
         pipeline=[])
     concat_cfgs = [custom_cfg, custom_cfg]
     concat_dataset = build_dataset(concat_cfgs)
@@ -200,7 +200,7 @@ def test_dataset_evaluation():
     concat_cfg = dict(
         type='CustomDataset',
         ann_file=[fake_pkl_file, fake_pkl_file],
-        classes=('car', ),
+        classes=('car',),
         pipeline=[])
     concat_dataset = build_dataset(concat_cfg)
     eval_results = concat_dataset.evaluate(fake_concat_results)
@@ -216,7 +216,7 @@ def test_dataset_evaluation():
     eval_results = concat_dataset.evaluate(fake_concat_results, metric='mAP')
     assert eval_results['mAP'] == 1
     assert len(concat_dataset.datasets[0].data_infos) == \
-        len(concat_dataset.datasets[1].data_infos)
+           len(concat_dataset.datasets[1].data_infos)
     assert len(concat_dataset.datasets[0].data_infos) == 1
     tmp_dir.cleanup()
 
@@ -311,7 +311,6 @@ def test_evaluation_hook(EvalHookParam):
 
 
 def _build_demo_runner():
-
     class Model(nn.Module):
 
         def __init__(self):

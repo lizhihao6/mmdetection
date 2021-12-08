@@ -9,11 +9,10 @@ from mmcv.utils import print_log
 from mmdet.core import eval_map, eval_recalls
 from .builder import DATASETS
 from .xml_style import XMLDataset
-import numpy as np
+
 
 @DATASETS.register_module()
 class MultiRAWDataset(XMLDataset):
-
     CLASSES = ('car', 'person', 'traffic sign', 'traffic light')
 
     def __init__(self, **kwargs):
@@ -88,7 +87,7 @@ class MultiRAWDataset(XMLDataset):
         annotations = [self.get_ann_info(i) for i in range(len(self))]
         if self.rearrange_bbox_at_test:
             for ann in annotations:
-                ann['bboxes'] = ann['bboxes']*0.5
+                ann['bboxes'] = ann['bboxes'] * 0.5
         eval_results = OrderedDict()
         iou_thrs = [iou_thr] if isinstance(iou_thr, float) else iou_thr
         if metric == 'mAP':

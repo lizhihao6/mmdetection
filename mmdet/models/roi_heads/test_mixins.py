@@ -13,7 +13,6 @@ if sys.version_info >= (3, 7):
 
 
 class BBoxTestMixin:
-
     if sys.version_info >= (3, 7):
 
         async def async_test_bboxes(self,
@@ -78,7 +77,7 @@ class BBoxTestMixin:
         if rois.shape[0] == 0:
             batch_size = len(proposals)
             det_bbox = rois.new_zeros(0, 5)
-            det_label = rois.new_zeros((0, ), dtype=torch.long)
+            det_label = rois.new_zeros((0,), dtype=torch.long)
             if rcnn_test_cfg is None:
                 det_bbox = det_bbox[:, :4]
                 det_label = rois.new_zeros(
@@ -107,7 +106,7 @@ class BBoxTestMixin:
                 bbox_pred = self.bbox_head.bbox_pred_split(
                     bbox_pred, num_proposals_per_img)
         else:
-            bbox_pred = (None, ) * len(proposals)
+            bbox_pred = (None,) * len(proposals)
 
         # apply bbox post-processing to each image individually
         det_bboxes = []
@@ -116,7 +115,7 @@ class BBoxTestMixin:
             if rois[i].shape[0] == 0:
                 # There is no proposal in the single image
                 det_bbox = rois[i].new_zeros(0, 5)
-                det_label = rois[i].new_zeros((0, ), dtype=torch.long)
+                det_label = rois[i].new_zeros((0,), dtype=torch.long)
                 if rcnn_test_cfg is None:
                     det_bbox = det_bbox[:, :4]
                     det_label = rois[i].new_zeros(
@@ -166,7 +165,7 @@ class BBoxTestMixin:
         if merged_bboxes.shape[0] == 0:
             # There is no proposal in the single image
             det_bboxes = merged_bboxes.new_zeros(0, 5)
-            det_labels = merged_bboxes.new_zeros((0, ), dtype=torch.long)
+            det_labels = merged_bboxes.new_zeros((0,), dtype=torch.long)
         else:
             det_bboxes, det_labels = multiclass_nms(merged_bboxes,
                                                     merged_scores,
@@ -177,7 +176,6 @@ class BBoxTestMixin:
 
 
 class MaskTestMixin:
-
     if sys.version_info >= (3, 7):
 
         async def async_test_mask(self,

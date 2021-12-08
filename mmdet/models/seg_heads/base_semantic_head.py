@@ -28,7 +28,7 @@ class BaseSemanticHead(BaseModule, metaclass=ABCMeta):
         self.loss_seg = build_loss(loss_seg)
         self.num_classes = num_classes
 
-    @force_fp32(apply_to=('seg_preds', ))
+    @force_fp32(apply_to=('seg_preds',))
     def loss(self, seg_preds, gt_semantic_seg):
         """Get the loss of semantic head.
 

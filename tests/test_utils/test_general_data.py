@@ -15,7 +15,6 @@ def _equal(a, b):
 
 
 def test_general_data():
-
     # test init
     meta_info = dict(
         img_size=[256, 256],
@@ -526,13 +525,13 @@ def test_instance_data():
         assert len(v) == 10
 
     # test Longtensor
-    long_tensor = torch.randint(100, (50, ))
+    long_tensor = torch.randint(100, (50,))
     long_index_instance_data = new_instance_data[long_tensor]
     assert len(long_index_instance_data) == len(long_tensor)
     for key, value in long_index_instance_data.items():
         if not isinstance(value, list):
             assert (long_index_instance_data[key] == new_instance_data[key]
-                    [long_tensor]).all()
+            [long_tensor]).all()
         else:
             len(long_tensor) == len(value)
 
@@ -543,7 +542,7 @@ def test_instance_data():
     for key, value in bool_index_instance_data.items():
         if not isinstance(value, list):
             assert (bool_index_instance_data[key] == new_instance_data[key]
-                    [bool_tensor]).all()
+            [bool_tensor]).all()
         else:
             assert len(value) == bool_tensor.sum()
 

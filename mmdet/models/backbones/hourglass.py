@@ -4,9 +4,9 @@ import torch.nn.functional as F
 from mmcv.cnn import ConvModule
 from mmcv.runner import BaseModule
 
+from .resnet import BasicBlock
 from ..builder import BACKBONES
 from ..utils import ResLayer
-from .resnet import BasicBlock
 
 
 class HourglassModule(BaseModule):
@@ -216,7 +216,7 @@ class HourglassNet(BaseModule):
             if ind < self.num_stacks - 1:
                 inter_feat = self.conv1x1s[ind](
                     inter_feat) + self.remap_convs[ind](
-                        out_feat)
+                    out_feat)
                 inter_feat = self.inters[ind](self.relu(inter_feat))
 
         return out_feats

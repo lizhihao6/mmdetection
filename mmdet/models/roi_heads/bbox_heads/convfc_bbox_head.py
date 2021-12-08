@@ -90,7 +90,7 @@ class ConvFCBBoxHead(BBoxHead):
                 out_features=cls_channels)
         if self.with_reg:
             out_dim_reg = (4 if self.reg_class_agnostic else 4 *
-                           self.num_classes)
+                                                             self.num_classes)
             self.fc_reg = build_linear_layer(
                 self.reg_predictor_cfg,
                 in_features=self.reg_last_dim,
@@ -145,7 +145,7 @@ class ConvFCBBoxHead(BBoxHead):
             # for shared branch, only consider self.with_avg_pool
             # for separated branches, also consider self.num_shared_fcs
             if (is_shared
-                    or self.num_shared_fcs == 0) and not self.with_avg_pool:
+                or self.num_shared_fcs == 0) and not self.with_avg_pool:
                 last_layer_dim *= self.roi_feat_area
             for i in range(num_branch_fcs):
                 fc_in_channels = (

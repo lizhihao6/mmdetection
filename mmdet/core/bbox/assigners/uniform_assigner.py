@@ -1,11 +1,11 @@
 # Copyright (c) OpenMMLab. All rights reserved.
 import torch
 
+from .assign_result import AssignResult
+from .base_assigner import BaseAssigner
 from ..builder import BBOX_ASSIGNERS
 from ..iou_calculators import build_iou_calculator
 from ..transforms import bbox_xyxy_to_cxcywh
-from .assign_result import AssignResult
-from .base_assigner import BaseAssigner
 
 
 @BBOX_ASSIGNERS.register_module()
@@ -41,10 +41,10 @@ class UniformAssigner(BaseAssigner):
         num_gts, num_bboxes = gt_bboxes.size(0), bbox_pred.size(0)
 
         # 1. assign -1 by default
-        assigned_gt_inds = bbox_pred.new_full((num_bboxes, ),
+        assigned_gt_inds = bbox_pred.new_full((num_bboxes,),
                                               0,
                                               dtype=torch.long)
-        assigned_labels = bbox_pred.new_full((num_bboxes, ),
+        assigned_labels = bbox_pred.new_full((num_bboxes,),
                                              -1,
                                              dtype=torch.long)
         if num_gts == 0 or num_bboxes == 0:
@@ -113,7 +113,7 @@ class UniformAssigner(BaseAssigner):
         assigned_gt_inds[indexes] = pos_gt_index_with_ignore
 
         if gt_labels is not None:
-            assigned_labels = assigned_gt_inds.new_full((num_bboxes, ), -1)
+            assigned_labels = assigned_gt_inds.new_full((num_bboxes,), -1)
             pos_inds = torch.nonzero(
                 assigned_gt_inds > 0, as_tuple=False).squeeze()
             if pos_inds.numel() > 0:

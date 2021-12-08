@@ -1,6 +1,6 @@
 # Copyright (c) OpenMMLab. All rights reserved.
-from ..builder import BBOX_CODERS
 from .base_bbox_coder import BaseBBoxCoder
+from ..builder import BBOX_CODERS
 
 
 @BBOX_CODERS.register_module()

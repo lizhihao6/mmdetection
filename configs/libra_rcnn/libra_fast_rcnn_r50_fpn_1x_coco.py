@@ -43,8 +43,8 @@ dataset_type = 'CocoDataset'
 data_root = 'data/coco/'
 data = dict(
     train=dict(proposal_file=data_root +
-               'libra_proposals/rpn_r50_fpn_1x_train2017.pkl'),
+                             'libra_proposals/rpn_r50_fpn_1x_train2017.pkl'),
     val=dict(proposal_file=data_root +
-             'libra_proposals/rpn_r50_fpn_1x_val2017.pkl'),
+                           'libra_proposals/rpn_r50_fpn_1x_val2017.pkl'),
     test=dict(proposal_file=data_root +
-              'libra_proposals/rpn_r50_fpn_1x_val2017.pkl'))
+                            'libra_proposals/rpn_r50_fpn_1x_val2017.pkl'))

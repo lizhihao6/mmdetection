@@ -3,9 +3,9 @@ import mmcv
 import torch
 from mmcv.runner import load_checkpoint
 
+from .single_stage import SingleStageDetector
 from .. import build_detector
 from ..builder import DETECTORS
-from .single_stage import SingleStageDetector
 
 
 @DETECTORS.register_module()

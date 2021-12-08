@@ -159,7 +159,7 @@ class BBoxHead(BaseModule):
         # original implementation uses new_zeros since BG are set to be 0
         # now use empty & fill because BG cat_id = num_classes,
         # FG cat_id = [0, num_classes-1]
-        labels = pos_bboxes.new_full((num_samples, ),
+        labels = pos_bboxes.new_full((num_samples,),
                                      self.num_classes,
                                      dtype=torch.long)
         label_weights = pos_bboxes.new_zeros(num_samples)
@@ -376,7 +376,7 @@ class BBoxHead(BaseModule):
 
             return det_bboxes, det_labels
 
-    @force_fp32(apply_to=('bbox_preds', ))
+    @force_fp32(apply_to=('bbox_preds',))
     def refine_bboxes(self, rois, labels, bbox_preds, pos_is_gts, img_metas):
         """Refine bboxes during training.
 
@@ -455,7 +455,7 @@ class BBoxHead(BaseModule):
 
         return bboxes_list
 
-    @force_fp32(apply_to=('bbox_pred', ))
+    @force_fp32(apply_to=('bbox_pred',))
     def regress_by_class(self, rois, label, bbox_pred, img_meta):
         """Regress the bbox for the predicted class. Used in Cascade R-CNN.
 

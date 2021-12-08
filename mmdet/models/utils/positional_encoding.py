@@ -44,8 +44,8 @@ class SinePositionalEncoding(BaseModule):
         super(SinePositionalEncoding, self).__init__(init_cfg)
         if normalize:
             assert isinstance(scale, (float, int)), 'when normalize is set,' \
-                'scale should be provided and in float or int type, ' \
-                f'found {type(scale)}'
+                                                    'scale should be provided and in float or int type, ' \
+                                                    f'found {type(scale)}'
         self.num_feats = num_feats
         self.temperature = temperature
         self.normalize = normalize
@@ -78,7 +78,7 @@ class SinePositionalEncoding(BaseModule):
                       (x_embed[:, :, -1:] + self.eps) * self.scale
         dim_t = torch.arange(
             self.num_feats, dtype=torch.float32, device=mask.device)
-        dim_t = self.temperature**(2 * (dim_t // 2) / self.num_feats)
+        dim_t = self.temperature ** (2 * (dim_t // 2) / self.num_feats)
         pos_x = x_embed[:, :, :, None] / dim_t
         pos_y = y_embed[:, :, :, None] / dim_t
         # use `view` instead of `flatten` for dynamically exporting to ONNX

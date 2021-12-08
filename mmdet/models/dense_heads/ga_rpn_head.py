@@ -8,8 +8,8 @@ import torch.nn.functional as F
 from mmcv import ConfigDict
 from mmcv.ops import nms
 
-from ..builder import HEADS
 from .guided_anchor_head import GuidedAnchorHead
+from ..builder import HEADS
 
 
 @HEADS.register_module()
@@ -95,22 +95,22 @@ class GARPNHead(GuidedAnchorHead):
         if 'max_num' in cfg:
             if 'max_per_img' in cfg:
                 assert cfg.max_num == cfg.max_per_img, f'You ' \
-                    f'set max_num and max_per_img at the same time, ' \
-                    f'but get {cfg.max_num} ' \
-                    f'and {cfg.max_per_img} respectively' \
-                    'Please delete max_num which will be deprecated.'
+                                                       f'set max_num and max_per_img at the same time, ' \
+                                                       f'but get {cfg.max_num} ' \
+                                                       f'and {cfg.max_per_img} respectively' \
+                                                       'Please delete max_num which will be deprecated.'
             else:
                 cfg.max_per_img = cfg.max_num
         if 'nms_thr' in cfg:
             assert cfg.nms.iou_threshold == cfg.nms_thr, f'You set ' \
-                f'iou_threshold in nms and ' \
-                f'nms_thr at the same time, but get ' \
-                f'{cfg.nms.iou_threshold} and {cfg.nms_thr}' \
-                f' respectively. Please delete the ' \
-                f'nms_thr which will be deprecated.'
+                                                         f'iou_threshold in nms and ' \
+                                                         f'nms_thr at the same time, but get ' \
+                                                         f'{cfg.nms.iou_threshold} and {cfg.nms_thr}' \
+                                                         f' respectively. Please delete the ' \
+                                                         f'nms_thr which will be deprecated.'
 
         assert cfg.nms.get('type', 'nms') == 'nms', 'GARPNHead only support ' \
-            'naive nms.'
+                                                    'naive nms.'
 
         mlvl_proposals = []
         for idx in range(len(cls_scores)):

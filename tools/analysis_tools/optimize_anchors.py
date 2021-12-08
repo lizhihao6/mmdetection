@@ -47,7 +47,7 @@ def parse_args():
         '--algorithm',
         default='differential_evolution',
         help='Algorithm used for anchor optimizing.'
-        'Support k-means and differential_evolution for YOLO.')
+             'Support k-means and differential_evolution for YOLO.')
     parser.add_argument(
         '--iters',
         default=1000,
@@ -172,9 +172,9 @@ class YOLOKMeansAnchorOptimizer(BaseAnchorOptimizer):
             f'Start cluster {self.num_anchors} YOLO anchors with K-means...')
         bboxes = self.get_zero_center_bbox_tensor()
         cluster_center_idx = torch.randint(
-            0, bboxes.shape[0], (self.num_anchors, )).to(self.device)
+            0, bboxes.shape[0], (self.num_anchors,)).to(self.device)
 
-        assignments = torch.zeros((bboxes.shape[0], )).to(self.device)
+        assignments = torch.zeros((bboxes.shape[0],)).to(self.device)
         cluster_centers = bboxes[cluster_center_idx]
         if self.num_anchors == 1:
             cluster_centers = self.kmeans_maximization(bboxes, assignments,
@@ -264,7 +264,6 @@ class YOLODEAnchorOptimizer(BaseAnchorOptimizer):
                  mutation=(0.5, 1),
                  recombination=0.7,
                  **kwargs):
-
         super(YOLODEAnchorOptimizer, self).__init__(**kwargs)
 
         self.num_anchors = num_anchors
@@ -289,7 +288,7 @@ class YOLODEAnchorOptimizer(BaseAnchorOptimizer):
         result = differential_evolution(
             func=self.avg_iou_cost,
             bounds=bounds,
-            args=(bboxes, ),
+            args=(bboxes,),
             strategy=self.strategy,
             maxiter=self.iters,
             popsize=self.population_size,
@@ -310,7 +309,7 @@ class YOLODEAnchorOptimizer(BaseAnchorOptimizer):
         anchor_whs = torch.tensor(
             [[w, h]
              for w, h in zip(anchor_params[::2], anchor_params[1::2])]).to(
-                 bboxes.device, dtype=bboxes.dtype)
+            bboxes.device, dtype=bboxes.dtype)
         anchor_boxes = bbox_cxcywh_to_xyxy(
             torch.cat([torch.zeros_like(anchor_whs), anchor_whs], dim=1))
         ious = bbox_overlaps(bboxes, anchor_boxes)

@@ -2,8 +2,8 @@
 import torch
 
 from mmdet.core import bbox2result
-from ..builder import DETECTORS, build_head
 from .single_stage import SingleStageDetector
+from ..builder import DETECTORS, build_head
 
 
 @DETECTORS.register_module()
@@ -88,8 +88,8 @@ class YOLACT(SingleStageDetector):
 
         # check NaN and Inf
         for loss_name in losses.keys():
-            assert torch.isfinite(torch.stack(losses[loss_name]))\
-                .all().item(), '{} becomes infinite or NaN!'\
+            assert torch.isfinite(torch.stack(losses[loss_name])) \
+                .all().item(), '{} becomes infinite or NaN!' \
                 .format(loss_name)
 
         return losses

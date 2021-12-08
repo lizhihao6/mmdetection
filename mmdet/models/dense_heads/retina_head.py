@@ -2,8 +2,8 @@
 import torch.nn as nn
 from mmcv.cnn import ConvModule
 
-from ..builder import HEADS
 from .anchor_head import AnchorHead
+from ..builder import HEADS
 
 
 @HEADS.register_module()

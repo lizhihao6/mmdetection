@@ -160,18 +160,18 @@ class PatchEmbed(BaseModule):
     """
 
     def __init__(
-        self,
-        in_channels=3,
-        embed_dims=768,
-        conv_type='Conv2d',
-        kernel_size=16,
-        stride=16,
-        padding='corner',
-        dilation=1,
-        bias=True,
-        norm_cfg=None,
-        input_size=None,
-        init_cfg=None,
+            self,
+            in_channels=3,
+            embed_dims=768,
+            conv_type='Conv2d',
+            kernel_size=16,
+            stride=16,
+            padding='corner',
+            dilation=1,
+            bias=True,
+            norm_cfg=None,
+            input_size=None,
+            init_cfg=None,
     ):
         super(PatchEmbed, self).__init__(init_cfg=init_cfg)
 
@@ -671,11 +671,11 @@ class DeformableDetrTransformerDecoder(TransformerLayerSequence):
         for lid, layer in enumerate(self.layers):
             if reference_points.shape[-1] == 4:
                 reference_points_input = reference_points[:, :, None] * \
-                    torch.cat([valid_ratios, valid_ratios], -1)[:, None]
+                                         torch.cat([valid_ratios, valid_ratios], -1)[:, None]
             else:
                 assert reference_points.shape[-1] == 2
                 reference_points_input = reference_points[:, :, None] * \
-                    valid_ratios[:, None]
+                                         valid_ratios[:, None]
             output = layer(
                 output,
                 *args,
@@ -693,7 +693,7 @@ class DeformableDetrTransformerDecoder(TransformerLayerSequence):
                     assert reference_points.shape[-1] == 2
                     new_reference_points = tmp
                     new_reference_points[..., :2] = tmp[
-                        ..., :2] + inverse_sigmoid(reference_points)
+                                                    ..., :2] + inverse_sigmoid(reference_points)
                     new_reference_points = new_reference_points.sigmoid()
                 reference_points = new_reference_points.detach()
 
@@ -805,14 +805,14 @@ class DeformableDetrTransformer(Transformer):
             scale = torch.cat([valid_W.unsqueeze(-1),
                                valid_H.unsqueeze(-1)], 1).view(N, 1, 1, 2)
             grid = (grid.unsqueeze(0).expand(N, -1, -1, -1) + 0.5) / scale
-            wh = torch.ones_like(grid) * 0.05 * (2.0**lvl)
+            wh = torch.ones_like(grid) * 0.05 * (2.0 ** lvl)
             proposal = torch.cat((grid, wh), -1).view(N, -1, 4)
             proposals.append(proposal)
             _cur += (H * W)
         output_proposals = torch.cat(proposals, 1)
         output_proposals_valid = ((output_proposals > 0.01) &
                                   (output_proposals < 0.99)).all(
-                                      -1, keepdim=True)
+            -1, keepdim=True)
         output_proposals = torch.log(output_proposals / (1 - output_proposals))
         output_proposals = output_proposals.masked_fill(
             memory_padding_mask.unsqueeze(-1), float('inf'))
@@ -853,9 +853,9 @@ class DeformableDetrTransformer(Transformer):
                 torch.linspace(
                     0.5, W - 0.5, W, dtype=torch.float32, device=device))
             ref_y = ref_y.reshape(-1)[None] / (
-                valid_ratios[:, None, lvl, 1] * H)
+                    valid_ratios[:, None, lvl, 1] * H)
             ref_x = ref_x.reshape(-1)[None] / (
-                valid_ratios[:, None, lvl, 0] * W)
+                    valid_ratios[:, None, lvl, 0] * W)
             ref = torch.stack((ref_x, ref_y), -1)
             reference_points_list.append(ref)
         reference_points = torch.cat(reference_points_list, 1)
@@ -880,7 +880,7 @@ class DeformableDetrTransformer(Transformer):
         scale = 2 * math.pi
         dim_t = torch.arange(
             num_pos_feats, dtype=torch.float32, device=proposals.device)
-        dim_t = temperature**(2 * (dim_t // 2) / num_pos_feats)
+        dim_t = temperature ** (2 * (dim_t // 2) / num_pos_feats)
         # N, L, 4
         proposals = proposals.sigmoid() * scale
         # N, L, 4, 128
@@ -970,7 +970,7 @@ class DeformableDetrTransformer(Transformer):
         spatial_shapes = torch.as_tensor(
             spatial_shapes, dtype=torch.long, device=feat_flatten.device)
         level_start_index = torch.cat((spatial_shapes.new_zeros(
-            (1, )), spatial_shapes.prod(1).cumsum(0)[:-1]))
+            (1,)), spatial_shapes.prod(1).cumsum(0)[:-1]))
         valid_ratios = torch.stack(
             [self.get_valid_ratio(m) for m in mlvl_masks], 1)
 
@@ -1044,11 +1044,11 @@ class DeformableDetrTransformer(Transformer):
 
         inter_references_out = inter_references
         if self.as_two_stage:
-            return inter_states, init_reference_out,\
-                inter_references_out, enc_outputs_class,\
-                enc_outputs_coord_unact
+            return inter_states, init_reference_out, \
+                   inter_references_out, enc_outputs_class, \
+                   enc_outputs_coord_unact
         return inter_states, init_reference_out, \
-            inter_references_out, None, None
+               inter_references_out, None, None
 
 
 @TRANSFORMER.register_module()
@@ -1108,7 +1108,7 @@ class DynamicConv(BaseModule):
 
         self.activation = build_activation_layer(act_cfg)
 
-        num_output = self.out_channels * input_feat_shape**2
+        num_output = self.out_channels * input_feat_shape ** 2
         if self.with_proj:
             self.fc_layer = nn.Linear(num_output, self.out_channels)
             self.fc_norm = build_norm_layer(norm_cfg, self.out_channels)[1]

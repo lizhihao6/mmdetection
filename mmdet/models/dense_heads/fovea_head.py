@@ -9,8 +9,8 @@ from mmcv.runner import BaseModule
 
 from mmdet.core import multi_apply
 from mmdet.core.utils import filter_scores_and_topk
-from ..builder import HEADS
 from .anchor_free_head import AnchorFreeHead
+from ..builder import HEADS
 
 INF = 1e8
 

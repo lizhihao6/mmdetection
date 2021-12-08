@@ -66,7 +66,7 @@ class BaseEMAHook(Hook):
 
     def get_momentum(self, runner):
         return self.momentum_fun(runner.iter) if self.momentum_fun else \
-                        self.momentum
+            self.momentum
 
     def after_train_iter(self, runner):
         """Update ema parameter every self.interval iterations."""
@@ -112,7 +112,7 @@ class ExpMomentumEMAHook(BaseEMAHook):
     def __init__(self, total_iter=2000, **kwargs):
         super(ExpMomentumEMAHook, self).__init__(**kwargs)
         self.momentum_fun = lambda x: (1 - self.momentum) * math.exp(-(
-            1 + x) / total_iter) + self.momentum
+                1 + x) / total_iter) + self.momentum
 
 
 @HOOKS.register_module()
@@ -126,5 +126,5 @@ class LinearMomentumEMAHook(BaseEMAHook):
 
     def __init__(self, warm_up=100, **kwargs):
         super(LinearMomentumEMAHook, self).__init__(**kwargs)
-        self.momentum_fun = lambda x: min(self.momentum**self.interval,
+        self.momentum_fun = lambda x: min(self.momentum ** self.interval,
                                           (1 + x) / (warm_up + x))

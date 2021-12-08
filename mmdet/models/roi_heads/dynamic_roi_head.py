@@ -4,8 +4,8 @@ import torch
 
 from mmdet.core import bbox2roi
 from mmdet.models.losses import SmoothL1Loss
-from ..builder import HEADS
 from .standard_roi_head import StandardRoIHead
+from ..builder import HEADS
 
 EPS = 1e-15
 

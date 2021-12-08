@@ -19,7 +19,6 @@ from .coco import CocoDataset
 
 @DATASETS.register_module()
 class CityscapesDataset(CocoDataset):
-
     CLASSES = ('person', 'rider', 'car', 'truck', 'bus', 'train', 'motorcycle',
                'bicycle')
 
@@ -189,12 +188,12 @@ class CityscapesDataset(CocoDataset):
         assert isinstance(results, list), 'results must be a list'
         assert len(results) == len(self), (
             'The length of results is not equal to the dataset len: {} != {}'.
-            format(len(results), len(self)))
+                format(len(results), len(self)))
 
         assert isinstance(results, list), 'results must be a list'
         assert len(results) == len(self), (
             'The length of results is not equal to the dataset len: {} != {}'.
-            format(len(results), len(self)))
+                format(len(results), len(self)))
 
         if txtfile_prefix is None:
             tmp_dir = tempfile.TemporaryDirectory()
@@ -320,7 +319,7 @@ class CityscapesDataset(CocoDataset):
 
         groundTruthImgList = glob.glob(CSEval.args.groundTruthSearch)
         assert len(groundTruthImgList), 'Cannot find ground truth images' \
-            f' in {CSEval.args.groundTruthSearch}.'
+                                        f' in {CSEval.args.groundTruthSearch}.'
         predictionImgList = []
         for gt in groundTruthImgList:
             predictionImgList.append(CSEval.getPrediction(gt, CSEval.args))

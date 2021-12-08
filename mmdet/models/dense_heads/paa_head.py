@@ -146,15 +146,15 @@ class PAAHead(ATSSHead):
 
         with torch.no_grad():
             reassign_labels, reassign_label_weight, \
-                reassign_bbox_weights, num_pos = multi_apply(
-                    self.paa_reassign,
-                    pos_losses_list,
-                    labels,
-                    labels_weight,
-                    bboxes_weight,
-                    pos_inds,
-                    pos_gt_index,
-                    anchor_list)
+            reassign_bbox_weights, num_pos = multi_apply(
+                self.paa_reassign,
+                pos_losses_list,
+                labels,
+                labels_weight,
+                bboxes_weight,
+                pos_inds,
+                pos_gt_index,
+                anchor_list)
             num_pos = sum(num_pos)
         # convert all tensor list to a flatten tensor
         cls_scores = torch.cat(cls_scores, 0).view(-1, cls_scores[0].size(-1))
@@ -300,7 +300,7 @@ class PAAHead(ATSSHead):
         pos_level_mask = []
         for i in range(num_level):
             mask = (pos_inds >= inds_level_interval[i]) & (
-                pos_inds < inds_level_interval[i + 1])
+                    pos_inds < inds_level_interval[i + 1])
             pos_level_mask.append(mask)
         pos_inds_after_paa = [label.new_tensor([])]
         ignore_inds_after_paa = [label.new_tensor([])]
@@ -400,15 +400,15 @@ class PAAHead(ATSSHead):
         return pos_inds_temp, ignore_inds_temp
 
     def get_targets(
-        self,
-        anchor_list,
-        valid_flag_list,
-        gt_bboxes_list,
-        img_metas,
-        gt_bboxes_ignore_list=None,
-        gt_labels_list=None,
-        label_channels=1,
-        unmap_outputs=True,
+            self,
+            anchor_list,
+            valid_flag_list,
+            gt_bboxes_list,
+            img_metas,
+            gt_bboxes_ignore_list=None,
+            gt_labels_list=None,
+            label_channels=1,
+            unmap_outputs=True,
     ):
         """Get targets for PAA head.
 
@@ -484,7 +484,7 @@ class PAAHead(ATSSHead):
         pos_inds = []
         for i, single_labels in enumerate(labels):
             pos_mask = (0 <= single_labels) & (
-                single_labels < self.num_classes)
+                    single_labels < self.num_classes)
             pos_inds.append(pos_mask.nonzero().view(-1))
 
         gt_inds = [item.pos_assigned_gt_inds for item in sampling_result]
@@ -741,11 +741,11 @@ class PAAHead(ATSSHead):
                 pos_ious = single_det_ious[pos_ious_mask]
                 pos_bboxes = candidate_cls_bboxes[pos_ious_mask]
                 pos_scores = candidate_cls_scores[pos_ious_mask]
-                pis = (torch.exp(-(1 - pos_ious)**2 / 0.025) *
+                pis = (torch.exp(-(1 - pos_ious) ** 2 / 0.025) *
                        pos_scores)[:, None]
                 voted_box = torch.sum(
                     pis * pos_bboxes, dim=0) / torch.sum(
-                        pis, dim=0)
+                    pis, dim=0)
                 voted_score = det_cls_bboxes[det_ind][-1:][None, :]
                 det_bboxes_voted.append(
                     torch.cat((voted_box[None, :], voted_score), dim=1))

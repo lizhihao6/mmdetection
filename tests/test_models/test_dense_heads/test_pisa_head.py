@@ -39,7 +39,7 @@ def test_pisa_retinanet_head_loss():
 
     # Anchor head expects a multiple levels of features per image
     feat = [
-        torch.rand(1, 1, s // (2**(i + 2)), s // (2**(i + 2)))
+        torch.rand(1, 1, s // (2 ** (i + 2)), s // (2 ** (i + 2)))
         for i in range(len(self.anchor_generator.strides))
     ]
     cls_scores, bbox_preds = self.forward(feat)
@@ -103,17 +103,17 @@ def test_pisa_ssd_head_loss():
         scale_major=False,
         input_size=300,
         strides=[1],
-        ratios=([2], ),
+        ratios=([2],),
         basesize_ratio_range=(0.15, 0.9))
     self = PISASSDHead(
         num_classes=4,
-        in_channels=(1, ),
+        in_channels=(1,),
         train_cfg=cfg,
         anchor_generator=ssd_anchor_generator)
 
     # Anchor head expects a multiple levels of features per image
     feat = [
-        torch.rand(1, 1, s // (2**(i + 2)), s // (2**(i + 2)))
+        torch.rand(1, 1, s // (2 ** (i + 2)), s // (2 ** (i + 2)))
         for i in range(len(self.anchor_generator.strides))
     ]
     cls_scores, bbox_preds = self.forward(feat)
@@ -205,7 +205,7 @@ def test_pisa_roi_head_loss():
 
     # Anchor head expects a multiple levels of features per image
     feat = [
-        torch.rand(1, 1, s // (2**(i + 2)), s // (2**(i + 2)))
+        torch.rand(1, 1, s // (2 ** (i + 2)), s // (2 ** (i + 2)))
         for i in range(1)
     ]
 

@@ -106,7 +106,7 @@ def isr_p(cls_score,
         cls_score[pos_label_inds], pos_labels, reduction_override='none')
     if pos_loss_cls.dim() > 1:
         ori_pos_loss_cls = pos_loss_cls * label_weights[pos_label_inds][:,
-                                                                        None]
+                                          None]
         new_pos_loss_cls = pos_loss_cls * pos_imp_weights[:, None]
     else:
         ori_pos_loss_cls = pos_loss_cls * label_weights[pos_label_inds]

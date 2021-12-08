@@ -7,8 +7,8 @@ import torch.nn.functional as F
 from mmcv.cnn import ConvModule
 from mmcv.ops import batched_nms
 
-from ..builder import HEADS
 from .anchor_head import AnchorHead
+from ..builder import HEADS
 
 
 @HEADS.register_module()
@@ -178,7 +178,7 @@ class RPNHead(AnchorHead):
             mlvl_bbox_preds.append(rpn_bbox_pred)
             mlvl_valid_anchors.append(anchors)
             level_ids.append(
-                scores.new_full((scores.size(0), ),
+                scores.new_full((scores.size(0),),
                                 level_idx,
                                 dtype=torch.long))
 

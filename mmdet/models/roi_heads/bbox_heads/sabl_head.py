@@ -280,7 +280,7 @@ class SABLHead(BaseModule):
         l_end = int(np.ceil(self.up_reg_feat_size / 2))
         r_start = int(np.floor(self.up_reg_feat_size / 2))
         feat_fl = feat[:, :l_end]
-        feat_fr = feat[:, r_start:].flip(dims=(1, ))
+        feat_fr = feat[:, r_start:].flip(dims=(1,))
         feat_fl = feat_fl.contiguous()
         feat_fr = feat_fr.contiguous()
         feat = torch.cat([feat_fl, feat_fr], dim=-1)
@@ -345,12 +345,12 @@ class SABLHead(BaseModule):
                       concat=True):
         (labels, label_weights, bucket_cls_targets, bucket_cls_weights,
          bucket_offset_targets, bucket_offset_weights) = multi_apply(
-             self._bucket_target_single,
-             pos_proposals_list,
-             neg_proposals_list,
-             pos_gt_bboxes_list,
-             pos_gt_labels_list,
-             cfg=rcnn_train_cfg)
+            self._bucket_target_single,
+            pos_proposals_list,
+            neg_proposals_list,
+            pos_gt_bboxes_list,
+            pos_gt_labels_list,
+            cfg=rcnn_train_cfg)
 
         if concat:
             labels = torch.cat(labels, 0)
@@ -397,7 +397,7 @@ class SABLHead(BaseModule):
         num_pos = pos_proposals.size(0)
         num_neg = neg_proposals.size(0)
         num_samples = num_pos + num_neg
-        labels = pos_gt_bboxes.new_full((num_samples, ),
+        labels = pos_gt_bboxes.new_full((num_samples,),
                                         self.num_classes,
                                         dtype=torch.long)
         label_weights = pos_proposals.new_zeros(num_samples)
@@ -415,7 +415,7 @@ class SABLHead(BaseModule):
             (pos_bucket_offset_targets, pos_bucket_offset_weights,
              pos_bucket_cls_targets,
              pos_bucket_cls_weights) = self.bbox_coder.encode(
-                 pos_proposals, pos_gt_bboxes)
+                pos_proposals, pos_gt_bboxes)
             bucket_cls_targets[:num_pos, :] = pos_bucket_cls_targets
             bucket_cls_weights[:num_pos, :] = pos_bucket_cls_weights
             bucket_offset_targets[:num_pos, :] = pos_bucket_offset_targets
@@ -511,7 +511,7 @@ class SABLHead(BaseModule):
 
             return det_bboxes, det_labels
 
-    @force_fp32(apply_to=('bbox_preds', ))
+    @force_fp32(apply_to=('bbox_preds',))
     def refine_bboxes(self, rois, labels, bbox_preds, pos_is_gts, img_metas):
         """Refine bboxes during training.
 
@@ -557,7 +557,7 @@ class SABLHead(BaseModule):
 
         return bboxes_list
 
-    @force_fp32(apply_to=('bbox_pred', ))
+    @force_fp32(apply_to=('bbox_pred',))
     def regress_by_class(self, rois, label, bbox_pred, img_meta):
         """Regress the bbox for the predicted class. Used in Cascade R-CNN.
 

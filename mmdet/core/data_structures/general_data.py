@@ -251,7 +251,7 @@ class GeneralData(NiceRepr):
 
     def __contains__(self, item):
         return item in self._data_fields or \
-                    item in self._meta_info_fields
+               item in self._meta_info_fields
 
     # Tensor-like methods
     def to(self, *args, **kwargs):

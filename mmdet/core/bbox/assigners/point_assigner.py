@@ -1,9 +1,9 @@
 # Copyright (c) OpenMMLab. All rights reserved.
 import torch
 
-from ..builder import BBOX_ASSIGNERS
 from .assign_result import AssignResult
 from .base_assigner import BaseAssigner
+from ..builder import BBOX_ASSIGNERS
 
 
 @BBOX_ASSIGNERS.register_module()
@@ -53,13 +53,13 @@ class PointAssigner(BaseAssigner):
 
         if num_gts == 0 or num_points == 0:
             # If no truth assign everything to the background
-            assigned_gt_inds = points.new_full((num_points, ),
+            assigned_gt_inds = points.new_full((num_points,),
                                                0,
                                                dtype=torch.long)
             if gt_labels is None:
                 assigned_labels = None
             else:
-                assigned_labels = points.new_full((num_points, ),
+                assigned_labels = points.new_full((num_points,),
                                                   -1,
                                                   dtype=torch.long)
             return AssignResult(
@@ -80,9 +80,9 @@ class PointAssigner(BaseAssigner):
         gt_bboxes_lvl = torch.clamp(gt_bboxes_lvl, min=lvl_min, max=lvl_max)
 
         # stores the assigned gt index of each point
-        assigned_gt_inds = points.new_zeros((num_points, ), dtype=torch.long)
+        assigned_gt_inds = points.new_zeros((num_points,), dtype=torch.long)
         # stores the assigned gt dist (to this point) of each point
-        assigned_gt_dist = points.new_full((num_points, ), float('inf'))
+        assigned_gt_dist = points.new_full((num_points,), float('inf'))
         points_range = torch.arange(points.shape[0])
 
         for idx in range(num_gts):
@@ -121,7 +121,7 @@ class PointAssigner(BaseAssigner):
                 less_than_recorded_index]
 
         if gt_labels is not None:
-            assigned_labels = assigned_gt_inds.new_full((num_points, ), -1)
+            assigned_labels = assigned_gt_inds.new_full((num_points,), -1)
             pos_inds = torch.nonzero(
                 assigned_gt_inds > 0, as_tuple=False).squeeze()
             if pos_inds.numel() > 0:

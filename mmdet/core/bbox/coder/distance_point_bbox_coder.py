@@ -1,6 +1,6 @@
+from .base_bbox_coder import BaseBBoxCoder
 from ..builder import BBOX_CODERS
 from ..transforms import bbox2distance, distance2bbox
-from .base_bbox_coder import BaseBBoxCoder
 
 
 @BBOX_CODERS.register_module()

@@ -601,7 +601,7 @@ def test_random_center_crop_pad():
     train_transform = dict(
         type='RandomCenterCropPad',
         crop_size=(h - 20, w - 20),
-        ratios=(1.0, ),
+        ratios=(1.0,),
         border=128,
         mean=[123.675, 116.28, 103.53],
         std=[58.395, 57.12, 57.375],

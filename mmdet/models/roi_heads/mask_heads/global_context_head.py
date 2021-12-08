@@ -90,7 +90,7 @@ class GlobalContextHead(BaseModule):
 
         return mc_pred, x
 
-    @force_fp32(apply_to=('pred', ))
+    @force_fp32(apply_to=('pred',))
     def loss(self, pred, labels):
         """Loss function."""
         labels = [lbl.unique() for lbl in labels]

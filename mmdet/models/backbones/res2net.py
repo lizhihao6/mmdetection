@@ -7,9 +7,9 @@ import torch.utils.checkpoint as cp
 from mmcv.cnn import build_conv_layer, build_norm_layer
 from mmcv.runner import Sequential
 
-from ..builder import BACKBONES
 from .resnet import Bottleneck as _Bottleneck
 from .resnet import ResNet
+from ..builder import BACKBONES
 
 
 class Bottle2neck(_Bottleneck):

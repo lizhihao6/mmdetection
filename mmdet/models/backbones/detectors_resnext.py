@@ -3,9 +3,9 @@ import math
 
 from mmcv.cnn import build_conv_layer, build_norm_layer
 
-from ..builder import BACKBONES
 from .detectors_resnet import Bottleneck as _Bottleneck
 from .detectors_resnet import DetectoRS_ResNet
+from ..builder import BACKBONES
 
 
 class Bottleneck(_Bottleneck):

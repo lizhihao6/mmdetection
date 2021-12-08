@@ -25,7 +25,7 @@ def accuracy(pred, target, topk=1, thresh=None):
     """
     assert isinstance(topk, (int, tuple))
     if isinstance(topk, int):
-        topk = (topk, )
+        topk = (topk,)
         return_single = True
     else:
         return_single = False
@@ -53,7 +53,7 @@ def accuracy(pred, target, topk=1, thresh=None):
 
 class Accuracy(nn.Module):
 
-    def __init__(self, topk=(1, ), thresh=None):
+    def __init__(self, topk=(1,), thresh=None):
         """Module to calculate the accuracy.
 
         Args:

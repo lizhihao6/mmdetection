@@ -287,7 +287,7 @@ def test_two_stage_forward(cfg_file):
 
     # Save cost
     if cfg_file in [
-            'seesaw_loss/mask_rcnn_r50_fpn_random_seesaw_loss_normed_mask_mstrain_2x_lvis_v1.py'  # noqa: E501
+        'seesaw_loss/mask_rcnn_r50_fpn_random_seesaw_loss_normed_mask_mstrain_2x_lvis_v1.py'  # noqa: E501
     ]:
         model.roi_head.bbox_head.num_classes = 80
         model.roi_head.bbox_head.loss_cls.num_classes = 80
@@ -326,7 +326,7 @@ def test_two_stage_forward(cfg_file):
 
     # Test RoI forward train with an empty proposals
     if cfg_file in [
-            'panoptic_fpn/panoptic_fpn_r50_fpn_1x_coco.py'  # noqa: E501
+        'panoptic_fpn/panoptic_fpn_r50_fpn_1x_coco.py'  # noqa: E501
     ]:
         mm_inputs.pop('gt_semantic_seg')
 
@@ -628,7 +628,7 @@ def test_inference_detector():
             type='ResNet',
             depth=18,
             num_stages=4,
-            out_indices=(3, ),
+            out_indices=(3,),
             norm_cfg=dict(type='BN', requires_grad=False),
             norm_eval=True,
             style='pytorch'),

@@ -37,17 +37,16 @@ def parse_args():
         nargs='+',
         action=DictAction,
         help='override some settings in the used config, the key-value pair '
-        'in xxx=yyy format will be merged into config file. If the value to '
-        'be overwritten is a list, it should be like key="[a,b]" or key=a,b '
-        'It also allows nested list/tuple values, e.g. key="[(a,b),(c,d)]" '
-        'Note that the quotation marks are necessary and that no white space '
-        'is allowed.')
+             'in xxx=yyy format will be merged into config file. If the value to '
+             'be overwritten is a list, it should be like key="[a,b]" or key=a,b '
+             'It also allows nested list/tuple values, e.g. key="[(a,b),(c,d)]" '
+             'Note that the quotation marks are necessary and that no white space '
+             'is allowed.')
     args = parser.parse_args()
     return args
 
 
 def retrieve_data_cfg(config_path, skip_type, cfg_options):
-
     def skip_pipeline_steps(config):
         config['pipeline'] = [
             x for x in config.pipeline if x['type'] not in skip_type
@@ -58,7 +57,7 @@ def retrieve_data_cfg(config_path, skip_type, cfg_options):
         cfg.merge_from_dict(cfg_options)
     train_data_cfg = cfg.data.train
     while 'dataset' in train_data_cfg and train_data_cfg[
-            'type'] != 'MultiImageMixDataset':
+        'type'] != 'MultiImageMixDataset':
         train_data_cfg = train_data_cfg['dataset']
 
     if isinstance(train_data_cfg, Sequence):

@@ -15,10 +15,10 @@ def collect_files(img_dir, gt_dir):
     for img_file in glob.glob(osp.join(img_dir, '**/*.png')):
         assert img_file.endswith(suffix), img_file
         inst_file = gt_dir + img_file[
-            len(img_dir):-len(suffix)] + 'gtFine_instanceIds.png'
+                             len(img_dir):-len(suffix)] + 'gtFine_instanceIds.png'
         # Note that labelIds are not converted to trainId for seg map
         segm_file = gt_dir + img_file[
-            len(img_dir):-len(suffix)] + 'gtFine_labelIds.png'
+                             len(img_dir):-len(suffix)] + 'gtFine_labelIds.png'
         files.append((img_file, inst_file, segm_file))
     assert len(files), f'No images found in {img_dir}'
     print(f'Loaded {len(files)} images from {img_dir}')

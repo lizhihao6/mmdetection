@@ -40,7 +40,7 @@ class GenericRoIExtractor(BaseRoIExtractor):
         if self.with_pre:
             self.pre_module = build_plugin_layer(pre_cfg, '_pre_module')[1]
 
-    @force_fp32(apply_to=('feats', ), out_fp16=True)
+    @force_fp32(apply_to=('feats',), out_fp16=True)
     def forward(self, feats, rois, roi_scale_factor=None):
         """Forward function."""
         if len(feats) == 1:

@@ -5,10 +5,10 @@ from mmcv.runner import force_fp32
 
 from mmdet.core import (anchor_inside_flags, images_to_levels, multi_apply,
                         unmap)
+from .retina_head import RetinaHead
 from ..builder import HEADS
 from ..losses.accuracy import accuracy
 from ..losses.utils import weight_reduce_loss
-from .retina_head import RetinaHead
 
 
 @HEADS.register_module()
@@ -99,7 +99,7 @@ class FSAFHead(RetinaHead):
                                            img_meta['img_shape'][:2],
                                            self.train_cfg.allowed_border)
         if not inside_flags.any():
-            return (None, ) * 7
+            return (None,) * 7
         # Assign gt and sample anchors
         anchors = flat_anchors[inside_flags.type(torch.bool), :]
         assign_result = self.assigner.assign(
@@ -112,12 +112,12 @@ class FSAFHead(RetinaHead):
         num_valid_anchors = anchors.shape[0]
         bbox_targets = torch.zeros_like(anchors)
         bbox_weights = torch.zeros_like(anchors)
-        labels = anchors.new_full((num_valid_anchors, ),
+        labels = anchors.new_full((num_valid_anchors,),
                                   self.num_classes,
                                   dtype=torch.long)
         label_weights = anchors.new_zeros((num_valid_anchors, label_channels),
                                           dtype=torch.float)
-        pos_gt_inds = anchors.new_full((num_valid_anchors, ),
+        pos_gt_inds = anchors.new_full((num_valid_anchors,),
                                        -1,
                                        dtype=torch.long)
 
@@ -283,7 +283,7 @@ class FSAFHead(RetinaHead):
             loss_levels = torch.stack(loss_levels, dim=0)
             # Locate the best fpn level for loss back-propagation
             if loss_levels.numel() == 0:  # zero gt
-                argmin = loss_levels.new_empty((num_gts, ), dtype=torch.long)
+                argmin = loss_levels.new_empty((num_gts,), dtype=torch.long)
             else:
                 _, argmin = loss_levels.min(dim=0)
 

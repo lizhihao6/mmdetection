@@ -1,6 +1,6 @@
 # Copyright (c) OpenMMLab. All rights reserved.
-from ..builder import DETECTORS
 from .two_stage import TwoStageDetector
+from ..builder import DETECTORS
 
 
 @DETECTORS.register_module()

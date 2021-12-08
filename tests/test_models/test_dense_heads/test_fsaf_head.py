@@ -48,7 +48,7 @@ def test_fsaf_head_loss():
         head.cuda()
         # FSAF head expects a multiple levels of features per image
         feat = [
-            torch.rand(1, 1, s // (2**(i + 2)), s // (2**(i + 2))).cuda()
+            torch.rand(1, 1, s // (2 ** (i + 2)), s // (2 ** (i + 2))).cuda()
             for i in range(len(head.anchor_generator.strides))
         ]
         cls_scores, bbox_preds = head.forward(feat)

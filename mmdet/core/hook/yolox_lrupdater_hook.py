@@ -64,4 +64,4 @@ class YOLOXLrUpdaterHook(CosineAnnealingLrUpdaterHook):
         else:
             return annealing_cos(
                 base_lr, target_lr, (progress - self.warmup_iters) /
-                (max_progress - self.warmup_iters - last_iter))
+                                    (max_progress - self.warmup_iters - last_iter))

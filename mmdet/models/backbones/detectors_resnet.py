@@ -7,10 +7,10 @@ from mmcv.runner import Sequential, load_checkpoint
 from torch.nn.modules.batchnorm import _BatchNorm
 
 from mmdet.utils import get_root_logger
-from ..builder import BACKBONES
 from .resnet import BasicBlock
 from .resnet import Bottleneck as _Bottleneck
 from .resnet import ResNet
+from ..builder import BACKBONES
 
 
 class Bottleneck(_Bottleneck):
@@ -268,7 +268,7 @@ class DetectoRS_ResNet(ResNet):
                 stage_plugins = self.make_stage_plugins(self.plugins, i)
             else:
                 stage_plugins = None
-            planes = self.base_channels * 2**i
+            planes = self.base_channels * 2 ** i
             res_layer = self.make_res_layer(
                 block=self.block,
                 inplanes=self.inplanes,

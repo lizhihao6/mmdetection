@@ -86,8 +86,8 @@ def mask_matrix_nms(masks,
 
     # Calculate the decay_coefficient
     if kernel == 'gaussian':
-        decay_matrix = torch.exp(-1 * sigma * (decay_iou**2))
-        compensate_matrix = torch.exp(-1 * sigma * (compensate_iou**2))
+        decay_matrix = torch.exp(-1 * sigma * (decay_iou ** 2))
+        compensate_matrix = torch.exp(-1 * sigma * (compensate_iou ** 2))
         decay_coefficient, _ = (decay_matrix / compensate_matrix).min(0)
     elif kernel == 'linear':
         decay_matrix = (1 - decay_iou) / (1 - compensate_iou)

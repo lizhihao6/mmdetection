@@ -97,9 +97,9 @@ class CenterPrior(nn.Module):
             instance_sigma = self.sigma[labels][None]
             # distance has shape (num_points, num_gt, 2)
             distance = (((single_level_points - gt_center) / float(stride) -
-                         instance_center)**2)
+                         instance_center) ** 2)
             center_prior = torch.exp(-distance /
-                                     (2 * instance_sigma**2)).prod(dim=-1)
+                                     (2 * instance_sigma ** 2)).prod(dim=-1)
             center_prior_list.append(center_prior)
         center_prior_weights = torch.cat(center_prior_list, dim=0)
 
@@ -109,16 +109,16 @@ class CenterPrior(nn.Module):
             if gt_inds_no_points_inside.numel():
                 topk_center_index = \
                     center_prior_weights[:, gt_inds_no_points_inside].topk(
-                                                             self.topk,
-                                                             dim=0)[1]
+                        self.topk,
+                        dim=0)[1]
                 temp_mask = inside_gt_bbox_mask[:, gt_inds_no_points_inside]
                 inside_gt_bbox_mask[:, gt_inds_no_points_inside] = \
                     torch.scatter(temp_mask,
                                   dim=0,
                                   index=topk_center_index,
                                   src=torch.ones_like(
-                                    topk_center_index,
-                                    dtype=torch.bool))
+                                      topk_center_index,
+                                      dtype=torch.bool))
 
         center_prior_weights[~inside_gt_bbox_mask] = 0
         return center_prior_weights, inside_gt_bbox_mask
@@ -295,8 +295,8 @@ class AutoAssignHead(FCOSHead):
 
         logits = (joint_conf * p_neg_weight)
         neg_loss = (
-            logits**2 * F.binary_cross_entropy(
-                logits, torch.zeros_like(logits), reduction='none'))
+                logits ** 2 * F.binary_cross_entropy(
+            logits, torch.zeros_like(logits), reduction='none'))
         neg_loss = neg_loss.sum() * self.neg_loss_weight
         return neg_loss,
 

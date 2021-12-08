@@ -7,8 +7,8 @@ import torch
 import torch.nn as nn
 
 from mmdet.core import bbox_overlaps
-from ..builder import LOSSES
 from .utils import weighted_loss
+from ..builder import LOSSES
 
 
 @mmcv.jit(derivate=True, coderize=True)
@@ -42,7 +42,7 @@ def iou_loss(pred, target, linear=False, mode='log', eps=1e-6):
     if mode == 'linear':
         loss = 1 - ious
     elif mode == 'square':
-        loss = 1 - ious**2
+        loss = 1 - ious ** 2
     elif mode == 'log':
         loss = -ious.log()
     else:
@@ -155,15 +155,15 @@ def diou_loss(pred, target, eps=1e-7):
     cw = enclose_wh[:, 0]
     ch = enclose_wh[:, 1]
 
-    c2 = cw**2 + ch**2 + eps
+    c2 = cw ** 2 + ch ** 2 + eps
 
     b1_x1, b1_y1 = pred[:, 0], pred[:, 1]
     b1_x2, b1_y2 = pred[:, 2], pred[:, 3]
     b2_x1, b2_y1 = target[:, 0], target[:, 1]
     b2_x2, b2_y2 = target[:, 2], target[:, 3]
 
-    left = ((b2_x1 + b2_x2) - (b1_x1 + b1_x2))**2 / 4
-    right = ((b2_y1 + b2_y2) - (b1_y1 + b1_y2))**2 / 4
+    left = ((b2_x1 + b2_x2) - (b1_x1 + b1_x2)) ** 2 / 4
+    right = ((b2_y1 + b2_y2) - (b1_y1 + b1_y2)) ** 2 / 4
     rho2 = left + right
 
     # DIoU
@@ -211,7 +211,7 @@ def ciou_loss(pred, target, eps=1e-7):
     cw = enclose_wh[:, 0]
     ch = enclose_wh[:, 1]
 
-    c2 = cw**2 + ch**2 + eps
+    c2 = cw ** 2 + ch ** 2 + eps
 
     b1_x1, b1_y1 = pred[:, 0], pred[:, 1]
     b1_x2, b1_y2 = pred[:, 2], pred[:, 3]
@@ -221,11 +221,11 @@ def ciou_loss(pred, target, eps=1e-7):
     w1, h1 = b1_x2 - b1_x1, b1_y2 - b1_y1 + eps
     w2, h2 = b2_x2 - b2_x1, b2_y2 - b2_y1 + eps
 
-    left = ((b2_x1 + b2_x2) - (b1_x1 + b1_x2))**2 / 4
-    right = ((b2_y1 + b2_y2) - (b1_y1 + b1_y2))**2 / 4
+    left = ((b2_x1 + b2_x2) - (b1_x1 + b1_x2)) ** 2 / 4
+    right = ((b2_y1 + b2_y2) - (b1_y1 + b1_y2)) ** 2 / 4
     rho2 = left + right
 
-    factor = 4 / math.pi**2
+    factor = 4 / math.pi ** 2
     v = factor * torch.pow(torch.atan(w2 / h2) - torch.atan(w1 / h1), 2)
 
     with torch.no_grad():

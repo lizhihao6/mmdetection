@@ -83,7 +83,6 @@ def pvt_convert(ckpt):
 
 
 def swin_converter(ckpt):
-
     new_ckpt = OrderedDict()
 
     def correct_unfold_reduction_order(x):

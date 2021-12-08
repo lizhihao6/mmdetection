@@ -1,10 +1,10 @@
 # Copyright (c) OpenMMLab. All rights reserved.
 import torch
 
-from ..builder import BBOX_ASSIGNERS
-from ..iou_calculators import build_iou_calculator
 from .assign_result import AssignResult
 from .base_assigner import BaseAssigner
+from ..builder import BBOX_ASSIGNERS
+from ..iou_calculators import build_iou_calculator
 
 
 def scale_boxes(bboxes, scale):
@@ -185,11 +185,11 @@ class CenterRegionAssigner(BaseAssigner):
             bboxes, gt_core, mode='iof')
         # The center point of effective priors should be within the gt box
         is_bbox_in_gt_core = is_bbox_in_gt & (
-            bbox_and_gt_core_overlaps > self.min_pos_iof)  # shape (n, k)
+                bbox_and_gt_core_overlaps > self.min_pos_iof)  # shape (n, k)
 
         is_bbox_in_gt_shadow = (
-            self.iou_calculator(bboxes, gt_shadow, mode='iof') >
-            self.min_pos_iof)
+                self.iou_calculator(bboxes, gt_shadow, mode='iof') >
+                self.min_pos_iof)
         # Rule out center effective positive pixels
         is_bbox_in_gt_shadow &= (~is_bbox_in_gt_core)
 
@@ -223,7 +223,7 @@ class CenterRegionAssigner(BaseAssigner):
         shadowed_pixel_labels = None
         if gt_labels is not None:
             # Default assigned label is the background (-1)
-            assigned_labels = assigned_gt_ids.new_full((num_bboxes, ), -1)
+            assigned_labels = assigned_gt_ids.new_full((num_bboxes,), -1)
             pos_inds = torch.nonzero(
                 assigned_gt_ids > 0, as_tuple=False).squeeze()
             if pos_inds.numel() > 0:
@@ -232,13 +232,13 @@ class CenterRegionAssigner(BaseAssigner):
             # 5. Find pixels lying in the shadow of an object
             shadowed_pixel_labels = pixels_in_gt_shadow.clone()
             if pixels_in_gt_shadow.numel() > 0:
-                pixel_idx, gt_idx =\
+                pixel_idx, gt_idx = \
                     pixels_in_gt_shadow[:, 0], pixels_in_gt_shadow[:, 1]
                 assert (assigned_gt_ids[pixel_idx] != gt_idx).all(), \
                     'Some pixels are dually assigned to ignore and gt!'
                 shadowed_pixel_labels[:, 1] = gt_labels[gt_idx - 1]
                 override = (
-                    assigned_labels[pixel_idx] == shadowed_pixel_labels[:, 1])
+                        assigned_labels[pixel_idx] == shadowed_pixel_labels[:, 1])
                 if self.foreground_dominate:
                     # When a pixel is both positive and shadowed, set it as pos
                     shadowed_pixel_labels = shadowed_pixel_labels[~override]
@@ -291,7 +291,7 @@ class CenterRegionAssigner(BaseAssigner):
         assert gt_priority.size(0) == num_gts
         # The bigger gt_priority, the more preferable to be assigned
         # The assigned inds are by default 0 (background)
-        assigned_gt_inds = is_bbox_in_gt_core.new_zeros((num_bboxes, ),
+        assigned_gt_inds = is_bbox_in_gt_core.new_zeros((num_bboxes,),
                                                         dtype=torch.long)
         # Shadowed bboxes are assigned to be background. But the corresponding
         #   label is ignored during loss calculation, which is done through

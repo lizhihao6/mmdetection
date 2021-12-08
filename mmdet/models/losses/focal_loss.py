@@ -4,8 +4,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 from mmcv.ops import sigmoid_focal_loss as _sigmoid_focal_loss
 
-from ..builder import LOSSES
 from .utils import weight_reduce_loss
+from ..builder import LOSSES
 
 
 # This method is only for debugging

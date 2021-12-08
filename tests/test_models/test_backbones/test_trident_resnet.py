@@ -160,7 +160,7 @@ def test_trident_resnet_backbone():
         strides=(1, 2, 2),
         dilations=(1, 1, 1),
         trident_dilations=(1, 2, 3),
-        out_indices=(2, ),
+        out_indices=(2,),
     )
     """Test tridentresnet backbone."""
     with pytest.raises(AssertionError):

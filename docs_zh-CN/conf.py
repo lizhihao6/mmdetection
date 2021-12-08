@@ -89,7 +89,7 @@ html_theme_options = {
         },
         {
             'name':
-            '算法库',
+                '算法库',
             'children': [
                 {
                     'name': 'MMAction2',
@@ -135,7 +135,7 @@ html_theme_options = {
         },
         {
             'name':
-            'OpenMMLab',
+                'OpenMMLab',
             'children': [
                 {
                     'name': '官网',

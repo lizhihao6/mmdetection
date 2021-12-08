@@ -8,13 +8,13 @@ from .dataset_wrappers import (ClassBalancedDataset, ConcatDataset,
                                MultiImageMixDataset, RepeatDataset)
 from .deepfashion import DeepFashionDataset
 from .lvis import LVISDataset, LVISV1Dataset, LVISV05Dataset
+from .multi_raw import MultiRAWDataset
 from .samplers import DistributedGroupSampler, DistributedSampler, GroupSampler
 from .utils import (NumClassCheckHook, get_loading_pipeline,
                     replace_ImageToTensor)
 from .voc import VOCDataset
 from .wider_face import WIDERFaceDataset
 from .xml_style import XMLDataset
-from .multi_raw import MultiRAWDataset
 
 __all__ = [
     'CustomDataset', 'XMLDataset', 'CocoDataset', 'DeepFashionDataset',

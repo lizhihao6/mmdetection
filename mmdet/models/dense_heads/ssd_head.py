@@ -9,9 +9,9 @@ from mmcv.runner import force_fp32
 
 from mmdet.core import (build_assigner, build_bbox_coder,
                         build_prior_generator, build_sampler, multi_apply)
+from .anchor_head import AnchorHead
 from ..builder import HEADS
 from ..losses import smooth_l1_loss
-from .anchor_head import AnchorHead
 
 
 # TODO: add loss evaluator for SSD

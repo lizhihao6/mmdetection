@@ -63,15 +63,15 @@ test_pipeline = [
 data = dict(
     train=dict(
         proposal_file=data_root +
-        'proposals/crpn_r50_caffe_fpn_1x_train2017.pkl',
+                      'proposals/crpn_r50_caffe_fpn_1x_train2017.pkl',
         pipeline=train_pipeline),
     val=dict(
         proposal_file=data_root +
-        'proposals/crpn_r50_caffe_fpn_1x_val2017.pkl',
+                      'proposals/crpn_r50_caffe_fpn_1x_val2017.pkl',
         pipeline=test_pipeline),
     test=dict(
         proposal_file=data_root +
-        'proposals/crpn_r50_caffe_fpn_1x_val2017.pkl',
+                      'proposals/crpn_r50_caffe_fpn_1x_val2017.pkl',
         pipeline=test_pipeline))
 optimizer_config = dict(
     _delete_=True, grad_clip=dict(max_norm=35, norm_type=2))

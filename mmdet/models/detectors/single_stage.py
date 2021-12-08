@@ -4,8 +4,8 @@ import warnings
 import torch
 
 from mmdet.core import bbox2result
-from ..builder import DETECTORS, build_backbone, build_head, build_neck
 from .base import BaseDetector
+from ..builder import DETECTORS, build_backbone, build_head, build_neck
 
 
 @DETECTORS.register_module()

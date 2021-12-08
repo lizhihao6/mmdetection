@@ -165,7 +165,6 @@ class BBoxTestMixin(object):
         return merged_proposals
 
     if sys.version_info >= (3, 7):
-
         async def async_simple_test_rpn(self, x, img_metas):
             sleep_interval = self.test_cfg.pop('async_sleep_interval', 0.025)
             async with completed(

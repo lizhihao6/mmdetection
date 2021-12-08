@@ -52,9 +52,9 @@ def _create_panoptic_style_json(json_name):
                 'area': 70036
             }],
             'file_name':
-            'fake_name1.jpg',
+                'fake_name1.jpg',
             'image_id':
-            0
+                0
         },
         {
             'segments_info': [
@@ -90,9 +90,9 @@ def _create_panoptic_style_json(json_name):
                 }
             ],
             'file_name':
-            'fake_name2.jpg',
+                'fake_name2.jpg',
             'image_id':
-            1
+                1
         }
     ]
 
@@ -201,9 +201,9 @@ def _create_panoptic_gt_annotations(ann_file):
             'area': 3950
         }],
         'file_name':
-        'fake_name1.png',
+            'fake_name1.png',
         'image_id':
-        0
+            0
     }]
 
     gt_json = {

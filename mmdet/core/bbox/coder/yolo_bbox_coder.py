@@ -2,8 +2,8 @@
 import mmcv
 import torch
 
-from ..builder import BBOX_CODERS
 from .base_bbox_coder import BaseBBoxCoder
+from ..builder import BBOX_CODERS
 
 
 @BBOX_CODERS.register_module()
@@ -72,7 +72,7 @@ class YOLOBBoxCoder(BaseBBoxCoder):
         """
         assert pred_bboxes.size(-1) == bboxes.size(-1) == 4
         xy_centers = (bboxes[..., :2] + bboxes[..., 2:]) * 0.5 + (
-            pred_bboxes[..., :2] - 0.5) * stride
+                pred_bboxes[..., :2] - 0.5) * stride
         whs = (bboxes[..., 2:] -
                bboxes[..., :2]) * 0.5 * pred_bboxes[..., 2:].exp()
         decoded_bboxes = torch.stack(

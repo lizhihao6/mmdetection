@@ -1,6 +1,6 @@
 # Copyright (c) OpenMMLab. All rights reserved.
-from ..builder import HEADS
 from .standard_roi_head import StandardRoIHead
+from ..builder import HEADS
 
 
 @HEADS.register_module()

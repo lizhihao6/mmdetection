@@ -16,7 +16,6 @@ from .coco import CocoDataset
 
 @DATASETS.register_module()
 class LVISV05Dataset(CocoDataset):
-
     CLASSES = (
         'acorn', 'aerosol_can', 'air_conditioner', 'airplane', 'alarm_clock',
         'alcohol', 'alligator', 'almond', 'ambulance', 'amplifier', 'anklet',
@@ -281,12 +280,14 @@ class LVISV05Dataset(CocoDataset):
             import lvis
             if getattr(lvis, '__version__', '0') >= '10.5.3':
                 warnings.warn(
-                    'mmlvis is deprecated, please install official lvis-api by "pip install git+https://github.com/lvis-dataset/lvis-api.git"',  # noqa: E501
+                    'mmlvis is deprecated, please install official lvis-api by "pip install git+https://github.com/lvis-dataset/lvis-api.git"',
+                    # noqa: E501
                     UserWarning)
             from lvis import LVIS
         except ImportError:
             raise ImportError(
-                'Package lvis is not installed. Please run "pip install git+https://github.com/lvis-dataset/lvis-api.git".'  # noqa: E501
+                'Package lvis is not installed. Please run "pip install git+https://github.com/lvis-dataset/lvis-api.git".'
+                # noqa: E501
             )
         self.coco = LVIS(ann_file)
         self.cat_ids = self.coco.get_cat_ids()
@@ -339,17 +340,19 @@ class LVISV05Dataset(CocoDataset):
             import lvis
             if getattr(lvis, '__version__', '0') >= '10.5.3':
                 warnings.warn(
-                    'mmlvis is deprecated, please install official lvis-api by "pip install git+https://github.com/lvis-dataset/lvis-api.git"',  # noqa: E501
+                    'mmlvis is deprecated, please install official lvis-api by "pip install git+https://github.com/lvis-dataset/lvis-api.git"',
+                    # noqa: E501
                     UserWarning)
             from lvis import LVISResults, LVISEval
         except ImportError:
             raise ImportError(
-                'Package lvis is not installed. Please run "pip install git+https://github.com/lvis-dataset/lvis-api.git".'  # noqa: E501
+                'Package lvis is not installed. Please run "pip install git+https://github.com/lvis-dataset/lvis-api.git".'
+                # noqa: E501
             )
         assert isinstance(results, list), 'results must be a list'
         assert len(results) == len(self), (
             'The length of results is not equal to the dataset len: {} != {}'.
-            format(len(results), len(self)))
+                format(len(results), len(self)))
 
         metrics = metric if isinstance(metric, list) else [metric]
         allowed_metrics = ['bbox', 'segm', 'proposal', 'proposal_fast']
@@ -469,7 +472,6 @@ DATASETS.register_module(name='LVISDataset', module=LVISDataset)
 
 @DATASETS.register_module()
 class LVISV1Dataset(LVISDataset):
-
     CLASSES = (
         'aerosol_can', 'air_conditioner', 'airplane', 'alarm_clock', 'alcohol',
         'alligator', 'almond', 'ambulance', 'amplifier', 'anklet', 'antenna',
@@ -715,12 +717,14 @@ class LVISV1Dataset(LVISDataset):
             import lvis
             if getattr(lvis, '__version__', '0') >= '10.5.3':
                 warnings.warn(
-                    'mmlvis is deprecated, please install official lvis-api by "pip install git+https://github.com/lvis-dataset/lvis-api.git"',  # noqa: E501
+                    'mmlvis is deprecated, please install official lvis-api by "pip install git+https://github.com/lvis-dataset/lvis-api.git"',
+                    # noqa: E501
                     UserWarning)
             from lvis import LVIS
         except ImportError:
             raise ImportError(
-                'Package lvis is not installed. Please run "pip install git+https://github.com/lvis-dataset/lvis-api.git".'  # noqa: E501
+                'Package lvis is not installed. Please run "pip install git+https://github.com/lvis-dataset/lvis-api.git".'
+                # noqa: E501
             )
         self.coco = LVIS(ann_file)
         self.cat_ids = self.coco.get_cat_ids()

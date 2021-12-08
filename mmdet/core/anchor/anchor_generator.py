@@ -97,7 +97,7 @@ class AnchorGenerator:
             self.scales = torch.Tensor(scales)
         elif octave_base_scale is not None and scales_per_octave is not None:
             octave_scales = np.array(
-                [2**(i / scales_per_octave) for i in range(scales_per_octave)])
+                [2 ** (i / scales_per_octave) for i in range(scales_per_octave)])
             scales = octave_scales * octave_base_scale
             self.scales = torch.Tensor(scales)
         else:
@@ -311,7 +311,7 @@ class AnchorGenerator:
         y = (prior_idxs // width //
              num_base_anchors) % height * self.strides[level_idx][1]
         priors = torch.stack([x, y, x, y], 1).to(dtype).to(device) + \
-            self.base_anchors[level_idx][base_anchor_id, :].to(device)
+                 self.base_anchors[level_idx][base_anchor_id, :].to(device)
 
         return priors
 

@@ -9,8 +9,8 @@ from mmcv.runner import force_fp32
 
 from mmdet.core import multi_apply
 from mmdet.models.utils.transformer import inverse_sigmoid
-from ..builder import HEADS
 from .detr_head import DETRHead
+from ..builder import HEADS
 
 
 @HEADS.register_module()
@@ -141,14 +141,14 @@ class DeformableDETRHead(DETRHead):
         if not self.as_two_stage:
             query_embeds = self.query_embedding.weight
         hs, init_reference, inter_references, \
-            enc_outputs_class, enc_outputs_coord = self.transformer(
-                    mlvl_feats,
-                    mlvl_masks,
-                    query_embeds,
-                    mlvl_positional_encodings,
-                    reg_branches=self.reg_branches if self.with_box_refine else None,  # noqa:E501
-                    cls_branches=self.cls_branches if self.as_two_stage else None  # noqa:E501
-            )
+        enc_outputs_class, enc_outputs_coord = self.transformer(
+            mlvl_feats,
+            mlvl_masks,
+            query_embeds,
+            mlvl_positional_encodings,
+            reg_branches=self.reg_branches if self.with_box_refine else None,  # noqa:E501
+            cls_branches=self.cls_branches if self.as_two_stage else None  # noqa:E501
+        )
         hs = hs.permute(0, 2, 1, 3)
         outputs_classes = []
         outputs_coords = []
@@ -174,11 +174,11 @@ class DeformableDETRHead(DETRHead):
         outputs_coords = torch.stack(outputs_coords)
         if self.as_two_stage:
             return outputs_classes, outputs_coords, \
-                enc_outputs_class, \
-                enc_outputs_coord.sigmoid()
+                   enc_outputs_class, \
+                   enc_outputs_coord.sigmoid()
         else:
             return outputs_classes, outputs_coords, \
-                None, None
+                   None, None
 
     @force_fp32(apply_to=('all_cls_scores_list', 'all_bbox_preds_list'))
     def loss(self,

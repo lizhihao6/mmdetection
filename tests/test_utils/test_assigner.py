@@ -99,7 +99,7 @@ def test_max_iou_assigner_with_empty_boxes():
     # Test with gt_labels
     assign_result = self.assign(bboxes, gt_bboxes, gt_labels=gt_labels)
     assert len(assign_result.gt_inds) == 0
-    assert tuple(assign_result.labels.shape) == (0, )
+    assert tuple(assign_result.labels.shape) == (0,)
 
     # Test without gt_labels
     assign_result = self.assign(bboxes, gt_bboxes, gt_labels=None)
@@ -132,7 +132,7 @@ def test_max_iou_assigner_with_empty_boxes_and_ignore():
         gt_labels=gt_labels,
         gt_bboxes_ignore=gt_bboxes_ignore)
     assert len(assign_result.gt_inds) == 0
-    assert tuple(assign_result.labels.shape) == (0, )
+    assert tuple(assign_result.labels.shape) == (0,)
 
     # Test without gt_labels
     assign_result = self.assign(
@@ -373,7 +373,7 @@ def test_center_region_assigner_with_empty_gts():
         [10, 10, 20, 20],
     ])
     gt_bboxes = torch.empty((0, 4)).float()
-    gt_labels = torch.empty((0, )).long()
+    gt_labels = torch.empty((0,)).long()
     assign_result = self.assign(bboxes, gt_bboxes, gt_labels=gt_labels)
     assert len(assign_result.gt_inds) == 2
     expected_gt_inds = torch.LongTensor([0, 0])
@@ -388,7 +388,7 @@ def test_hungarian_match_assigner():
     bbox_pred = torch.rand((10, 4))
     cls_pred = torch.rand((10, 81))
     gt_bboxes = torch.empty((0, 4)).float()
-    gt_labels = torch.empty((0, )).long()
+    gt_labels = torch.empty((0,)).long()
     img_meta = dict(img_shape=(10, 8, 3))
     assign_result = self.assign(bbox_pred, cls_pred, gt_bboxes, gt_labels,
                                 img_meta)
@@ -491,7 +491,7 @@ def test_uniform_assigner_with_empty_boxes():
     assign_result = self.assign(
         pred_bbox, anchor, gt_bboxes, gt_labels=gt_labels)
     assert len(assign_result.gt_inds) == 0
-    assert tuple(assign_result.labels.shape) == (0, )
+    assert tuple(assign_result.labels.shape) == (0,)
 
     # Test without gt_labels
     assign_result = self.assign(pred_bbox, anchor, gt_bboxes, gt_labels=None)

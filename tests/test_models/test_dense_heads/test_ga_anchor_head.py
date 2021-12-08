@@ -52,7 +52,7 @@ def test_ga_anchor_head_loss():
     if torch.cuda.is_available():
         head.cuda()
         feat = [
-            torch.rand(1, 4, s // (2**(i + 2)), s // (2**(i + 2))).cuda()
+            torch.rand(1, 4, s // (2 ** (i + 2)), s // (2 ** (i + 2))).cuda()
             for i in range(len(head.approx_anchor_generator.base_anchors))
         ]
         cls_scores, bbox_preds, shape_preds, loc_preds = head.forward(feat)

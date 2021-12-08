@@ -89,7 +89,7 @@ html_theme_options = {
         },
         {
             'name':
-            'Projects',
+                'Projects',
             'children': [
                 {
                     'name': 'MMAction2',
@@ -135,7 +135,7 @@ html_theme_options = {
         },
         {
             'name':
-            'OpenMMLab',
+                'OpenMMLab',
             'children': [
                 {
                     'name': 'Homepage',

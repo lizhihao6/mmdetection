@@ -94,7 +94,7 @@ def test_classification_losses(loss_class, input_shape):
             f'tensor.')
 
     pred = torch.rand(input_shape)
-    target = torch.randint(0, 5, (input_shape[0], ))
+    target = torch.randint(0, 5, (input_shape[0],))
 
     # Test loss forward
     loss = loss_class()(pred, target)
@@ -140,9 +140,9 @@ def test_loss_with_ignore_index(use_sigmoid):
     loss_class = CrossEntropyLoss(
         use_sigmoid=use_sigmoid, use_mask=False, ignore_index=255)
     pred = torch.rand((10, 5))
-    target = torch.randint(0, 5, (10, ))
+    target = torch.randint(0, 5, (10,))
 
-    ignored_indices = torch.randint(0, 10, (2, ), dtype=torch.long)
+    ignored_indices = torch.randint(0, 10, (2,), dtype=torch.long)
     target[ignored_indices] = 255
 
     # Test loss forward with default ignore

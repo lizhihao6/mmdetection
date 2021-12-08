@@ -47,34 +47,34 @@ class SOLOHead(BaseMaskHead):
     """
 
     def __init__(
-        self,
-        num_classes,
-        in_channels,
-        feat_channels=256,
-        stacked_convs=4,
-        strides=(4, 8, 16, 32, 64),
-        scale_ranges=((8, 32), (16, 64), (32, 128), (64, 256), (128, 512)),
-        pos_scale=0.2,
-        num_grids=[40, 36, 24, 16, 12],
-        cls_down_index=0,
-        loss_mask=None,
-        loss_cls=None,
-        norm_cfg=dict(type='GN', num_groups=32, requires_grad=True),
-        train_cfg=None,
-        test_cfg=None,
-        init_cfg=[
-            dict(type='Normal', layer='Conv2d', std=0.01),
-            dict(
-                type='Normal',
-                std=0.01,
-                bias_prob=0.01,
-                override=dict(name='conv_mask_list')),
-            dict(
-                type='Normal',
-                std=0.01,
-                bias_prob=0.01,
-                override=dict(name='conv_cls'))
-        ],
+            self,
+            num_classes,
+            in_channels,
+            feat_channels=256,
+            stacked_convs=4,
+            strides=(4, 8, 16, 32, 64),
+            scale_ranges=((8, 32), (16, 64), (32, 128), (64, 256), (128, 512)),
+            pos_scale=0.2,
+            num_grids=[40, 36, 24, 16, 12],
+            cls_down_index=0,
+            loss_mask=None,
+            loss_cls=None,
+            norm_cfg=dict(type='GN', num_groups=32, requires_grad=True),
+            train_cfg=None,
+            test_cfg=None,
+            init_cfg=[
+                dict(type='Normal', layer='Conv2d', std=0.01),
+                dict(
+                    type='Normal',
+                    std=0.01,
+                    bias_prob=0.01,
+                    override=dict(name='conv_mask_list')),
+                dict(
+                    type='Normal',
+                    std=0.01,
+                    bias_prob=0.01,
+                    override=dict(name='conv_cls'))
+            ],
     ):
         super(SOLOHead, self).__init__(init_cfg)
         self.num_classes = num_classes
@@ -124,7 +124,7 @@ class SOLOHead(BaseMaskHead):
         self.conv_mask_list = nn.ModuleList()
         for num_grid in self.num_grids:
             self.conv_mask_list.append(
-                nn.Conv2d(self.feat_channels, num_grid**2, 1))
+                nn.Conv2d(self.feat_channels, num_grid ** 2, 1))
 
         self.conv_cls = nn.Conv2d(
             self.feat_channels, self.cls_out_channels, 3, padding=1)
@@ -327,14 +327,14 @@ class SOLOHead(BaseMaskHead):
                        featmap_sizes, self.num_grids):
 
             mask_target = torch.zeros(
-                [num_grid**2, featmap_size[0], featmap_size[1]],
+                [num_grid ** 2, featmap_size[0], featmap_size[1]],
                 dtype=torch.uint8,
                 device=device)
             # FG cat_id: [0, num_classes -1], BG cat_id: num_classes
             labels = torch.zeros([num_grid, num_grid],
                                  dtype=torch.int64,
                                  device=device) + self.num_classes
-            pos_mask = torch.zeros([num_grid**2],
+            pos_mask = torch.zeros([num_grid ** 2],
                                    dtype=torch.bool,
                                    device=device)
 
@@ -409,7 +409,7 @@ class SOLOHead(BaseMaskHead):
                     for j in range(left, right + 1):
                         index = int(i * num_grid + j)
                         mask_target[index, :gt_mask.shape[0], :gt_mask.
-                                    shape[1]] = gt_mask
+                            shape[1]] = gt_mask
                         pos_mask[index] = True
             mlvl_pos_mask_targets.append(mask_target[pos_mask])
             mlvl_labels.append(labels)
@@ -741,7 +741,7 @@ class DecoupledSOLOHead(SOLOHead):
         featmap_sizes = [featmap.size()[-2:] for featmap in mlvl_mask_preds_x]
 
         pos_mask_targets, labels, \
-            xy_pos_indexes = \
+        xy_pos_indexes = \
             multi_apply(self._get_targets_single,
                         gt_bboxes,
                         gt_labels,
@@ -842,7 +842,7 @@ class DecoupledSOLOHead(SOLOHead):
                   dimension 2 present (index_x, index_y).
         """
         mlvl_pos_mask_targets, mlvl_labels, \
-            mlvl_pos_masks = \
+        mlvl_pos_masks = \
             super()._get_targets_single(gt_bboxes, gt_labels, gt_masks,
                                         featmap_sizes=featmap_sizes)
 
@@ -1082,7 +1082,7 @@ class DecoupledSOLOLightHead(DecoupledSOLOHead):
         self.cls_convs = nn.ModuleList()
 
         for i in range(self.stacked_convs):
-            if self.dcn_cfg is not None\
+            if self.dcn_cfg is not None \
                     and i == self.stacked_convs - 1:
                 conv_cfg = self.dcn_cfg
             else:

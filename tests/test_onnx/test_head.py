@@ -23,7 +23,6 @@ if digit_version(torch.__version__) <= digit_version('1.5.0'):
 
 
 def test_cascade_onnx_export():
-
     config_path = './configs/cascade_rcnn/cascade_rcnn_r50_fpn_1x_coco.py'
     cfg = mmcv.Config.fromfile(config_path)
     model = build_detector(cfg.model, test_cfg=cfg.get('test_cfg'))
@@ -58,7 +57,6 @@ def test_cascade_onnx_export():
 
 
 def test_faster_onnx_export():
-
     config_path = './configs/faster_rcnn/faster_rcnn_r50_fpn_1x_coco.py'
     cfg = mmcv.Config.fromfile(config_path)
     model = build_detector(cfg.model, test_cfg=cfg.get('test_cfg'))
@@ -138,8 +136,8 @@ def test_retina_head_forward():
     s = 128
     # RetinaNet head expects a multiple levels of features per image
     feats = [
-        torch.rand(1, retina_model.in_channels, s // (2**(i + 2)),
-                   s // (2**(i + 2)))  # [32, 16, 8, 4, 2]
+        torch.rand(1, retina_model.in_channels, s // (2 ** (i + 2)),
+                   s // (2 ** (i + 2)))  # [32, 16, 8, 4, 2]
         for i in range(len(retina_model.prior_generator.strides))
     ]
     ort_validate(retina_model.forward, feats)
@@ -211,7 +209,7 @@ def test_yolov3_head_forward():
 
     # Yolov3 head expects a multiple levels of features per image
     feats = [
-        torch.rand(1, 1, 64 // (2**(i + 2)), 64 // (2**(i + 2)))
+        torch.rand(1, 1, 64 // (2 ** (i + 2)), 64 // (2 ** (i + 2)))
         for i in range(len(yolo_model.in_channels))
     ]
     ort_validate(yolo_model.forward, feats)
@@ -264,7 +262,7 @@ def test_fcos_head_forward_single():
     fcos_model.forward_single = partial(
         fcos_model.forward_single,
         scale=Scale(1.0).requires_grad_(False),
-        stride=(4, ))
+        stride=(4,))
     ort_validate(fcos_model.forward_single, feat)
 
 
@@ -344,8 +342,8 @@ def test_fsaf_head_forward():
     fsaf_model = fsaf_config()
     s = 128
     feats = [
-        torch.rand(1, fsaf_model.in_channels, s // (2**(i + 2)),
-                   s // (2**(i + 2)))
+        torch.rand(1, fsaf_model.in_channels, s // (2 ** (i + 2)),
+                   s // (2 ** (i + 2)))
         for i in range(len(fsaf_model.anchor_generator.strides))
     ]
     ort_validate(fsaf_model.forward, feats)

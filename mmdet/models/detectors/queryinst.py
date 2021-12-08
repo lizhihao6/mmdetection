@@ -1,5 +1,5 @@
-from ..builder import DETECTORS
 from .sparse_rcnn import SparseRCNN
+from ..builder import DETECTORS
 
 
 @DETECTORS.register_module()

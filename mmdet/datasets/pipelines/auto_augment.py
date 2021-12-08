@@ -5,8 +5,8 @@ import cv2
 import mmcv
 import numpy as np
 
-from ..builder import PIPELINES
 from .compose import Compose
+from ..builder import PIPELINES
 
 _MAX_LEVEL = 10
 
@@ -143,30 +143,30 @@ class Shear:
                  random_negative_prob=0.5,
                  interpolation='bilinear'):
         assert isinstance(level, (int, float)), 'The level must be type ' \
-            f'int or float, got {type(level)}.'
+                                                f'int or float, got {type(level)}.'
         assert 0 <= level <= _MAX_LEVEL, 'The level should be in range ' \
-            f'[0,{_MAX_LEVEL}], got {level}.'
+                                         f'[0,{_MAX_LEVEL}], got {level}.'
         if isinstance(img_fill_val, (float, int)):
             img_fill_val = tuple([float(img_fill_val)] * 3)
         elif isinstance(img_fill_val, tuple):
             assert len(img_fill_val) == 3, 'img_fill_val as tuple must ' \
-                f'have 3 elements. got {len(img_fill_val)}.'
+                                           f'have 3 elements. got {len(img_fill_val)}.'
             img_fill_val = tuple([float(val) for val in img_fill_val])
         else:
             raise ValueError(
                 'img_fill_val must be float or tuple with 3 elements.')
         assert np.all([0 <= val <= 255 for val in img_fill_val]), 'all ' \
-            'elements of img_fill_val should between range [0,255].' \
-            f'got {img_fill_val}.'
+                                                                  'elements of img_fill_val should between range [0,255].' \
+                                                                  f'got {img_fill_val}.'
         assert 0 <= prob <= 1.0, 'The probability of shear should be in ' \
-            f'range [0,1]. got {prob}.'
+                                 f'range [0,1]. got {prob}.'
         assert direction in ('horizontal', 'vertical'), 'direction must ' \
-            f'in be either "horizontal" or "vertical". got {direction}.'
+                                                        f'in be either "horizontal" or "vertical". got {direction}.'
         assert isinstance(max_shear_magnitude, float), 'max_shear_magnitude ' \
-            f'should be type float. got {type(max_shear_magnitude)}.'
+                                                       f'should be type float. got {type(max_shear_magnitude)}.'
         assert 0. <= max_shear_magnitude <= 1., 'Defaultly ' \
-            'max_shear_magnitude should be in range [0,1]. ' \
-            f'got {max_shear_magnitude}.'
+                                                'max_shear_magnitude should be in range [0,1]. ' \
+                                                f'got {max_shear_magnitude}.'
         self.level = level
         self.magnitude = level_to_value(level, max_shear_magnitude)
         self.img_fill_val = img_fill_val
@@ -372,27 +372,27 @@ class Rotate:
         if isinstance(center, (int, float)):
             center = (center, center)
         elif isinstance(center, tuple):
-            assert len(center) == 2, 'center with type tuple must have '\
-                f'2 elements. got {len(center)} elements.'
+            assert len(center) == 2, 'center with type tuple must have ' \
+                                     f'2 elements. got {len(center)} elements.'
         else:
-            assert center is None, 'center must be None or type int, '\
-                f'float or tuple, got type {type(center)}.'
+            assert center is None, 'center must be None or type int, ' \
+                                   f'float or tuple, got type {type(center)}.'
         if isinstance(img_fill_val, (float, int)):
             img_fill_val = tuple([float(img_fill_val)] * 3)
         elif isinstance(img_fill_val, tuple):
-            assert len(img_fill_val) == 3, 'img_fill_val as tuple must '\
-                f'have 3 elements. got {len(img_fill_val)}.'
+            assert len(img_fill_val) == 3, 'img_fill_val as tuple must ' \
+                                           f'have 3 elements. got {len(img_fill_val)}.'
             img_fill_val = tuple([float(val) for val in img_fill_val])
         else:
             raise ValueError(
                 'img_fill_val must be float or tuple with 3 elements.')
         assert np.all([0 <= val <= 255 for val in img_fill_val]), \
-            'all elements of img_fill_val should between range [0,255]. '\
+            'all elements of img_fill_val should between range [0,255]. ' \
             f'got {img_fill_val}.'
-        assert 0 <= prob <= 1.0, 'The probability should be in range [0,1]. '\
-            'got {prob}.'
-        assert isinstance(max_rotate_angle, (int, float)), 'max_rotate_angle '\
-            f'should be type int or float. got type {type(max_rotate_angle)}.'
+        assert 0 <= prob <= 1.0, 'The probability should be in range [0,1]. ' \
+                                 'got {prob}.'
+        assert isinstance(max_rotate_angle, (int, float)), 'max_rotate_angle ' \
+                                                           f'should be type int or float. got type {type(max_rotate_angle)}.'
         self.level = level
         self.scale = scale
         # Rotation angle in degrees. Positive values mean
@@ -446,16 +446,16 @@ class Rotate:
             rotated_coords = rotated_coords[..., 0]  # [nb_bbox, 4, 2]
             min_x, min_y = np.min(
                 rotated_coords[:, :, 0], axis=1), np.min(
-                    rotated_coords[:, :, 1], axis=1)
+                rotated_coords[:, :, 1], axis=1)
             max_x, max_y = np.max(
                 rotated_coords[:, :, 0], axis=1), np.max(
-                    rotated_coords[:, :, 1], axis=1)
+                rotated_coords[:, :, 1], axis=1)
             min_x, min_y = np.clip(
                 min_x, a_min=0, a_max=w), np.clip(
-                    min_y, a_min=0, a_max=h)
+                min_y, a_min=0, a_max=h)
             max_x, max_y = np.clip(
                 max_x, a_min=min_x, a_max=w), np.clip(
-                    max_y, a_min=min_y, a_max=h)
+                max_y, a_min=min_y, a_max=h)
             results[key] = np.stack([min_x, min_y, max_x, max_y],
                                     axis=-1).astype(results[key].dtype)
 

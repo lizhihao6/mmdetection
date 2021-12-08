@@ -8,13 +8,13 @@ from .formating import (Collect, DefaultFormatBundle, ImageToTensor,
 from .instaboost import InstaBoost
 from .loading import (LoadAnnotations, LoadImageFromFile, LoadImageFromWebcam,
                       LoadMultiChannelImageFromFiles, LoadProposals)
+from .multi_raw import (LoadRAWFromFile, Rearrange, CamTosRGB, HDRSplit,
+                        EqualizeHist, RYYBtoRGGB, RGGBtoRYYB)
 from .test_time_aug import MultiScaleFlipAug
 from .transforms import (Albu, CutOut, Expand, MinIoURandomCrop, MixUp, Mosaic,
                          Normalize, Pad, PhotoMetricDistortion, RandomAffine,
                          RandomCenterCropPad, RandomCrop, RandomFlip,
                          RandomShift, Resize, SegRescale)
-from .multi_raw import (LoadRAWFromFile, Rearrange, CamTosRGB, HDRSplit,
-                        EqualizeHist, RYYBtoRGGB, RGGBtoRYYB)
 
 __all__ = [
     'Compose', 'to_tensor', 'ToTensor', 'ImageToTensor', 'ToDataContainer',

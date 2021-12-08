@@ -27,8 +27,8 @@ class TestLoading:
         assert results['img_shape'] == (288, 512, 3)
         assert results['ori_shape'] == (288, 512, 3)
         assert repr(transform) == transform.__class__.__name__ + \
-            "(to_float32=False, color_type='color', " + \
-            "file_client_args={'backend': 'disk'})"
+               "(to_float32=False, color_type='color', " + \
+               "file_client_args={'backend': 'disk'})"
 
         # no img_prefix
         results = dict(
@@ -75,8 +75,8 @@ class TestLoading:
         assert results['pad_shape'] == (288, 512, 3, 2)
         assert results['scale_factor'] == 1.0
         assert repr(transform) == transform.__class__.__name__ + \
-            "(to_float32=False, color_type='unchanged', " + \
-            "file_client_args={'backend': 'disk'})"
+               "(to_float32=False, color_type='unchanged', " + \
+               "file_client_args={'backend': 'disk'})"
 
     def test_load_webcam_img(self):
         img = mmcv.imread(osp.join(self.data_prefix, 'color.jpg'))

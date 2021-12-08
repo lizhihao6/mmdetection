@@ -10,7 +10,7 @@ def test_sine_positional_encoding(num_feats=16, batch_size=2):
     # test invalid type of scale
     with pytest.raises(AssertionError):
         module = SinePositionalEncoding(
-            num_feats, scale=(3., ), normalize=True)
+            num_feats, scale=(3.,), normalize=True)
 
     module = SinePositionalEncoding(num_feats)
     h, w = 10, 6

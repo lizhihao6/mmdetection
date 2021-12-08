@@ -75,9 +75,9 @@ class DropBlock(nn.Module):
         gamma = (self.drop_prob * feat_size[0] * feat_size[1])
         gamma /= ((feat_size[0] - self.block_size + 1) *
                   (feat_size[1] - self.block_size + 1))
-        gamma /= (self.block_size**2)
+        gamma /= (self.block_size ** 2)
         factor = (1.0 if self.iter_cnt > self.warmup_iters else self.iter_cnt /
-                  self.warmup_iters)
+                                                                self.warmup_iters)
         return gamma * factor
 
     def extra_repr(self):

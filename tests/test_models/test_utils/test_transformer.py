@@ -10,7 +10,6 @@ from mmdet.models.utils.transformer import (AdaptivePadding,
 
 
 def test_adaptive_padding():
-
     for padding in ('same', 'corner'):
         kernel_size = 16
         stride = 16
@@ -316,7 +315,6 @@ def test_patch_embed():
 
 
 def test_patch_merging():
-
     # Test the model with int padding
     in_c = 3
     out_c = 4
@@ -497,18 +495,18 @@ def test_detr_transformer_dencoder_encoder_layer():
                 return_intermediate=True,
                 num_layers=6,
                 transformerlayers=[
-                    dict(
-                        type='DetrTransformerDecoderLayer',
-                        attn_cfgs=dict(
-                            type='MultiheadAttention',
-                            embed_dims=256,
-                            num_heads=8,
-                            dropout=0.1),
-                        feedforward_channels=2048,
-                        ffn_dropout=0.1,
-                        operation_order=('self_attn', 'norm', 'cross_attn',
-                                         'norm', 'ffn', 'norm'))
-                ] * 5))
+                                      dict(
+                                          type='DetrTransformerDecoderLayer',
+                                          attn_cfgs=dict(
+                                              type='MultiheadAttention',
+                                              embed_dims=256,
+                                              num_heads=8,
+                                              dropout=0.1),
+                                          feedforward_channels=2048,
+                                          ffn_dropout=0.1,
+                                          operation_order=('self_attn', 'norm', 'cross_attn',
+                                                           'norm', 'ffn', 'norm'))
+                                  ] * 5))
         DetrTransformerDecoder(**config)
 
     config = ConfigDict(

@@ -1,10 +1,10 @@
 # Copyright (c) OpenMMLab. All rights reserved.
 import torch
 
-from ..builder import BBOX_ASSIGNERS
-from ..iou_calculators import build_iou_calculator
 from .assign_result import AssignResult
 from .base_assigner import BaseAssigner
+from ..builder import BBOX_ASSIGNERS
+from ..iou_calculators import build_iou_calculator
 
 
 @BBOX_ASSIGNERS.register_module()
@@ -75,20 +75,20 @@ class GridAssigner(BaseAssigner):
         overlaps = self.iou_calculator(gt_bboxes, bboxes)
 
         # 1. assign -1 by default
-        assigned_gt_inds = overlaps.new_full((num_bboxes, ),
+        assigned_gt_inds = overlaps.new_full((num_bboxes,),
                                              -1,
                                              dtype=torch.long)
 
         if num_gts == 0 or num_bboxes == 0:
             # No ground truth or boxes, return empty assignment
-            max_overlaps = overlaps.new_zeros((num_bboxes, ))
+            max_overlaps = overlaps.new_zeros((num_bboxes,))
             if num_gts == 0:
                 # No truth, assign everything to background
                 assigned_gt_inds[:] = 0
             if gt_labels is None:
                 assigned_labels = None
             else:
-                assigned_labels = overlaps.new_full((num_bboxes, ),
+                assigned_labels = overlaps.new_full((num_bboxes,),
                                                     -1,
                                                     dtype=torch.long)
             return AssignResult(
@@ -135,14 +135,14 @@ class GridAssigner(BaseAssigner):
             if gt_max_overlaps[i] > self.min_pos_iou:
                 if self.gt_max_assign_all:
                     max_iou_inds = (overlaps[i, :] == gt_max_overlaps[i]) & \
-                         box_responsible_flags.type(torch.bool)
+                                   box_responsible_flags.type(torch.bool)
                     assigned_gt_inds[max_iou_inds] = i + 1
                 elif box_responsible_flags[gt_argmax_overlaps[i]]:
                     assigned_gt_inds[gt_argmax_overlaps[i]] = i + 1
 
         # assign labels of positive anchors
         if gt_labels is not None:
-            assigned_labels = assigned_gt_inds.new_full((num_bboxes, ), -1)
+            assigned_labels = assigned_gt_inds.new_full((num_bboxes,), -1)
             pos_inds = torch.nonzero(
                 assigned_gt_inds > 0, as_tuple=False).squeeze()
             if pos_inds.numel() > 0:

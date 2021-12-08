@@ -120,7 +120,7 @@ class DynamicMaskHead(FCNMaskHead):
         mask_pred = self.conv_logits(x)
         return mask_pred
 
-    @force_fp32(apply_to=('mask_pred', ))
+    @force_fp32(apply_to=('mask_pred',))
     def loss(self, mask_pred, mask_targets, labels):
         num_pos = labels.new_ones(labels.size()).float().sum()
         avg_factor = torch.clamp(reduce_mean(num_pos), min=1.).item()

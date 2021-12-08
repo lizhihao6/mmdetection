@@ -122,6 +122,6 @@ def mask_target_single(pos_proposals, pos_assigned_gt_inds, gt_masks, cfg):
 
         mask_targets = torch.from_numpy(mask_targets).float().to(device)
     else:
-        mask_targets = pos_proposals.new_zeros((0, ) + mask_size)
+        mask_targets = pos_proposals.new_zeros((0,) + mask_size)
 
     return mask_targets

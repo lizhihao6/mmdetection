@@ -204,7 +204,7 @@ def analyze_individual_category(k,
     cocoEval.params.iouThrs = [0.1]
     cocoEval.params.useCats = 1
     if areas:
-        cocoEval.params.areaRng = [[0**2, areas[2]], [0**2, areas[0]],
+        cocoEval.params.areaRng = [[0 ** 2, areas[2]], [0 ** 2, areas[0]],
                                    [areas[0], areas[1]], [areas[1], areas[2]]]
     cocoEval.evaluate()
     cocoEval.accumulate()
@@ -223,7 +223,7 @@ def analyze_individual_category(k,
     cocoEval.params.iouThrs = [0.1]
     cocoEval.params.useCats = 1
     if areas:
-        cocoEval.params.areaRng = [[0**2, areas[2]], [0**2, areas[0]],
+        cocoEval.params.areaRng = [[0 ** 2, areas[2]], [0 ** 2, areas[0]],
                                    [areas[0], areas[1]], [areas[1], areas[2]]]
     cocoEval.evaluate()
     cocoEval.accumulate()
@@ -265,7 +265,7 @@ def analyze_results(res_file,
         cocoEval.params.iouThrs = [0.75, 0.5, 0.1]
         cocoEval.params.maxDets = [100]
         if areas:
-            cocoEval.params.areaRng = [[0**2, areas[2]], [0**2, areas[0]],
+            cocoEval.params.areaRng = [[0 ** 2, areas[2]], [0 ** 2, areas[0]],
                                        [areas[0], areas[1]],
                                        [areas[1], areas[2]]]
         cocoEval.evaluate()

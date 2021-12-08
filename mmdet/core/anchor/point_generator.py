@@ -22,7 +22,7 @@ class PointGenerator:
         shift_x = torch.arange(0., feat_w, device=device) * stride
         shift_y = torch.arange(0., feat_h, device=device) * stride
         shift_xx, shift_yy = self._meshgrid(shift_x, shift_y)
-        stride = shift_x.new_full((shift_xx.shape[0], ), stride)
+        stride = shift_x.new_full((shift_xx.shape[0],), stride)
         shifts = torch.stack([shift_xx, shift_yy, stride], dim=-1)
         all_points = shifts.to(device)
         return all_points
@@ -165,9 +165,9 @@ class MlvlPointGenerator:
             shifts = torch.stack([shift_xx, shift_yy], dim=-1)
         else:
             # use `shape[0]` instead of `len(shift_xx)` for ONNX export
-            stride_w = shift_xx.new_full((shift_xx.shape[0], ),
+            stride_w = shift_xx.new_full((shift_xx.shape[0],),
                                          stride_w).to(dtype)
-            stride_h = shift_xx.new_full((shift_yy.shape[0], ),
+            stride_h = shift_xx.new_full((shift_yy.shape[0],),
                                          stride_h).to(dtype)
             shifts = torch.stack([shift_xx, shift_yy, stride_w, stride_h],
                                  dim=-1)

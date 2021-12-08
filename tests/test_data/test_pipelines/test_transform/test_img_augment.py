@@ -42,7 +42,6 @@ def test_adjust_color():
 
 
 def test_imequalize(nb_rand_test=100):
-
     def _imequalize(img):
         # equalize the image using PIL.ImageOps.equalize
         from PIL import ImageOps, Image
@@ -77,7 +76,6 @@ def test_imequalize(nb_rand_test=100):
 
 
 def test_adjust_brightness(nb_rand_test=100):
-
     def _adjust_brightness(img, factor):
         # adjust the brightness of image using
         # PIL.ImageEnhance.Brightness
@@ -122,7 +120,6 @@ def test_adjust_brightness(nb_rand_test=100):
 
 
 def test_adjust_contrast(nb_rand_test=100):
-
     def _adjust_contrast(img, factor):
         from PIL.ImageEnhance import Contrast
         from PIL import Image

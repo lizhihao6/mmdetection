@@ -5,9 +5,9 @@ import torch
 import torch.nn as nn
 from mmcv.runner import ModuleList
 
+from .base_semantic_head import BaseSemanticHead
 from ..builder import HEADS
 from ..utils import ConvUpsample
-from .base_semantic_head import BaseSemanticHead
 
 
 @HEADS.register_module()
@@ -115,7 +115,7 @@ class PanopticFPNHead(BaseSemanticHead):
         gt_semantic_seg = gt_semantic_seg.int()
         fg_mask = gt_semantic_seg < self.num_things_classes
         bg_mask = (gt_semantic_seg >= self.num_things_classes) * (
-            gt_semantic_seg < self.num_things_classes + self.num_stuff_classes)
+                gt_semantic_seg < self.num_things_classes + self.num_stuff_classes)
 
         new_gt_seg = torch.clone(gt_semantic_seg)
         new_gt_seg = torch.where(bg_mask,

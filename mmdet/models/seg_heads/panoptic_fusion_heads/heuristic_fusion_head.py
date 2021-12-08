@@ -75,7 +75,7 @@ class HeuristicFusionHead(BasePanopticFusionHead):
         if len(left_labels) > 0:
             instance_labels = torch.stack(left_labels)
         else:
-            instance_labels = bboxes.new_zeros((0, ), dtype=torch.long)
+            instance_labels = bboxes.new_zeros((0,), dtype=torch.long)
         assert instance_id == (len(instance_labels) + 1)
         return id_map, instance_labels
 

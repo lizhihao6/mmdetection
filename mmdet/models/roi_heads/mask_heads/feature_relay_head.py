@@ -31,7 +31,7 @@ class FeatureRelayHead(BaseModule):
         self.in_channels = in_channels
         self.out_conv_channels = out_conv_channels
         self.roi_feat_size = roi_feat_size
-        self.out_channels = (roi_feat_size**2) * out_conv_channels
+        self.out_channels = (roi_feat_size ** 2) * out_conv_channels
         self.scale_factor = scale_factor
         self.fp16_enabled = False
 

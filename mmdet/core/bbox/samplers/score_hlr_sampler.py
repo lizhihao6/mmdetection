@@ -2,10 +2,10 @@
 import torch
 from mmcv.ops import nms_match
 
-from ..builder import BBOX_SAMPLERS
-from ..transforms import bbox2roi
 from .base_sampler import BaseSampler
 from .sampling_result import SamplingResult
+from ..builder import BBOX_SAMPLERS
+from ..transforms import bbox2roi
 
 
 @BBOX_SAMPLERS.register_module()
@@ -141,7 +141,7 @@ class ScoreHLRSampler(BaseSampler):
                 cls_score=cls_score,
                 bbox_pred=None,
                 rois=None,
-                labels=neg_inds.new_full((num_neg, ),
+                labels=neg_inds.new_full((num_neg,),
                                          self.bbox_head.num_classes),
                 label_weights=cls_score.new_ones(num_neg),
                 bbox_targets=None,
@@ -202,7 +202,7 @@ class ScoreHLRSampler(BaseSampler):
                 neg_label_weights[num_hlr:] = imp_weights.min()
                 neg_label_weights = (self.bias +
                                      (1 - self.bias) * neg_label_weights).pow(
-                                         self.k)
+                    self.k)
                 ori_selected_loss = ori_loss[select_inds]
                 new_loss = ori_selected_loss * neg_label_weights
                 norm_ratio = ori_selected_loss.sum() / new_loss.sum()
@@ -237,7 +237,7 @@ class ScoreHLRSampler(BaseSampler):
         """
         bboxes = bboxes[:, :4]
 
-        gt_flags = bboxes.new_zeros((bboxes.shape[0], ), dtype=torch.uint8)
+        gt_flags = bboxes.new_zeros((bboxes.shape[0],), dtype=torch.uint8)
         if self.add_gt_as_proposals:
             bboxes = torch.cat([gt_bboxes, bboxes], dim=0)
             assign_result.add_gt_(gt_labels)

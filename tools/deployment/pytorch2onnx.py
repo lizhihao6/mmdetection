@@ -25,7 +25,6 @@ def pytorch2onnx(model,
                  do_simplify=False,
                  dynamic_export=None,
                  skip_postprocess=False):
-
     input_config = {
         'input_shape': input_shape,
         'input_path': input_img,
@@ -267,17 +266,17 @@ def parse_args():
         nargs='+',
         default=[58.395, 57.12, 57.375],
         help='variance value used for preprocess input data. '
-        'This argument is deprecated and will be removed in future releases.')
+             'This argument is deprecated and will be removed in future releases.')
     parser.add_argument(
         '--cfg-options',
         nargs='+',
         action=DictAction,
         help='Override some settings in the used config, the key-value pair '
-        'in xxx=yyy format will be merged into config file. If the value to '
-        'be overwritten is a list, it should be like key="[a,b]" or key=a,b '
-        'It also allows nested list/tuple values, e.g. key="[(a,b),(c,d)]" '
-        'Note that the quotation marks are necessary and that no white space '
-        'is allowed.')
+             'in xxx=yyy format will be merged into config file. If the value to '
+             'be overwritten is a list, it should be like key="[a,b]" or key=a,b '
+             'It also allows nested list/tuple values, e.g. key="[(a,b),(c,d)]" '
+             'Note that the quotation marks are necessary and that no white space '
+             'is allowed.')
     parser.add_argument(
         '--dynamic-export',
         action='store_true',
@@ -286,8 +285,8 @@ def parse_args():
         '--skip-postprocess',
         action='store_true',
         help='Whether to export model without post process. Experimental '
-        'option. We do not guarantee the correctness of the exported '
-        'model.')
+             'option. We do not guarantee the correctness of the exported '
+             'model.')
     args = parser.parse_args()
     return args
 

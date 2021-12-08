@@ -3,8 +3,8 @@ import mmcv
 import torch.nn as nn
 import torch.nn.functional as F
 
-from ..builder import LOSSES
 from .utils import weight_reduce_loss
+from ..builder import LOSSES
 
 
 @mmcv.jit(derivate=True, coderize=True)
@@ -44,12 +44,12 @@ def varifocal_loss(pred,
     target = target.type_as(pred)
     if iou_weighted:
         focal_weight = target * (target > 0.0).float() + \
-            alpha * (pred_sigmoid - target).abs().pow(gamma) * \
-            (target <= 0.0).float()
+                       alpha * (pred_sigmoid - target).abs().pow(gamma) * \
+                       (target <= 0.0).float()
     else:
         focal_weight = (target > 0.0).float() + \
-            alpha * (pred_sigmoid - target).abs().pow(gamma) * \
-            (target <= 0.0).float()
+                       alpha * (pred_sigmoid - target).abs().pow(gamma) * \
+                       (target <= 0.0).float()
     loss = F.binary_cross_entropy_with_logits(
         pred, target, reduction='none') * focal_weight
     loss = weight_reduce_loss(loss, weight, reduction, avg_factor)

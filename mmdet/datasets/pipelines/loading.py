@@ -538,7 +538,7 @@ class LoadProposals:
 
     def __repr__(self):
         return self.__class__.__name__ + \
-            f'(num_max_proposals={self.num_max_proposals})'
+               f'(num_max_proposals={self.num_max_proposals})'
 
 
 @PIPELINES.register_module()

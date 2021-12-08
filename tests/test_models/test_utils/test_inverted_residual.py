@@ -8,7 +8,6 @@ from mmdet.models.utils import InvertedResidual, SELayer
 
 
 def test_inverted_residual():
-
     with pytest.raises(AssertionError):
         # stride must be in [1, 2]
         InvertedResidual(16, 16, 32, stride=3)

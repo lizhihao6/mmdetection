@@ -103,7 +103,7 @@ class BaseMaskHead(BaseModule, metaclass=ABCMeta):
             outs = self(feats)
         else:
             outs = self(feats, instances_list=instances_list)
-        mask_inputs = outs + (img_metas, )
+        mask_inputs = outs + (img_metas,)
         results_list = self.get_results(
             *mask_inputs,
             rescale=rescale,

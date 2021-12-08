@@ -3,8 +3,8 @@ import torch.nn as nn
 from mmcv.cnn import ConvModule
 from mmcv.ops import MaskedConv2d
 
-from ..builder import HEADS
 from .guided_anchor_head import FeatureAdaption, GuidedAnchorHead
+from ..builder import HEADS
 
 
 @HEADS.register_module()

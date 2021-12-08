@@ -11,10 +11,10 @@ from mmdet.core import (build_assigner, build_bbox_coder,
                         build_prior_generator, build_sampler, images_to_levels,
                         multi_apply, unmap)
 from mmdet.core.utils import filter_scores_and_topk
-from ..builder import HEADS, build_loss
 from .base_dense_head import BaseDenseHead
 from .dense_test_mixins import BBoxTestMixin
 from .guided_anchor_head import GuidedAnchorHead
+from ..builder import HEADS, build_loss
 
 
 @HEADS.register_module()
@@ -295,17 +295,17 @@ class SABLRetinaHead(BaseDenseHead, BBoxTestMixin):
         (all_labels, all_label_weights, all_bbox_cls_targets,
          all_bbox_cls_weights, all_bbox_reg_targets, all_bbox_reg_weights,
          pos_inds_list, neg_inds_list) = multi_apply(
-             self._get_target_single,
-             approx_flat_list,
-             inside_flag_flat_list,
-             square_flat_list,
-             gt_bboxes_list,
-             gt_bboxes_ignore_list,
-             gt_labels_list,
-             img_metas,
-             label_channels=label_channels,
-             sampling=sampling,
-             unmap_outputs=unmap_outputs)
+            self._get_target_single,
+            approx_flat_list,
+            inside_flag_flat_list,
+            square_flat_list,
+            gt_bboxes_list,
+            gt_bboxes_ignore_list,
+            gt_labels_list,
+            img_metas,
+            label_channels=label_channels,
+            sampling=sampling,
+            unmap_outputs=unmap_outputs)
         # no valid anchors
         if any([labels is None for labels in all_labels]):
             return None
@@ -375,7 +375,7 @@ class SABLRetinaHead(BaseDenseHead, BBoxTestMixin):
                     in a single image
         """
         if not inside_flags.any():
-            return (None, ) * 8
+            return (None,) * 8
         # assign gt and sample anchors
         expand_inside_flags = inside_flags[:, None].expand(
             -1, self.approxs_per_octave).reshape(-1)
@@ -397,7 +397,7 @@ class SABLRetinaHead(BaseDenseHead, BBoxTestMixin):
             (num_valid_squares, self.side_num * 4))
         bbox_reg_weights = squares.new_zeros(
             (num_valid_squares, self.side_num * 4))
-        labels = squares.new_full((num_valid_squares, ),
+        labels = squares.new_full((num_valid_squares,),
                                   self.num_classes,
                                   dtype=torch.long)
         label_weights = squares.new_zeros(num_valid_squares, dtype=torch.float)
@@ -407,7 +407,7 @@ class SABLRetinaHead(BaseDenseHead, BBoxTestMixin):
         if len(pos_inds) > 0:
             (pos_bbox_reg_targets, pos_bbox_reg_weights, pos_bbox_cls_targets,
              pos_bbox_cls_weights) = self.bbox_coder.encode(
-                 sampling_result.pos_bboxes, sampling_result.pos_gt_bboxes)
+                sampling_result.pos_bboxes, sampling_result.pos_gt_bboxes)
 
             bbox_cls_targets[pos_inds, :] = pos_bbox_cls_targets
             bbox_reg_targets[pos_inds, :] = pos_bbox_reg_targets

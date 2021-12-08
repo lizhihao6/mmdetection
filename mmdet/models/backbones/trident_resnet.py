@@ -75,7 +75,7 @@ class TridentConv(BaseModule):
             outputs = [
                 F.conv2d(input, self.weight, self.bias, self.stride, padding,
                          dilation) for input, dilation, padding in zip(
-                             inputs, self.dilations, self.paddings)
+                    inputs, self.dilations, self.paddings)
             ]
         else:
             assert len(inputs) == 1
@@ -133,7 +133,7 @@ class TridentBottleneck(Bottleneck):
                 if self.training or self.test_branch_idx == -1 else 1)
             identity = x
             if not isinstance(x, list):
-                x = (x, ) * num_branch
+                x = (x,) * num_branch
                 identity = x
                 if self.downsample is not None:
                     identity = [self.downsample(b) for b in x]
@@ -272,11 +272,11 @@ class TridentResNet(ResNet):
                                                     last_stage_idx)
         else:
             stage_plugins = None
-        planes = self.base_channels * 2**last_stage_idx
+        planes = self.base_channels * 2 ** last_stage_idx
         res_layer = make_trident_res_layer(
             TridentBottleneck,
             inplanes=(self.block.expansion * self.base_channels *
-                      2**(last_stage_idx - 1)),
+                      2 ** (last_stage_idx - 1)),
             planes=planes,
             num_blocks=self.stage_blocks[last_stage_idx],
             stride=stride,

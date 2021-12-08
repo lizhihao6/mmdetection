@@ -114,7 +114,7 @@ class YOLOV3Neck(BaseModule):
             inter_c = out_channels[i - 1]
             self.add_module(f'conv{i}', ConvModule(inter_c, out_c, 1, **cfg))
             # in_c + out_c : High-lvl feats will be cat with low-lvl feats
-            self.add_module(f'detect{i+1}',
+            self.add_module(f'detect{i + 1}',
                             DetectionBlock(in_c + out_c, out_c, **cfg))
 
     def forward(self, feats):
@@ -126,14 +126,14 @@ class YOLOV3Neck(BaseModule):
         outs.append(out)
 
         for i, x in enumerate(reversed(feats[:-1])):
-            conv = getattr(self, f'conv{i+1}')
+            conv = getattr(self, f'conv{i + 1}')
             tmp = conv(out)
 
             # Cat with low-lvl feats
             tmp = F.interpolate(tmp, scale_factor=2)
             tmp = torch.cat((tmp, x), 1)
 
-            detect = getattr(self, f'detect{i+2}')
+            detect = getattr(self, f'detect{i + 2}')
             out = detect(tmp)
             outs.append(out)
 

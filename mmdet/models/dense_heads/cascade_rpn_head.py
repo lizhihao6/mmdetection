@@ -1,5 +1,6 @@
 # Copyright (c) OpenMMLab. All rights reserved.
 from __future__ import division
+
 import copy
 import warnings
 
@@ -12,9 +13,9 @@ from mmcv.runner import BaseModule, ModuleList
 from mmdet.core import (RegionAssigner, build_assigner, build_sampler,
                         images_to_levels, multi_apply)
 from mmdet.core.utils import select_single_mlvl
-from ..builder import HEADS, build_head
 from .base_dense_head import BaseDenseHead
 from .rpn_head import RPNHead
+from ..builder import HEADS, build_head
 
 
 class AdaptiveConv(BaseModule):
@@ -257,15 +258,15 @@ class StageCascadeRPNHead(RPNHead):
             gt_labels_list = [None for _ in range(num_imgs)]
         (all_labels, all_label_weights, all_bbox_targets, all_bbox_weights,
          pos_inds_list, neg_inds_list) = multi_apply(
-             self._region_targets_single,
-             anchor_list,
-             valid_flag_list,
-             gt_bboxes_list,
-             gt_bboxes_ignore_list,
-             gt_labels_list,
-             img_metas,
-             featmap_sizes=featmap_sizes,
-             label_channels=label_channels)
+            self._region_targets_single,
+            anchor_list,
+            valid_flag_list,
+            gt_bboxes_list,
+            gt_bboxes_ignore_list,
+            gt_labels_list,
+            img_metas,
+            featmap_sizes=featmap_sizes,
+            label_channels=label_channels)
         # no valid anchors
         if any([labels is None for labels in all_labels]):
             return None
@@ -617,7 +618,7 @@ class StageCascadeRPNHead(RPNHead):
             mlvl_bbox_preds.append(rpn_bbox_pred)
             mlvl_valid_anchors.append(anchors)
             level_ids.append(
-                scores.new_full((scores.size(0), ), idx, dtype=torch.long))
+                scores.new_full((scores.size(0),), idx, dtype=torch.long))
 
         scores = torch.cat(mlvl_scores)
         anchors = torch.cat(mlvl_valid_anchors)
@@ -648,19 +649,19 @@ class StageCascadeRPNHead(RPNHead):
         if 'max_num' in cfg:
             if 'max_per_img' in cfg:
                 assert cfg.max_num == cfg.max_per_img, f'You ' \
-                    f'set max_num and ' \
-                    f'max_per_img at the same time, but get {cfg.max_num} ' \
-                    f'and {cfg.max_per_img} respectively' \
-                    'Please delete max_num which will be deprecated.'
+                                                       f'set max_num and ' \
+                                                       f'max_per_img at the same time, but get {cfg.max_num} ' \
+                                                       f'and {cfg.max_per_img} respectively' \
+                                                       'Please delete max_num which will be deprecated.'
             else:
                 cfg.max_per_img = cfg.max_num
         if 'nms_thr' in cfg:
             assert cfg.nms.iou_threshold == cfg.nms_thr, f'You set' \
-                f' iou_threshold in nms and ' \
-                f'nms_thr at the same time, but get' \
-                f' {cfg.nms.iou_threshold} and {cfg.nms_thr}' \
-                f' respectively. Please delete the nms_thr ' \
-                f'which will be deprecated.'
+                                                         f' iou_threshold in nms and ' \
+                                                         f'nms_thr at the same time, but get' \
+                                                         f' {cfg.nms.iou_threshold} and {cfg.nms_thr}' \
+                                                         f' respectively. Please delete the nms_thr ' \
+                                                         f'which will be deprecated.'
 
         if proposals.numel() > 0:
             dets, _ = batched_nms(proposals, scores, ids, cfg.nms)

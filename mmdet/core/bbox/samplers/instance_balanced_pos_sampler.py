@@ -2,8 +2,8 @@
 import numpy as np
 import torch
 
-from ..builder import BBOX_SAMPLERS
 from .random_sampler import RandomSampler
+from ..builder import BBOX_SAMPLERS
 
 
 @BBOX_SAMPLERS.register_module()

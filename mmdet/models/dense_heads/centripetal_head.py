@@ -4,8 +4,8 @@ from mmcv.cnn import ConvModule, normal_init
 from mmcv.ops import DeformConv2d
 
 from mmdet.core import multi_apply
-from ..builder import HEADS, build_loss
 from .corner_head import CornerHead
+from ..builder import HEADS, build_loss
 
 
 @HEADS.register_module()
@@ -106,7 +106,7 @@ class CentripetalHead(CornerHead):
             self.tl_dcn_offset.append(
                 ConvModule(
                     self.guiding_shift_channels,
-                    self.feat_adaption_conv_kernel**2 *
+                    self.feat_adaption_conv_kernel ** 2 *
                     self.guiding_shift_channels,
                     1,
                     bias=False,
@@ -114,7 +114,7 @@ class CentripetalHead(CornerHead):
             self.br_dcn_offset.append(
                 ConvModule(
                     self.guiding_shift_channels,
-                    self.feat_adaption_conv_kernel**2 *
+                    self.feat_adaption_conv_kernel ** 2 *
                     self.guiding_shift_channels,
                     1,
                     bias=False,
@@ -418,9 +418,9 @@ class CentripetalHead(CornerHead):
                     tl_emb=None,
                     br_emb=None,
                     tl_centripetal_shift=tl_centripetal_shifts[-1][
-                        img_id:img_id + 1, :],
+                                         img_id:img_id + 1, :],
                     br_centripetal_shift=br_centripetal_shifts[-1][
-                        img_id:img_id + 1, :],
+                                         img_id:img_id + 1, :],
                     rescale=rescale,
                     with_nms=with_nms))
 

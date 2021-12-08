@@ -23,7 +23,6 @@ def _build_demo_runner_without_hook(runner_type='EpochBasedRunner',
                                     max_epochs=1,
                                     max_iters=None,
                                     multi_optimziers=False):
-
     class Model(nn.Module):
 
         def __init__(self):
@@ -45,9 +44,9 @@ def _build_demo_runner_without_hook(runner_type='EpochBasedRunner',
     if multi_optimziers:
         optimizer = {
             'model1':
-            torch.optim.SGD(model.linear.parameters(), lr=0.02, momentum=0.95),
+                torch.optim.SGD(model.linear.parameters(), lr=0.02, momentum=0.95),
             'model2':
-            torch.optim.SGD(model.conv.parameters(), lr=0.01, momentum=0.9),
+                torch.optim.SGD(model.conv.parameters(), lr=0.01, momentum=0.9),
         }
     else:
         optimizer = torch.optim.SGD(model.parameters(), lr=0.02, momentum=0.95)

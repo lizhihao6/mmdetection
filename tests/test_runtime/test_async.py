@@ -60,7 +60,6 @@ class MaskRCNNDetector:
 
 
 class AsyncInferenceTestCase(AsyncTestCase):
-
     if sys.version_info >= (3, 7):
 
         async def test_simple_inference(self):

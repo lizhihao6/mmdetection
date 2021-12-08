@@ -45,18 +45,18 @@ def merge_aug_proposals(aug_proposals, img_metas, cfg):
     if 'max_num' in cfg:
         if 'max_per_img' in cfg:
             assert cfg.max_num == cfg.max_per_img, f'You set max_num and ' \
-                f'max_per_img at the same time, but get {cfg.max_num} ' \
-                f'and {cfg.max_per_img} respectively' \
-                f'Please delete max_num which will be deprecated.'
+                                                   f'max_per_img at the same time, but get {cfg.max_num} ' \
+                                                   f'and {cfg.max_per_img} respectively' \
+                                                   f'Please delete max_num which will be deprecated.'
         else:
             cfg.max_per_img = cfg.max_num
     if 'nms_thr' in cfg:
         assert cfg.nms.iou_threshold == cfg.nms_thr, f'You set ' \
-            f'iou_threshold in nms and ' \
-            f'nms_thr at the same time, but get ' \
-            f'{cfg.nms.iou_threshold} and {cfg.nms_thr}' \
-            f' respectively. Please delete the nms_thr ' \
-            f'which will be deprecated.'
+                                                     f'iou_threshold in nms and ' \
+                                                     f'nms_thr at the same time, but get ' \
+                                                     f'{cfg.nms.iou_threshold} and {cfg.nms_thr}' \
+                                                     f' respectively. Please delete the nms_thr ' \
+                                                     f'which will be deprecated.'
 
     recovered_proposals = []
     for proposals, img_info in zip(aug_proposals, img_metas):

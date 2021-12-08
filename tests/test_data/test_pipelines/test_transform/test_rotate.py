@@ -13,12 +13,12 @@ from .utils import check_result_same, construct_toy_data
 def test_rotate():
     # test assertion for invalid type of max_rotate_angle
     with pytest.raises(AssertionError):
-        transform = dict(type='Rotate', level=1, max_rotate_angle=(30, ))
+        transform = dict(type='Rotate', level=1, max_rotate_angle=(30,))
         build_from_cfg(transform, PIPELINES)
 
     # test assertion for invalid type of scale
     with pytest.raises(AssertionError):
-        transform = dict(type='Rotate', level=2, scale=(1.2, ))
+        transform = dict(type='Rotate', level=2, scale=(1.2,))
         build_from_cfg(transform, PIPELINES)
 
     # test ValueError for invalid type of img_fill_val
@@ -31,7 +31,7 @@ def test_rotate():
 
     # test assertion for invalid number of elements in center
     with pytest.raises(AssertionError):
-        transform = dict(type='Rotate', level=2, center=(0.5, ))
+        transform = dict(type='Rotate', level=2, center=(0.5,))
         build_from_cfg(transform, PIPELINES)
 
     # test assertion for invalid type of center
@@ -118,13 +118,13 @@ def test_rotate():
         np.ones((h, w)) * img_fill_val[1],
         np.ones((h, w)) * img_fill_val[2]
     ],
-                     axis=-1).astype(np.uint8)
+        axis=-1).astype(np.uint8)
     img_r[0, 0, :] = 1
     img_r[0, 1, :] = 5
     results_gt['img'] = img_r
     results_gt['gt_bboxes'] = np.empty((0, 4), dtype=np.float32)
     results_gt['gt_bboxes_ignore'] = np.empty((0, 4), dtype=np.float32)
-    results_gt['gt_labels'] = np.empty((0, ), dtype=np.int64)
+    results_gt['gt_labels'] = np.empty((0,), dtype=np.int64)
     gt_masks = np.empty((0, h, w), dtype=np.uint8)
     results_gt['gt_masks'] = BitmapMasks(gt_masks, h, w)
     gt_seg = (np.ones((h, w)) * 255).astype(results['gt_semantic_seg'].dtype)

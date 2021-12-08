@@ -4,9 +4,9 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 
+from .base_bbox_coder import BaseBBoxCoder
 from ..builder import BBOX_CODERS
 from ..transforms import bbox_rescale
-from .base_bbox_coder import BaseBBoxCoder
 
 
 @BBOX_CODERS.register_module()
@@ -216,17 +216,17 @@ def bbox2bucket(proposals,
     for k in range(offset_topk):
         if k >= 1:
             offset_l_weights[inds, l_label[:,
-                                           k]] = (l_topk[:, k] <
-                                                  offset_upperbound).float()
+                                   k]] = (l_topk[:, k] <
+                                          offset_upperbound).float()
             offset_r_weights[inds, r_label[:,
-                                           k]] = (r_topk[:, k] <
-                                                  offset_upperbound).float()
+                                   k]] = (r_topk[:, k] <
+                                          offset_upperbound).float()
             offset_t_weights[inds, t_label[:,
-                                           k]] = (t_topk[:, k] <
-                                                  offset_upperbound).float()
+                                   k]] = (t_topk[:, k] <
+                                          offset_upperbound).float()
             offset_d_weights[inds, d_label[:,
-                                           k]] = (d_topk[:, k] <
-                                                  offset_upperbound).float()
+                                   k]] = (d_topk[:, k] <
+                                          offset_upperbound).float()
         else:
             offset_l_weights[inds, l_label[:, k]] = 1.0
             offset_r_weights[inds, r_label[:, k]] = 1.0
@@ -237,7 +237,7 @@ def bbox2bucket(proposals,
     offsets_weights = torch.cat([
         offset_l_weights, offset_r_weights, offset_t_weights, offset_d_weights
     ],
-                                dim=-1)
+        dim=-1)
 
     # generate bucket labels and weight
     side_num = int(np.ceil(num_buckets / 2.0))
@@ -255,7 +255,7 @@ def bbox2bucket(proposals,
         bucket_cls_l_weights, bucket_cls_r_weights, bucket_cls_t_weights,
         bucket_cls_d_weights
     ],
-                                   dim=-1)
+        dim=-1)
     # ignore second nearest buckets for cls if necessary
     if cls_ignore_neighbor:
         bucket_cls_weights = (~((bucket_cls_weights == 1) &

@@ -11,9 +11,9 @@ from mmcv.runner import force_fp32
 
 from mmdet.core import (MlvlPointGenerator, bbox_xyxy_to_cxcywh,
                         build_assigner, build_sampler, multi_apply)
-from ..builder import HEADS, build_loss
 from .base_dense_head import BaseDenseHead
 from .dense_test_mixins import BBoxTestMixin
+from ..builder import HEADS, build_loss
 
 
 @HEADS.register_module()
@@ -378,10 +378,10 @@ class YOLOXHead(BaseDenseHead, BBoxTestMixin):
 
         (pos_masks, cls_targets, obj_targets, bbox_targets, l1_targets,
          num_fg_imgs) = multi_apply(
-             self._get_target_single, flatten_cls_preds.detach(),
-             flatten_objectness.detach(),
-             flatten_priors.unsqueeze(0).repeat(num_imgs, 1, 1),
-             flatten_bboxes.detach(), gt_bboxes, gt_labels)
+            self._get_target_single, flatten_cls_preds.detach(),
+            flatten_objectness.detach(),
+            flatten_priors.unsqueeze(0).repeat(num_imgs, 1, 1),
+            flatten_bboxes.detach(), gt_bboxes, gt_labels)
 
         num_total_samples = max(sum(num_fg_imgs), 1)
         pos_masks = torch.cat(pos_masks, 0)

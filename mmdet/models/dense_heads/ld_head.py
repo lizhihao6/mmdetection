@@ -3,8 +3,8 @@ import torch
 from mmcv.runner import force_fp32
 
 from mmdet.core import bbox_overlaps, multi_apply, reduce_mean
-from ..builder import HEADS, build_loss
 from .gfl_head import GFLHead
+from ..builder import HEADS, build_loss
 
 
 @HEADS.register_module()
@@ -238,17 +238,17 @@ class LDHead(GFLHead):
         num_total_samples = max(num_total_samples, 1.0)
 
         losses_cls, losses_bbox, losses_dfl, losses_ld, \
-            avg_factor = multi_apply(
-                self.loss_single,
-                anchor_list,
-                cls_scores,
-                bbox_preds,
-                labels_list,
-                label_weights_list,
-                bbox_targets_list,
-                self.prior_generator.strides,
-                soft_target,
-                num_total_samples=num_total_samples)
+        avg_factor = multi_apply(
+            self.loss_single,
+            anchor_list,
+            cls_scores,
+            bbox_preds,
+            labels_list,
+            label_weights_list,
+            bbox_targets_list,
+            self.prior_generator.strides,
+            soft_target,
+            num_total_samples=num_total_samples)
 
         avg_factor = sum(avg_factor) + 1e-6
         avg_factor = reduce_mean(avg_factor).item()

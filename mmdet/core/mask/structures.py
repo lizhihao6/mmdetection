@@ -375,7 +375,7 @@ class BitmapMasks(BaseInstanceMasks):
             expanded_mask = np.zeros((len(self), expanded_h, expanded_w),
                                      dtype=np.uint8)
             expanded_mask[:, top:top + self.height,
-                          left:left + self.width] = self.masks
+            left:left + self.width] = self.masks
         return BitmapMasks(expanded_mask, expanded_h, expanded_w)
 
     def translate(self,
@@ -777,8 +777,8 @@ class PolygonMasks(BaseInstanceMasks):
             >>> assert np.all(new.masks[0][0][1::2] == self.masks[0][0][1::2])
             >>> assert np.all(new.masks[0][0][0::2] == self.masks[0][0][0::2] + 4)  # noqa: E501
         """
-        assert fill_val is None or fill_val == 0, 'Here fill_val is not '\
-            f'used, and defaultly should be None or 0. got {fill_val}.'
+        assert fill_val is None or fill_val == 0, 'Here fill_val is not ' \
+                                                  f'used, and defaultly should be None or 0. got {fill_val}.'
         if len(self.masks) == 0:
             translated_masks = PolygonMasks([], *out_shape)
         else:

@@ -2,8 +2,8 @@
 import torch
 import torch.nn as nn
 
-from ..builder import LOSSES
 from .utils import weight_reduce_loss
+from ..builder import LOSSES
 
 
 def dice_loss(pred,

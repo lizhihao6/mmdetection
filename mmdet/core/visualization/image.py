@@ -105,9 +105,9 @@ def imshow_det_bboxes(img,
         else:
             # specify  color
             mask_colors = [
-                np.array(mmcv.color_val(mask_color)[::-1], dtype=np.uint8)
-            ] * (
-                max(labels) + 1)
+                              np.array(mmcv.color_val(mask_color)[::-1], dtype=np.uint8)
+                          ] * (
+                                  max(labels) + 1)
 
     bbox_color = color_val_matplotlib(bbox_color)
     text_color = color_val_matplotlib(text_color)

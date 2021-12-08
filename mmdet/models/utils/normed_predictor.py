@@ -32,7 +32,7 @@ class NormedLinear(nn.Linear):
 
     def forward(self, x):
         weight_ = self.weight / (
-            self.weight.norm(dim=1, keepdim=True).pow(self.power) + self.eps)
+                self.weight.norm(dim=1, keepdim=True).pow(self.power) + self.eps)
         x_ = x / (x.norm(dim=1, keepdim=True).pow(self.power) + self.eps)
         x_ = x_ * self.tempearture
 
@@ -68,13 +68,13 @@ class NormedConv2d(nn.Conv2d):
     def forward(self, x):
         if not self.norm_over_kernel:
             weight_ = self.weight / (
-                self.weight.norm(dim=1, keepdim=True).pow(self.power) +
-                self.eps)
+                    self.weight.norm(dim=1, keepdim=True).pow(self.power) +
+                    self.eps)
         else:
             weight_ = self.weight / (
-                self.weight.view(self.weight.size(0), -1).norm(
-                    dim=1, keepdim=True).pow(self.power)[..., None, None] +
-                self.eps)
+                    self.weight.view(self.weight.size(0), -1).norm(
+                        dim=1, keepdim=True).pow(self.power)[..., None, None] +
+                    self.eps)
         x_ = x / (x.norm(dim=1, keepdim=True).pow(self.power) + self.eps)
         x_ = x_ * self.tempearture
 

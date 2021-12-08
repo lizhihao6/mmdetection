@@ -192,7 +192,7 @@ def test_translate():
             type='Translate',
             level=1,
             img_fill_val=128,
-            max_translate_offset=(250., ))
+            max_translate_offset=(250.,))
         build_from_cfg(transform, PIPELINES)
 
     # construct toy data example for unit test
@@ -238,7 +238,7 @@ def test_translate():
             gt_bboxes = _translate_bbox(
                 copy.deepcopy(results[key]), offset, direction, h, w)
             valid_inds = (gt_bboxes[:, 2] - gt_bboxes[:, 0] > min_size) & (
-                gt_bboxes[:, 3] - gt_bboxes[:, 1] > min_size)
+                    gt_bboxes[:, 3] - gt_bboxes[:, 1] > min_size)
             gt_bboxes = gt_bboxes[valid_inds]
             # check bbox
             assert np.equal(gt_bboxes, results_translated[key]).all()
@@ -301,7 +301,7 @@ def test_translate():
                     (2, 0, 1)), data_translated.transpose((2, 0, 1))
             elif 'seg' in key:
                 data, data_translated = data[None, :, :], data_translated[
-                    None, :, :]
+                                                          None, :, :]
             c, h, w = data.shape
             if direction == 'horizontal':
                 data_pad = _pad(

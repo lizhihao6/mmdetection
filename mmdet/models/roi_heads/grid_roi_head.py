@@ -3,8 +3,8 @@ import numpy as np
 import torch
 
 from mmdet.core import bbox2result, bbox2roi
-from ..builder import HEADS, build_head, build_roi_extractor
 from .standard_roi_head import StandardRoIHead
+from ..builder import HEADS, build_head, build_roi_extractor
 
 
 @HEADS.register_module()
@@ -67,13 +67,13 @@ class GridRoIHead(StandardRoIHead):
         if self.with_shared_head:
             grid_feats = self.shared_head(grid_feats)
         grid_pred = self.grid_head(grid_feats)
-        outs = outs + (grid_pred, )
+        outs = outs + (grid_pred,)
 
         # mask head
         if self.with_mask:
             mask_rois = rois[:100]
             mask_results = self._mask_forward(x, mask_rois)
-            outs = outs + (mask_results['mask_pred'], )
+            outs = outs + (mask_results['mask_pred'],)
         return outs
 
     def _bbox_forward_train(self, x, sampling_results, gt_bboxes, gt_labels,

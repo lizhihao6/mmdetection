@@ -2,9 +2,9 @@
 import torch
 
 from mmdet.core import anchor_inside_flags
-from ..builder import BBOX_ASSIGNERS
 from .assign_result import AssignResult
 from .base_assigner import BaseAssigner
+from ..builder import BBOX_ASSIGNERS
 
 
 def calc_region(bbox, ratio, stride, featmap_size=None):
@@ -110,13 +110,13 @@ class RegionAssigner(BaseAssigner):
 
         if num_gts == 0 or num_bboxes == 0:
             # No ground truth or boxes, return empty assignment
-            max_overlaps = gt_bboxes.new_zeros((num_bboxes, ))
-            assigned_gt_inds = gt_bboxes.new_zeros((num_bboxes, ),
+            max_overlaps = gt_bboxes.new_zeros((num_bboxes,))
+            assigned_gt_inds = gt_bboxes.new_zeros((num_bboxes,),
                                                    dtype=torch.long)
             if gt_labels is None:
                 assigned_labels = None
             else:
-                assigned_labels = gt_bboxes.new_full((num_bboxes, ),
+                assigned_labels = gt_bboxes.new_full((num_bboxes,),
                                                      -1,
                                                      dtype=torch.long)
             return AssignResult(
@@ -132,7 +132,7 @@ class RegionAssigner(BaseAssigner):
         scale = torch.sqrt((gt_bboxes[:, 2] - gt_bboxes[:, 0]) *
                            (gt_bboxes[:, 3] - gt_bboxes[:, 1]))
         min_anchor_size = scale.new_full(
-            (1, ), float(anchor_scale * anchor_strides[0]))
+            (1,), float(anchor_scale * anchor_strides[0]))
         target_lvls = torch.floor(
             torch.log2(scale) - torch.log2(min_anchor_size) + 0.5)
         target_lvls = target_lvls.clamp(min=0, max=num_lvls - 1).long()
@@ -143,7 +143,7 @@ class RegionAssigner(BaseAssigner):
         for lvl in range(num_lvls):
             h, w = featmap_sizes[lvl]
             assert h * w == mlvl_anchors[lvl].shape[0]
-            assigned_gt_inds = gt_bboxes.new_full((h * w, ),
+            assigned_gt_inds = gt_bboxes.new_full((h * w,),
                                                   0,
                                                   dtype=torch.long)
             ignore_flags = torch.zeros_like(assigned_gt_inds)

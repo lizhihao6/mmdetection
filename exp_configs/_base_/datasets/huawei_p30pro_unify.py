@@ -16,5 +16,3 @@ data = dict(
         ann_file=data_root + 'test.txt',
         img_prefix=data_root,
         img_suffix=suffix))
-
-

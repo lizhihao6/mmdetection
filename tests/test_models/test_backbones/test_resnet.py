@@ -357,7 +357,7 @@ def test_resnet_backbone():
     with pytest.raises(AssertionError):
         # len(stage_with_dcn) == num_stages
         dcn = dict(type='DCN', deform_groups=1, fallback_on_stride=False)
-        ResNet(50, dcn=dcn, stage_with_dcn=(True, ))
+        ResNet(50, dcn=dcn, stage_with_dcn=(True,))
 
     with pytest.raises(AssertionError):
         # len(stage_with_plugin) == num_stages
@@ -375,7 +375,7 @@ def test_resnet_backbone():
 
     with pytest.raises(AssertionError):
         # len(strides) == len(dilations) == num_stages
-        ResNet(50, strides=(1, ), dilations=(1, 1), num_stages=3)
+        ResNet(50, strides=(1,), dilations=(1, 1), num_stages=3)
 
     with pytest.raises(TypeError):
         # pretrained must be a string path

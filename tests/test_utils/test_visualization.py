@@ -54,7 +54,7 @@ def test_imshow_det_bboxes():
     # test shaped (0,)
     image = np.ones((10, 10, 3), np.uint8)
     bbox = np.ones((0, 4))
-    label = np.ones((0, ))
+    label = np.ones((0,))
     vis.imshow_det_bboxes(
         image, bbox, label, out_file=tmp_filename, show=False)
     assert osp.isfile(tmp_filename)

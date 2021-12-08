@@ -72,13 +72,13 @@ def test_corner_head_loss():
     gt_bboxes_ind = (gt_bboxes[0] // 4).int().tolist()
     for tl_emb_feat, br_emb_feat in zip(tl_embs, br_embs):
         tl_emb_feat[:, :, gt_bboxes_ind[0][1],
-                    gt_bboxes_ind[0][0]] = tl_emb_feat[:, :,
-                                                       gt_bboxes_ind[1][1],
-                                                       gt_bboxes_ind[1][0]]
+        gt_bboxes_ind[0][0]] = tl_emb_feat[:, :,
+                               gt_bboxes_ind[1][1],
+                               gt_bboxes_ind[1][0]]
         br_emb_feat[:, :, gt_bboxes_ind[0][3],
-                    gt_bboxes_ind[0][2]] = br_emb_feat[:, :,
-                                                       gt_bboxes_ind[1][3],
-                                                       gt_bboxes_ind[1][2]]
+        gt_bboxes_ind[0][2]] = br_emb_feat[:, :,
+                               gt_bboxes_ind[1][3],
+                               gt_bboxes_ind[1][2]]
 
     two_gt_losses = self.loss(tl_heats, br_heats, tl_embs, br_embs, tl_offs,
                               br_offs, gt_bboxes, gt_labels, img_metas,

@@ -118,9 +118,9 @@ class DIIHead(BBoxHead):
         self.fc_reg = nn.Linear(in_channels, 4)
 
         assert self.reg_class_agnostic, 'DIIHead only ' \
-            'suppport `reg_class_agnostic=True` '
+                                        'suppport `reg_class_agnostic=True` '
         assert self.reg_decoded_bbox, 'DIIHead only ' \
-            'suppport `reg_decoded_bbox=True`'
+                                      'suppport `reg_decoded_bbox=True`'
 
     def init_weights(self):
         """Use xavier initialization for all weight parameter and set
@@ -333,7 +333,7 @@ class DIIHead(BBoxHead):
         # original implementation uses new_zeros since BG are set to be 0
         # now use empty & fill because BG cat_id = num_classes,
         # FG cat_id = [0, num_classes-1]
-        labels = pos_bboxes.new_full((num_samples, ),
+        labels = pos_bboxes.new_full((num_samples,),
                                      self.num_classes,
                                      dtype=torch.long)
         label_weights = pos_bboxes.new_zeros(num_samples)

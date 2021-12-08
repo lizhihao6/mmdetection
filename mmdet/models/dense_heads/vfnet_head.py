@@ -11,9 +11,9 @@ from mmcv.runner import force_fp32
 from mmdet.core import (MlvlPointGenerator, bbox_overlaps, build_assigner,
                         build_prior_generator, build_sampler, multi_apply,
                         reduce_mean)
-from ..builder import HEADS, build_loss
 from .atss_head import ATSSHead
 from .fcos_head import FCOSHead
+from ..builder import HEADS, build_loss
 
 INF = 1e8
 
@@ -320,7 +320,7 @@ class VFNetHead(ATSSHead, FCOSHead):
         """
         dcn_base_offset = self.dcn_base_offset.type_as(bbox_pred)
         bbox_pred_grad_mul = (1 - gradient_mul) * bbox_pred.detach() + \
-            gradient_mul * bbox_pred
+                             gradient_mul * bbox_pred
         # map to the feature map scale
         bbox_pred_grad_mul = bbox_pred_grad_mul / stride
         N, C, H, W = bbox_pred.size()
@@ -630,7 +630,7 @@ class VFNetHead(ATSSHead, FCOSHead):
         assert len(
             featmap_sizes
         ) == self.atss_prior_generator.num_levels == \
-            self.fcos_prior_generator.num_levels
+               self.fcos_prior_generator.num_levels
 
         device = cls_scores[0].device
 

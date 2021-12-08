@@ -27,23 +27,22 @@ def parse_args():
         nargs='+',
         action=DictAction,
         help='override some settings in the used config, the key-value pair '
-        'in xxx=yyy format will be merged into config file. If the value to '
-        'be overwritten is a list, it should be like key="[a,b]" or key=a,b '
-        'It also allows nested list/tuple values, e.g. key="[(a,b),(c,d)]" '
-        'Note that the quotation marks are necessary and that no white space '
-        'is allowed.')
+             'in xxx=yyy format will be merged into config file. If the value to '
+             'be overwritten is a list, it should be like key="[a,b]" or key=a,b '
+             'It also allows nested list/tuple values, e.g. key="[(a,b),(c,d)]" '
+             'Note that the quotation marks are necessary and that no white space '
+             'is allowed.')
     parser.add_argument(
         '--size-divisor',
         type=int,
         default=32,
         help='Pad the input image, the minimum size that is divisible '
-        'by size_divisor, -1 means do not pad the image.')
+             'by size_divisor, -1 means do not pad the image.')
     args = parser.parse_args()
     return args
 
 
 def main():
-
     args = parse_args()
 
     if len(args.shape) == 1:
@@ -77,7 +76,7 @@ def main():
     else:
         raise NotImplementedError(
             'FLOPs counter is currently not currently supported with {}'.
-            format(model.__class__.__name__))
+                format(model.__class__.__name__))
 
     flops, params = get_model_complexity_info(model, input_shape)
     split_line = '=' * 30

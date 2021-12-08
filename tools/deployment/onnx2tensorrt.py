@@ -205,6 +205,7 @@ if __name__ == '__main__':
 
     cfg = Config.fromfile(args.config)
 
+
     def parse_shape(shape):
         if len(shape) == 1:
             shape = (1, 3, shape[0], shape[0])
@@ -213,6 +214,7 @@ if __name__ == '__main__':
         else:
             raise ValueError('invalid input shape')
         return shape
+
 
     if args.shape:
         input_shape = parse_shape(args.shape)

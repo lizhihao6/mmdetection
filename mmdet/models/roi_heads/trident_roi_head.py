@@ -28,7 +28,7 @@ class TridentRoIHead(StandardRoIHead):
         """Merge bbox predictions of each branch."""
         if trident_det_bboxes.numel() == 0:
             det_bboxes = trident_det_bboxes.new_zeros((0, 5))
-            det_labels = trident_det_bboxes.new_zeros((0, ), dtype=torch.long)
+            det_labels = trident_det_bboxes.new_zeros((0,), dtype=torch.long)
         else:
             nms_bboxes = trident_det_bboxes[:, :4]
             nms_scores = trident_det_bboxes[:, 4].contiguous()
@@ -67,9 +67,9 @@ class TridentRoIHead(StandardRoIHead):
         for i in range(len(img_metas) // num_branch):
             det_result = self.merge_trident_bboxes(
                 torch.cat(det_bboxes_list[i * num_branch:(i + 1) *
-                                          num_branch]),
+                                                         num_branch]),
                 torch.cat(det_labels_list[i * num_branch:(i + 1) *
-                                          num_branch]))
+                                                         num_branch]))
             det_bboxes.append(det_result[0])
             det_labels.append(det_result[1])
 

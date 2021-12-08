@@ -56,7 +56,7 @@ def convert(src, dst, depth):
             for k, letter in enumerate(['a', 'b', 'c']):
                 convert_conv_fc(blobs, state_dict,
                                 f'res{i + 1}_{j}_branch2{letter}',
-                                f'layer{i}.{j}.conv{k+1}', converted_names)
+                                f'layer{i}.{j}.conv{k + 1}', converted_names)
                 convert_bn(blobs, state_dict,
                            f'res{i + 1}_{j}_branch2{letter}_bn',
                            f'layer{i}.{j}.bn{k + 1}', converted_names)

@@ -16,7 +16,7 @@ from mmdet.models.builder import HEADS, build_loss
 BYTES_PER_FLOAT = 4
 # TODO: This memory limit may be too much or too little. It would be better to
 # determine it based on available resources.
-GPU_MEM_LIMIT = 1024**3  # 1 GB memory limit
+GPU_MEM_LIMIT = 1024 ** 3  # 1 GB memory limit
 
 
 @HEADS.register_module()
@@ -42,7 +42,7 @@ class FCNMaskHead(BaseModule):
         super(FCNMaskHead, self).__init__(init_cfg)
         self.upsample_cfg = upsample_cfg.copy()
         if self.upsample_cfg['type'] not in [
-                None, 'deconv', 'nearest', 'bilinear', 'carafe'
+            None, 'deconv', 'nearest', 'bilinear', 'carafe'
         ]:
             raise ValueError(
                 f'Invalid upsample method {self.upsample_cfg["type"]}, '
@@ -144,7 +144,7 @@ class FCNMaskHead(BaseModule):
                                    gt_masks, rcnn_train_cfg)
         return mask_targets
 
-    @force_fp32(apply_to=('mask_pred', ))
+    @force_fp32(apply_to=('mask_pred',))
     def loss(self, mask_pred, mask_targets, labels):
         """
         Example:
@@ -303,7 +303,7 @@ class FCNMaskHead(BaseModule):
                 # for visualization and debugging
                 masks_chunk = (masks_chunk * 255).to(dtype=torch.uint8)
 
-            im_mask[(inds, ) + spatial_inds] = masks_chunk
+            im_mask[(inds,) + spatial_inds] = masks_chunk
 
         for i in range(N):
             cls_segms[labels[i]].append(im_mask[i].detach().cpu().numpy())

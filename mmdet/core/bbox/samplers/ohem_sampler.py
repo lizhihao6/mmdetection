@@ -1,9 +1,9 @@
 # Copyright (c) OpenMMLab. All rights reserved.
 import torch
 
+from .base_sampler import BaseSampler
 from ..builder import BBOX_SAMPLERS
 from ..transforms import bbox2roi
-from .base_sampler import BaseSampler
 
 
 @BBOX_SAMPLERS.register_module()

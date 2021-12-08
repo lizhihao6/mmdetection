@@ -13,7 +13,6 @@ import yaml
 
 
 def ordered_yaml_dump(data, stream=None, Dumper=yaml.SafeDumper, **kwds):
-
     class OrderedDumper(Dumper):
         pass
 

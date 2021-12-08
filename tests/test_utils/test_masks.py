@@ -247,7 +247,7 @@ def test_bitmap_mask_crop():
 
 def test_bitmap_mask_crop_and_resize():
     dummy_bbox = dummy_bboxes(5, 28, 28)
-    inds = np.random.randint(0, 3, (5, ))
+    inds = np.random.randint(0, 3, (5,))
 
     # crop and resize with empty bitmap masks
     raw_masks = dummy_raw_bitmap_masks((0, 28, 28))
@@ -587,7 +587,7 @@ def test_polygon_mask_expand():
 
 def test_polygon_mask_crop_and_resize():
     dummy_bbox = dummy_bboxes(5, 28, 28)
-    inds = np.random.randint(0, 3, (5, ))
+    inds = np.random.randint(0, 3, (5,))
 
     # crop and resize with empty polygon masks
     raw_masks = dummy_raw_polygon_masks((0, 28, 28))

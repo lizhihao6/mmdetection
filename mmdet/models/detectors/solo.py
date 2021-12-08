@@ -1,5 +1,5 @@
-from ..builder import DETECTORS
 from .single_stage_instance_seg import SingleStageInstanceSegmentor
+from ..builder import DETECTORS
 
 
 @DETECTORS.register_module()

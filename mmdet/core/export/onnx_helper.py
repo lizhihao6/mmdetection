@@ -207,7 +207,6 @@ class DummyONNXNMSop(torch.autograd.Function):
     @staticmethod
     def forward(ctx, boxes, scores, max_output_boxes_per_class, iou_threshold,
                 score_threshold):
-
         return DummyONNXNMSop.output
 
     @staticmethod

@@ -3,10 +3,10 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from ..builder import LOSSES
 from .accuracy import accuracy
 from .cross_entropy_loss import cross_entropy
 from .utils import weight_reduce_loss
+from ..builder import LOSSES
 
 
 def seesaw_ce_loss(cls_score,

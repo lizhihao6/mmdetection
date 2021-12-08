@@ -4,8 +4,8 @@ import torch
 
 from mmdet.core import bbox2result, bbox2roi, bbox_xyxy_to_cxcywh
 from mmdet.core.bbox.samplers import PseudoSampler
-from ..builder import HEADS
 from .cascade_roi_head import CascadeRoIHead
+from ..builder import HEADS
 
 
 @HEADS.register_module()
@@ -268,7 +268,7 @@ class SparseRoIHead(CascadeRoIHead):
 
             for key, value in single_stage_loss.items():
                 all_stage_loss[f'stage{stage}_{key}'] = value * \
-                                    self.stage_loss_weights[stage]
+                                                        self.stage_loss_weights[stage]
             object_feats = bbox_results['object_feats']
 
         return all_stage_loss
@@ -350,7 +350,7 @@ class SparseRoIHead(CascadeRoIHead):
             cls_score_per_img = cls_score[img_id]
             scores_per_img, topk_indices = cls_score_per_img.flatten(
                 0, 1).topk(
-                    self.test_cfg.max_per_img, sorted=False)
+                self.test_cfg.max_per_img, sorted=False)
             labels_per_img = topk_indices % num_classes
             bbox_pred_per_img = proposal_list[img_id][topk_indices //
                                                       num_classes]
@@ -412,7 +412,7 @@ class SparseRoIHead(CascadeRoIHead):
                 bbox_results = self._bbox_forward(stage, x, rois, object_feats,
                                                   img_metas)
 
-                all_stage_bbox_results.append((bbox_results, ))
+                all_stage_bbox_results.append((bbox_results,))
                 proposal_list = bbox_results['detach_proposal_list']
                 object_feats = bbox_results['object_feats']
 
@@ -420,5 +420,5 @@ class SparseRoIHead(CascadeRoIHead):
                     rois = bbox2roi(proposal_list)
                     mask_results = self._mask_forward(
                         stage, x, rois, bbox_results['attn_feats'])
-                    all_stage_bbox_results[-1] += (mask_results, )
+                    all_stage_bbox_results[-1] += (mask_results,)
         return all_stage_bbox_results

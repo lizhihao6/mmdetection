@@ -528,8 +528,8 @@ def print_panoptic_table(pq_results, classwise_results=None, logger=None):
     print_log('Panoptic Evaluation Results:\n' + table.table, logger=logger)
 
     if classwise_results is not None:
-        class_metrics = [(name, ) + tuple(f'{(metrics[k] * 100):0.3f}'
-                                          for k in ['pq', 'sq', 'rq'])
+        class_metrics = [(name,) + tuple(f'{(metrics[k] * 100):0.3f}'
+                                         for k in ['pq', 'sq', 'rq'])
                          for name, metrics in classwise_results.items()]
         num_columns = min(8, len(class_metrics) * 4)
         results_flatten = list(itertools.chain(*class_metrics))

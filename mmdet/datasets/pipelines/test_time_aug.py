@@ -3,8 +3,8 @@ import warnings
 
 import mmcv
 
-from ..builder import PIPELINES
 from .compose import Compose
+from ..builder import PIPELINES
 
 
 @PIPELINES.register_module()

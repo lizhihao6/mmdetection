@@ -2,8 +2,8 @@
 # Copyright (c) 2019 Western Digital Corporation or its affiliates.
 import torch
 
-from ..builder import DETECTORS
 from .single_stage import SingleStageDetector
+from ..builder import DETECTORS
 
 
 @DETECTORS.register_module()

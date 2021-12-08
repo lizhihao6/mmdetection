@@ -150,7 +150,7 @@ def test_filter_scores_and_topk():
     nms_pre = 4
     # test results type error
     with pytest.raises(NotImplementedError):
-        filter_scores_and_topk(score, score_thr, nms_pre, (score, ))
+        filter_scores_and_topk(score, score_thr, nms_pre, (score,))
 
     filtered_results = filter_scores_and_topk(
         score, score_thr, nms_pre, results=dict(bbox_pred=bbox_pred))

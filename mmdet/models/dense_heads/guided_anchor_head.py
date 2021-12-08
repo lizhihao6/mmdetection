@@ -9,8 +9,8 @@ from mmcv.runner import BaseModule, force_fp32
 from mmdet.core import (anchor_inside_flags, build_assigner, build_bbox_coder,
                         build_prior_generator, build_sampler, calc_region,
                         images_to_levels, multi_apply, multiclass_nms, unmap)
-from ..builder import HEADS, build_loss
 from .anchor_head import AnchorHead
+from ..builder import HEADS, build_loss
 
 
 class FeatureAdaption(BaseModule):
@@ -291,7 +291,7 @@ class GuidedAnchorHead(AnchorHead):
                 # inside_flag for a position is true if any anchor in this
                 # position is true
                 inside_flags = (
-                    torch.stack(inside_flags_list, 0).sum(dim=0) > 0)
+                        torch.stack(inside_flags_list, 0).sum(dim=0) > 0)
                 multi_level_flags.append(inside_flags)
             inside_flag_list.append(multi_level_flags)
         return approxs_list, inside_flag_list
@@ -432,7 +432,7 @@ class GuidedAnchorHead(AnchorHead):
             scale = torch.sqrt((gt_bboxes[:, 2] - gt_bboxes[:, 0]) *
                                (gt_bboxes[:, 3] - gt_bboxes[:, 1]))
             min_anchor_size = scale.new_full(
-                (1, ), float(anchor_scale * anchor_strides[0]))
+                (1,), float(anchor_scale * anchor_strides[0]))
             # assign gt bboxes to different feature levels w.r.t. their scales
             target_lvls = torch.floor(
                 torch.log2(scale) - torch.log2(min_anchor_size) + 0.5)
@@ -448,11 +448,11 @@ class GuidedAnchorHead(AnchorHead):
                 ctr_x1, ctr_y1, ctr_x2, ctr_y2 = calc_region(
                     gt_, r1, featmap_sizes[lvl])
                 all_loc_targets[lvl][img_id, 0, ctr_y1:ctr_y2 + 1,
-                                     ctr_x1:ctr_x2 + 1] = 1
+                ctr_x1:ctr_x2 + 1] = 1
                 all_loc_weights[lvl][img_id, 0, ignore_y1:ignore_y2 + 1,
-                                     ignore_x1:ignore_x2 + 1] = 0
+                ignore_x1:ignore_x2 + 1] = 0
                 all_loc_weights[lvl][img_id, 0, ctr_y1:ctr_y2 + 1,
-                                     ctr_x1:ctr_x2 + 1] = 1
+                ctr_x1:ctr_x2 + 1] = 1
                 # calculate ignore map on nearby low level feature
                 if lvl > 0:
                     d_lvl = lvl - 1
@@ -461,7 +461,7 @@ class GuidedAnchorHead(AnchorHead):
                     ignore_x1, ignore_y1, ignore_x2, ignore_y2 = calc_region(
                         gt_, r2, featmap_sizes[d_lvl])
                     all_ignore_map[d_lvl][img_id, 0, ignore_y1:ignore_y2 + 1,
-                                          ignore_x1:ignore_x2 + 1] = 1
+                    ignore_x1:ignore_x2 + 1] = 1
                 # calculate ignore map on nearby high level feature
                 if lvl < num_lvls - 1:
                     u_lvl = lvl + 1
@@ -470,7 +470,7 @@ class GuidedAnchorHead(AnchorHead):
                     ignore_x1, ignore_y1, ignore_x2, ignore_y2 = calc_region(
                         gt_, r2, featmap_sizes[u_lvl])
                     all_ignore_map[u_lvl][img_id, 0, ignore_y1:ignore_y2 + 1,
-                                          ignore_x1:ignore_x2 + 1] = 1
+                    ignore_x1:ignore_x2 + 1] = 1
         for lvl_id in range(num_lvls):
             # ignore negative regions w.r.t. ignore map
             all_loc_weights[lvl_id][(all_loc_weights[lvl_id] < 0)
@@ -513,7 +513,7 @@ class GuidedAnchorHead(AnchorHead):
             tuple
         """
         if not inside_flags.any():
-            return (None, ) * 5
+            return (None,) * 5
         # assign gt and sample anchors
         expand_inside_flags = inside_flags[:, None].expand(
             -1, self.approxs_per_octave).reshape(-1)
@@ -589,14 +589,14 @@ class GuidedAnchorHead(AnchorHead):
             gt_bboxes_ignore_list = [None for _ in range(num_imgs)]
         (all_bbox_anchors, all_bbox_gts, all_bbox_weights, pos_inds_list,
          neg_inds_list) = multi_apply(
-             self._ga_shape_target_single,
-             approx_flat_list,
-             inside_flag_flat_list,
-             square_flat_list,
-             gt_bboxes_list,
-             gt_bboxes_ignore_list,
-             img_metas,
-             unmap_outputs=unmap_outputs)
+            self._ga_shape_target_single,
+            approx_flat_list,
+            inside_flag_flat_list,
+            square_flat_list,
+            gt_bboxes_list,
+            gt_bboxes_ignore_list,
+            img_metas,
+            unmap_outputs=unmap_outputs)
         # no valid anchors
         if any([bbox_anchors is None for bbox_anchors in all_bbox_anchors]):
             return None
@@ -682,7 +682,7 @@ class GuidedAnchorHead(AnchorHead):
          anchor_bg_num) = shape_targets
         anchor_total_num = (
             anchor_fg_num if not self.ga_sampling else anchor_fg_num +
-            anchor_bg_num)
+                                                       anchor_bg_num)
 
         # get anchor targets
         label_channels = self.cls_out_channels if self.use_sigmoid_cls else 1

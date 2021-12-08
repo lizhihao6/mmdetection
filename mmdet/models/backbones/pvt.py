@@ -14,9 +14,9 @@ from mmcv.runner import (BaseModule, ModuleList, Sequential, _load_checkpoint,
                          load_state_dict)
 from torch.nn.modules.utils import _pair as to_2tuple
 
-from ...utils import get_root_logger
 from ..builder import BACKBONES
 from ..utils import PatchEmbed, nchw_to_nlc, nlc_to_nchw, pvt_convert
+from ...utils import get_root_logger
 
 
 class MixFFN(BaseModule):

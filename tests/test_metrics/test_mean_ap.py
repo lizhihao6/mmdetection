@@ -12,7 +12,6 @@ gt_ignore = np.array([[5, 5, 10, 20], [6, 10, 10, 19]])
 
 
 def test_tpfp_imagenet():
-
     result = tpfp_imagenet(
         det_bboxes,
         gt_bboxes,
@@ -39,7 +38,6 @@ def test_tpfp_imagenet():
 
 
 def test_tpfp_default():
-
     result = tpfp_default(
         det_bboxes,
         gt_bboxes,
@@ -67,7 +65,6 @@ def test_tpfp_default():
 
 
 def test_eval_map():
-
     # 2 image and 2 classes
     det_results = [[det_bboxes, det_bboxes], [det_bboxes, det_bboxes]]
 

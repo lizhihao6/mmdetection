@@ -52,7 +52,7 @@ class InvertedResidual(BaseModule):
         super(InvertedResidual, self).__init__(init_cfg)
         self.with_res_shortcut = (stride == 1 and in_channels == out_channels)
         assert stride in [1, 2], f'stride must in [1, 2]. ' \
-            f'But received {stride}.'
+                                 f'But received {stride}.'
         self.with_cp = with_cp
         self.with_se = se_cfg is not None
         self.with_expand_conv = with_expand_conv

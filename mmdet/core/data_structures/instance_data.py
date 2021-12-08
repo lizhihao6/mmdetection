@@ -80,11 +80,11 @@ class InstanceData(GeneralData):
 
             if self._data_fields:
                 assert len(value) == len(self), f'the length of ' \
-                                             f'values {len(value)} is ' \
-                                             f'not consistent with' \
-                                             f' the length ' \
-                                             f'of this :obj:`InstanceData` ' \
-                                             f'{len(self)} '
+                                                f'values {len(value)} is ' \
+                                                f'not consistent with' \
+                                                f' the length ' \
+                                                f'of this :obj:`InstanceData` ' \
+                                                f'{len(self)} '
             super().__setattr__(name, value)
 
     def __getitem__(self, item):
@@ -115,7 +115,7 @@ class InstanceData(GeneralData):
         new_data = self.new()
         if isinstance(item, (torch.Tensor)):
             assert item.dim() == 1, 'Only support to get the' \
-                                 ' values along the first dimension.'
+                                    ' values along the first dimension.'
             if isinstance(item, torch.BoolTensor):
                 assert len(item) == len(self), f'The shape of the' \
                                                f' input(BoolTensor)) ' \

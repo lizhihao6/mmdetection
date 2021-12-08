@@ -1,6 +1,6 @@
 # Copyright (c) OpenMMLab. All rights reserved.
-from ..builder import DETECTORS
 from .two_stage import TwoStageDetector
+from ..builder import DETECTORS
 
 
 @DETECTORS.register_module()
@@ -11,7 +11,7 @@ class SparseRCNN(TwoStageDetector):
     def __init__(self, *args, **kwargs):
         super(SparseRCNN, self).__init__(*args, **kwargs)
         assert self.with_rpn, 'Sparse R-CNN and QueryInst ' \
-            'do not support external proposals'
+                              'do not support external proposals'
 
     def forward_train(self,
                       img,
@@ -47,7 +47,7 @@ class SparseRCNN(TwoStageDetector):
         """
 
         assert proposals is None, 'Sparse R-CNN and QueryInst ' \
-            'do not support external proposals'
+                                  'do not support external proposals'
 
         x = self.extract_feat(img)
         proposal_boxes, proposal_features, imgs_whwh = \
