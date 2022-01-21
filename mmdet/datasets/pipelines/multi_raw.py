@@ -226,9 +226,16 @@ class RYYBtoRGGB:
         yr = (img[..., 1] - blc) / (wl - blc)
         yb = (img[..., 2] - blc) / (wl - blc)
         r, yr, yb = np.clip(r, 0, 1), np.clip(yr, 0, 1), np.clip(yb, 0, 1)
-        gr = np.where((yr > r) & ((r + yr) < 0.99 * 2), yr - r, yr)
+        inflection = 0.9
+        mask_yr = (np.maximum(yr-inflection, 0) / (1-inflection))**2
+        mask_yb = (np.maximum(yb-inflection, 0) / (1-inflection))**2
+        yr = yr - (1-mask_yr) * r
+        yb = yb - (1-mask_yb) * r
+        img[..., 1] = np.clip(yr, 0, 1)
+        img[..., 2] = np.clip(yb, 0, 1)
+        # gr = np.where((yr > r) & ((r + yr) < 0.99 * 2), yr - r, yr)
         # gb = np.where((yb > r) & ((r+yb) < 0.99*2), yb-r, yb)
-        img[..., 1] = gr * (wl - blc) + blc
+        # img[..., 1] = gr * (wl - blc) + blc
         # img[..., 2] = gb*(wl-blc)+blc
         results['img'] = img
         return results
