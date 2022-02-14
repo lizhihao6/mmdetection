@@ -14,8 +14,9 @@ class MobileNetV2RAWganISP(MobileNetV2RAW):
 
     def __init__(self, **kwargs):
         self.ganISP_pretrained = kwargs.pop('ganISP_pretrained')
+        use_flow = kwargs.pop('use_flow', True)
         super().__init__(**kwargs)
-        cfg = dict(type='inverseISP')
+        cfg = dict(type='inverseISP', use_flow=use_flow)
         self.ganISP = build_module(cfg)
         self.loaded = False
 

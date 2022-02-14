@@ -1,6 +1,6 @@
 _base_ = ['../_base_/models/yolo_rgb.py', '../_base_/datasets/iphone_xsmax.py']
 dataset_type = 'MultiRAWCityscapesDataset'
-model = dict(bbox_head=dict(num_classes=8))
+model = dict(bbox_head=dict(num_classes=1))
 
 img_norm_cfg = dict(mean=[0, 0, 0], std=[255, 255, 255], to_rgb=True)
 test_pipeline = [

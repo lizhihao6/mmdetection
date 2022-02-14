@@ -2,9 +2,9 @@ _base_ = ['../_base_/models/yolo_rgb.py']
 model = dict(
     backbone=dict(
         type='MobileNetV2RAWganISP',
-        ganISP_pretrained='/lzh/Project/mmgeneration/work_dirs/experiments/ganISP_cityscapes_rgb2iphone_raw_without_identity_finetune/ckpt/ganISP_cityscapes_rgb2iphone_raw_without_identity_finetune/iter_10000.pth',
+        ganISP_pretrained='/lzh/Project/mmgeneration/.pretrain/ganISP.pth',
         use_flow=False),
-    bbox_head=dict(num_classes=8))
+    bbox_head=dict(num_classes=1))
 # dataset settings
 dataset_type = 'CityscapesDataset'
 data_root = '/shared/cityscapes/'
