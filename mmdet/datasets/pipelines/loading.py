@@ -1,6 +1,7 @@
 # Copyright (c) OpenMMLab. All rights reserved.
 import os.path as osp
 
+import cv2
 import mmcv
 import numpy as np
 import pycocotools.mask as maskUtils
@@ -62,8 +63,9 @@ class LoadImageFromFile:
         else:
             filename = results['img_info']['filename']
 
-        img_bytes = self.file_client.get(filename)
-        img = mmcv.imfrombytes(img_bytes, flag=self.color_type)
+        img = cv2.imread(filename, cv2.IMREAD_UNCHANGED)
+        # img_bytes = self.file_client.get(filename)
+        # img = mmcv.imfrombytes(img_bytes, flag=self.color_type)
         if self.to_float32:
             img = img.astype(np.float32)
 

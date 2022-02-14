@@ -9,7 +9,8 @@ from .instaboost import InstaBoost
 from .loading import (LoadAnnotations, LoadImageFromFile, LoadImageFromWebcam,
                       LoadMultiChannelImageFromFiles, LoadProposals)
 from .multi_raw import (LoadRAWFromFile, Rearrange, CamTosRGB, HDRSplit,
-                        EqualizeHist, RYYBtoRGGB, RGGBtoRYYB)
+                        EqualizeHist, RYYBtoRGGB, RGGBtoRYYB, Demosaic,
+                        RAWNormalize)
 from .test_time_aug import MultiScaleFlipAug
 from .transforms import (Albu, CutOut, Expand, MinIoURandomCrop, MixUp, Mosaic,
                          Normalize, Pad, PhotoMetricDistortion, RandomAffine,
@@ -27,5 +28,5 @@ __all__ = [
     'Rotate', 'ColorTransform', 'EqualizeTransform', 'BrightnessTransform',
     'ContrastTransform', 'Translate', 'RandomShift', 'Mosaic', 'MixUp',
     'RandomAffine', 'LoadRAWFromFile', 'Rearrange', 'CamTosRGB', 'HDRSplit',
-    'EqualizeHist', 'RYYBtoRGGB', 'RGGBtoRYYB'
+    'EqualizeHist', 'RYYBtoRGGB', 'RGGBtoRYYB', 'Demosaic', 'RAWNormalize'
 ]

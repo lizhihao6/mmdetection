@@ -227,16 +227,16 @@ class RYYBtoRGGB:
         yb = (img[..., 2] - blc) / (wl - blc)
         r, yr, yb = np.clip(r, 0, 1), np.clip(yr, 0, 1), np.clip(yb, 0, 1)
         inflection = 0.9
-        mask_yr = (np.maximum(yr-inflection, 0) / (1-inflection))**2
-        mask_yb = (np.maximum(yb-inflection, 0) / (1-inflection))**2
-        yr = yr - (1-mask_yr) * r
-        yb = yb - (1-mask_yb) * r
-        img[..., 1] = np.clip(yr, 0, 1)
-        img[..., 2] = np.clip(yb, 0, 1)
+        mask_yr = (np.maximum(yr - inflection, 0) / (1 - inflection)) ** 2
+        mask_yb = (np.maximum(yb - inflection, 0) / (1 - inflection)) ** 2
+        gr = yr - (1 - mask_yr) * r
+        gb = yb - (1 - mask_yb) * r
+        gr = np.clip(yr, 0, 1)
+        gb = np.clip(yb, 0, 1)
         # gr = np.where((yr > r) & ((r + yr) < 0.99 * 2), yr - r, yr)
         # gb = np.where((yb > r) & ((r+yb) < 0.99*2), yb-r, yb)
-        # img[..., 1] = gr * (wl - blc) + blc
-        # img[..., 2] = gb*(wl-blc)+blc
+        img[..., 1] = gr * (wl - blc) + blc
+        img[..., 2] = gb * (wl - blc) + blc
         results['img'] = img
         return results
 
@@ -268,6 +268,83 @@ class RGGBtoRYYB:
         yr, yb = np.clip(gr + r, 0, 1), np.clip(gb + r, 0, 1)
         img[..., 1] = yr * (wl - blc) + blc
         img[..., 2] = yb * (wl - blc) + blc
+        results['img'] = img
+        return results
+
+    def __repr__(self):
+        repr_str = f'{self.__class__.__name__}()'
+        return repr_str
+
+
+@PIPELINES.register_module()
+class Demosaic:
+    """ Demosaic RAW image.
+    """
+
+    def __call__(self, results):
+        """Call functions to load image and get image meta information.
+
+        Args:
+            results (dict): Result dict from :obj:`mmdet.CustomDataset`.
+
+        Returns:
+            dict: The dict contains loaded image and meta information.
+        """
+        assert results['bayer_pattern'] == 'rggb', 'Only support rggb pattern'
+        img = results['img']
+        if len(img.shape) == 3:
+            assert img.shape[2] == 1
+            img = img[..., 0]
+        h, w = img.shape
+        rgb = np.zeros((h, w, 3), dtype=img.dtype)
+
+        img = np.pad(img, ((2, 2), (2, 2)), mode='reflect')
+        r, gb, gr, b = img[0::2, 0::2], img[0::2, 1::2], img[1::2, 0::2], img[1::2, 1::2]
+
+        rgb[0::2, 0::2, 0] = r[1:-1, 1:-1]
+        rgb[0::2, 0::2, 1] = (gr[1:-1, 1:-1] + gr[:-2, 1:-1] + gb[1:-1, 1:-1] + gb[1:-1, :-2]) / 4
+        rgb[0::2, 0::2, 2] = (b[1:-1, 1:-1] + b[:-2, :-2] + b[1:-1, :-2] + b[:-2, 1:-1]) / 4
+
+        rgb[1::2, 0::2, 0] = (r[1:-1, 1:-1] + r[2:, 1:-1]) / 2
+        rgb[1::2, 0::2, 1] = gr[1:-1, 1:-1]
+        rgb[1::2, 0::2, 2] = (b[1:-1, 1:-1] + b[1:-1, :-2]) / 2
+
+        rgb[0::2, 1::2, 0] = (r[1:-1, 1:-1] + r[1:-1, 2:]) / 2
+        rgb[0::2, 1::2, 1] = gb[1:-1, 1:-1]
+        rgb[0::2, 1::2, 2] = (b[1:-1, 1:-1] + b[:-2, 1:-1]) / 2
+
+        rgb[1::2, 1::2, 0] = (r[1:-1, 1:-1] + r[2:, 2:] + r[1:-1, 2:] + r[2:, 1:-1]) / 4
+        rgb[1::2, 1::2, 1] = (gr[1:-1, 1:-1] + gr[1:-1, 2:] + gb[1:-1, 1:-1] + gb[2:, 1:-1]) / 4
+        rgb[1::2, 1::2, 2] = b[1:-1, 1:-1]
+
+        results['img'] = rgb
+        results['img_shape'] = rgb.shape
+        results['ori_shape'] = rgb.shape
+        return results
+
+    def __repr__(self):
+        repr_str = f'{self.__class__.__name__}()'
+        return repr_str
+
+
+@PIPELINES.register_module()
+class RAWNormalize:
+    """Rearrange RAW to four channels.
+    """
+
+    def __call__(self, results):
+        """Call functions to load image and get image meta information.
+
+        Args:
+            results (dict): Result dict from :obj:`mmdet.CustomDataset`.
+
+        Returns:
+            dict: The dict contains loaded image and meta information.
+        """
+        img = results['img']
+        blc, saturate = results['black_level'], results['white_level']
+        img = (img - blc) / (saturate - blc)
+        img = np.clip(img, 0, 1)
         results['img'] = img
         return results
 

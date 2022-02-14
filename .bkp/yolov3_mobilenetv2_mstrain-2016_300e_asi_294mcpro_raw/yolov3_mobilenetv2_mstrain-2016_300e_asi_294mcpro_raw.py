@@ -6,159 +6,6 @@ log_level = 'INFO'
 load_from = None
 resume_from = None
 workflow = [('train', 1)]
-dataset_type = 'MultiRAWDataset'
-data_root = '/lzh/datasets/multiRAW/asi_294mcpro/'
-img_norm_cfg = dict(
-    mean=[0, 0, 0, 0, 0, 0, 0, 0],
-    std=[255, 255, 255, 255, 255, 255, 255, 255],
-    to_rgb=False)
-train_pipeline = [
-    dict(type='LoadRAWFromFile'),
-    dict(type='LoadAnnotations', with_bbox=True),
-    dict(type='Rearrange'),
-    dict(type='HDRSplit'),
-    dict(
-        type='Expand',
-        mean=[0, 0, 0, 0, 0, 0, 0, 0],
-        to_rgb=False,
-        ratio_range=(1, 2)),
-    dict(
-        type='MinIoURandomCrop',
-        min_ious=(0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
-        min_crop_size=0.3),
-    dict(type='Resize', img_scale=(2016, 1512), keep_ratio=True),
-    dict(type='RandomFlip', flip_ratio=0.5),
-    dict(
-        type='Normalize',
-        mean=[0, 0, 0, 0, 0, 0, 0, 0],
-        std=[255, 255, 255, 255, 255, 255, 255, 255],
-        to_rgb=False),
-    dict(type='Pad', size_divisor=32),
-    dict(type='DefaultFormatBundle'),
-    dict(type='Collect', keys=['img', 'gt_bboxes', 'gt_labels'])
-]
-test_pipeline = [
-    dict(type='LoadRAWFromFile'),
-    dict(type='Rearrange'),
-    dict(type='HDRSplit'),
-    dict(
-        type='MultiScaleFlipAug',
-        img_scale=(2016, 1512),
-        flip=False,
-        transforms=[
-            dict(type='Resize', keep_ratio=True),
-            dict(type='RandomFlip'),
-            dict(
-                type='Normalize',
-                mean=[0, 0, 0, 0, 0, 0, 0, 0],
-                std=[255, 255, 255, 255, 255, 255, 255, 255],
-                to_rgb=False),
-            dict(type='Pad', size_divisor=32),
-            dict(type='ImageToTensor', keys=['img']),
-            dict(type='Collect', keys=['img'])
-        ])
-]
-data = dict(
-    samples_per_gpu=2,
-    workers_per_gpu=2,
-    train=dict(
-        type='RepeatDataset',
-        times=10,
-        dataset=dict(
-            type='MultiRAWDataset',
-            ann_file='/lzh/datasets/multiRAW/asi_294mcpro/train.txt',
-            img_prefix='/lzh/datasets/multiRAW/asi_294mcpro/',
-            img_subdir='raw',
-            meta_subdir='place_holder',
-            ann_subdir='labels/detection',
-            img_suffix='TIF',
-            pipeline=[
-                dict(type='LoadRAWFromFile'),
-                dict(type='LoadAnnotations', with_bbox=True),
-                dict(type='Rearrange'),
-                dict(type='HDRSplit'),
-                dict(
-                    type='Expand',
-                    mean=[0, 0, 0, 0, 0, 0, 0, 0],
-                    to_rgb=False,
-                    ratio_range=(1, 2)),
-                dict(
-                    type='MinIoURandomCrop',
-                    min_ious=(0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
-                    min_crop_size=0.3),
-                dict(type='Resize', img_scale=(2016, 1512), keep_ratio=True),
-                dict(type='RandomFlip', flip_ratio=0.5),
-                dict(
-                    type='Normalize',
-                    mean=[0, 0, 0, 0, 0, 0, 0, 0],
-                    std=[255, 255, 255, 255, 255, 255, 255, 255],
-                    to_rgb=False),
-                dict(type='Pad', size_divisor=32),
-                dict(type='DefaultFormatBundle'),
-                dict(type='Collect', keys=['img', 'gt_bboxes', 'gt_labels'])
-            ],
-            rearrange_bbox_at_test=True)),
-    val=dict(
-        type='MultiRAWDataset',
-        ann_file='/lzh/datasets/multiRAW/asi_294mcpro/test.txt',
-        img_prefix='/lzh/datasets/multiRAW/asi_294mcpro/',
-        img_subdir='raw',
-        meta_subdir='place_holder',
-        ann_subdir='labels/detection',
-        img_suffix='TIF',
-        pipeline=[
-            dict(type='LoadRAWFromFile'),
-            dict(type='Rearrange'),
-            dict(type='HDRSplit'),
-            dict(
-                type='MultiScaleFlipAug',
-                img_scale=(2016, 1512),
-                flip=False,
-                transforms=[
-                    dict(type='Resize', keep_ratio=True),
-                    dict(type='RandomFlip'),
-                    dict(
-                        type='Normalize',
-                        mean=[0, 0, 0, 0, 0, 0, 0, 0],
-                        std=[255, 255, 255, 255, 255, 255, 255, 255],
-                        to_rgb=False),
-                    dict(type='Pad', size_divisor=32),
-                    dict(type='ImageToTensor', keys=['img']),
-                    dict(type='Collect', keys=['img'])
-                ])
-        ],
-        rearrange_bbox_at_test=True),
-    test=dict(
-        type='MultiRAWDataset',
-        ann_file='/lzh/datasets/multiRAW/asi_294mcpro/test.txt',
-        img_prefix='/lzh/datasets/multiRAW/asi_294mcpro/',
-        img_subdir='raw',
-        meta_subdir='place_holder',
-        ann_subdir='labels/detection',
-        img_suffix='TIF',
-        pipeline=[
-            dict(type='LoadRAWFromFile'),
-            dict(type='Rearrange'),
-            dict(type='HDRSplit'),
-            dict(
-                type='MultiScaleFlipAug',
-                img_scale=(2016, 1512),
-                flip=False,
-                transforms=[
-                    dict(type='Resize', keep_ratio=True),
-                    dict(type='RandomFlip'),
-                    dict(
-                        type='Normalize',
-                        mean=[0, 0, 0, 0, 0, 0, 0, 0],
-                        std=[255, 255, 255, 255, 255, 255, 255, 255],
-                        to_rgb=False),
-                    dict(type='Pad', size_divisor=32),
-                    dict(type='ImageToTensor', keys=['img']),
-                    dict(type='Collect', keys=['img'])
-                ])
-        ],
-        rearrange_bbox_at_test=True))
-evaluation = dict(interval=1, metric='mAP')
 model = dict(
     type='YOLOV3',
     backbone=dict(
@@ -225,5 +72,157 @@ lr_config = dict(
     step=[24, 28])
 runner = dict(type='EpochBasedRunner', max_epochs=30)
 find_unused_parameters = True
+dataset_type = 'MultiRAWDataset'
+img_norm_cfg = dict(
+    mean=[0, 0, 0, 0, 0, 0, 0, 0], std=[1, 1, 1, 1, 1, 1, 1, 1], to_rgb=False)
+train_pipeline = [
+    dict(type='LoadRAWFromFile'),
+    dict(type='LoadAnnotations', with_bbox=True),
+    dict(type='Rearrange'),
+    dict(type='HDRSplit'),
+    dict(
+        type='Expand',
+        mean=[0, 0, 0, 0, 0, 0, 0, 0],
+        to_rgb=False,
+        ratio_range=(1, 2)),
+    dict(
+        type='MinIoURandomCrop',
+        min_ious=(0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
+        min_crop_size=0.3),
+    dict(type='Resize', img_scale=(2016, 1512), keep_ratio=True),
+    dict(type='RandomFlip', flip_ratio=0.5),
+    dict(
+        type='Normalize',
+        mean=[0, 0, 0, 0, 0, 0, 0, 0],
+        std=[1, 1, 1, 1, 1, 1, 1, 1],
+        to_rgb=False),
+    dict(type='Pad', size_divisor=32),
+    dict(type='DefaultFormatBundle'),
+    dict(type='Collect', keys=['img', 'gt_bboxes', 'gt_labels'])
+]
+test_pipeline = [
+    dict(type='LoadRAWFromFile'),
+    dict(type='Rearrange'),
+    dict(type='HDRSplit'),
+    dict(
+        type='MultiScaleFlipAug',
+        img_scale=(2016, 1512),
+        flip=False,
+        transforms=[
+            dict(type='Resize', keep_ratio=True),
+            dict(type='RandomFlip'),
+            dict(
+                type='Normalize',
+                mean=[0, 0, 0, 0, 0, 0, 0, 0],
+                std=[1, 1, 1, 1, 1, 1, 1, 1],
+                to_rgb=False),
+            dict(type='Pad', size_divisor=32),
+            dict(type='ImageToTensor', keys=['img']),
+            dict(type='Collect', keys=['img'])
+        ])
+]
+data = dict(
+    samples_per_gpu=2,
+    workers_per_gpu=2,
+    train=dict(
+        type='RepeatDataset',
+        times=10,
+        dataset=dict(
+            type='MultiRAWDataset',
+            img_subdir='raw',
+            meta_subdir='metainfo',
+            ann_subdir='labels/detection',
+            pipeline=[
+                dict(type='LoadRAWFromFile'),
+                dict(type='LoadAnnotations', with_bbox=True),
+                dict(type='Rearrange'),
+                dict(type='HDRSplit'),
+                dict(
+                    type='Expand',
+                    mean=[0, 0, 0, 0, 0, 0, 0, 0],
+                    to_rgb=False,
+                    ratio_range=(1, 2)),
+                dict(
+                    type='MinIoURandomCrop',
+                    min_ious=(0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
+                    min_crop_size=0.3),
+                dict(type='Resize', img_scale=(2016, 1512), keep_ratio=True),
+                dict(type='RandomFlip', flip_ratio=0.5),
+                dict(
+                    type='Normalize',
+                    mean=[0, 0, 0, 0, 0, 0, 0, 0],
+                    std=[1, 1, 1, 1, 1, 1, 1, 1],
+                    to_rgb=False),
+                dict(type='Pad', size_divisor=32),
+                dict(type='DefaultFormatBundle'),
+                dict(type='Collect', keys=['img', 'gt_bboxes', 'gt_labels'])
+            ],
+            rearrange_bbox_at_test=True,
+            ann_file='/lzh/datasets/multiRAW/asi_294mcpro/train.txt',
+            img_prefix='/lzh/datasets/multiRAW/asi_294mcpro/',
+            img_suffix='raw.TIF')),
+    val=dict(
+        type='MultiRAWDataset',
+        img_subdir='raw',
+        meta_subdir='metainfo',
+        ann_subdir='labels/detection',
+        pipeline=[
+            dict(type='LoadRAWFromFile'),
+            dict(type='Rearrange'),
+            dict(type='HDRSplit'),
+            dict(
+                type='MultiScaleFlipAug',
+                img_scale=(2016, 1512),
+                flip=False,
+                transforms=[
+                    dict(type='Resize', keep_ratio=True),
+                    dict(type='RandomFlip'),
+                    dict(
+                        type='Normalize',
+                        mean=[0, 0, 0, 0, 0, 0, 0, 0],
+                        std=[1, 1, 1, 1, 1, 1, 1, 1],
+                        to_rgb=False),
+                    dict(type='Pad', size_divisor=32),
+                    dict(type='ImageToTensor', keys=['img']),
+                    dict(type='Collect', keys=['img'])
+                ])
+        ],
+        rearrange_bbox_at_test=True,
+        ann_file='/lzh/datasets/multiRAW/asi_294mcpro/test.txt',
+        img_prefix='/lzh/datasets/multiRAW/asi_294mcpro/',
+        img_suffix='raw.TIF'),
+    test=dict(
+        type='MultiRAWDataset',
+        img_subdir='raw',
+        meta_subdir='metainfo',
+        ann_subdir='labels/detection',
+        pipeline=[
+            dict(type='LoadRAWFromFile'),
+            dict(type='Rearrange'),
+            dict(type='HDRSplit'),
+            dict(
+                type='MultiScaleFlipAug',
+                img_scale=(2016, 1512),
+                flip=False,
+                transforms=[
+                    dict(type='Resize', keep_ratio=True),
+                    dict(type='RandomFlip'),
+                    dict(
+                        type='Normalize',
+                        mean=[0, 0, 0, 0, 0, 0, 0, 0],
+                        std=[1, 1, 1, 1, 1, 1, 1, 1],
+                        to_rgb=False),
+                    dict(type='Pad', size_divisor=32),
+                    dict(type='ImageToTensor', keys=['img']),
+                    dict(type='Collect', keys=['img'])
+                ])
+        ],
+        rearrange_bbox_at_test=True,
+        ann_file='/lzh/datasets/multiRAW/asi_294mcpro/test.txt',
+        img_prefix='/lzh/datasets/multiRAW/asi_294mcpro/',
+        img_suffix='raw.TIF'))
+evaluation = dict(interval=1, metric='mAP')
+data_root = '/lzh/datasets/multiRAW/asi_294mcpro/'
+suffix = 'raw.TIF'
 work_dir = './work_dirs/yolov3_mobilenetv2_mstrain-2016_300e_asi_294mcpro_raw'
 gpu_ids = range(0, 4)

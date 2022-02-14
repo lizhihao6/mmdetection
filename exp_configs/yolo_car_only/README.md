@@ -38,7 +38,8 @@ We also train YOLOv3 with mixed precision training.
 |   MobileNetV2   |   416   |   300e  |   5.3    |                |  23.9  | [config](https://github.com/open-mmlab/mmdetection/tree/master/configs/yolo/yolov3_mobilenetv2_mstrain-416_300e_coco.py) | [model](https://download.openmmlab.com/mmdetection/v2.0/yolo/yolov3_mobilenetv2_mstrain-416_300e_coco/yolov3_mobilenetv2_mstrain-416_300e_coco_20210718_010823-f68a07b3.pth) &#124; [log](https://download.openmmlab.com/mmdetection/v2.0/yolo/yolov3_mobilenetv2_mstrain-416_300e_coco/yolov3_mobilenetv2_mstrain-416_300e_coco_20210718_010823.log.json) |
 |   MobileNetV2   |   320   |   300e  |   3.2    |                |  22.2  | [config](https://github.com/open-mmlab/mmdetection/tree/master/configs/yolo/yolov3_mobilenetv2_320_300e_coco.py) | [model](https://download.openmmlab.com/mmdetection/v2.0/yolo/yolov3_mobilenetv2_320_300e_coco/yolov3_mobilenetv2_320_300e_coco_20210719_215349-d18dff72.pth) &#124; [log](https://download.openmmlab.com/mmdetection/v2.0/yolo/yolov3_mobilenetv2_320_300e_coco/yolov3_mobilenetv2_320_300e_coco_20210719_215349.log.json) |
 
-Notice: We reduce the number of channels to 96 in both head and neck. It can reduce the flops and parameters, which makes these models more suitable for edge devices.
+Notice: We reduce the number of channels to 96 in both head and neck. It can reduce the flops and parameters, which
+makes these models more suitable for edge devices.
 
 ## Credit
 

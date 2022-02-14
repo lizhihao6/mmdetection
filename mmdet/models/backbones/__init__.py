@@ -7,6 +7,7 @@ from .hourglass import HourglassNet
 from .hrnet import HRNet
 from .mobilenet_v2 import MobileNetV2
 from .mobilenet_v2_raw import MobileNetV2RAW
+from .mobilenet_v2_raw_ganISP import MobileNetV2RAWganISP
 from .pvt import PyramidVisionTransformer, PyramidVisionTransformerV2
 from .regnet import RegNet
 from .res2net import Res2Net
@@ -22,5 +23,5 @@ __all__ = [
     'MobileNetV2', 'Res2Net', 'HourglassNet', 'DetectoRS_ResNet',
     'DetectoRS_ResNeXt', 'Darknet', 'ResNeSt', 'TridentResNet', 'CSPDarknet',
     'SwinTransformer', 'PyramidVisionTransformer', 'PyramidVisionTransformerV2',
-    'MobileNetV2RAW'
+    'MobileNetV2RAW', 'MobileNetV2RAWganISP'
 ]

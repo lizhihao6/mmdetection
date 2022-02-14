@@ -10,6 +10,7 @@ from .deepfashion import DeepFashionDataset
 from .lvis import LVISDataset, LVISV1Dataset, LVISV05Dataset
 from .multi_raw import MultiRAWDataset
 from .multi_raw_car_only import MultiRAWCarOnlyDataset
+from .multi_raw_cityscapes import MultiRAWCityscapesDataset
 from .multi_raw_comp import MultiRAWCompDataset
 from .samplers import DistributedGroupSampler, DistributedSampler, GroupSampler
 from .utils import (NumClassCheckHook, get_loading_pipeline,
@@ -26,5 +27,6 @@ __all__ = [
     'ClassBalancedDataset', 'WIDERFaceDataset', 'DATASETS', 'PIPELINES',
     'build_dataset', 'replace_ImageToTensor', 'get_loading_pipeline',
     'NumClassCheckHook', 'CocoPanopticDataset', 'MultiImageMixDataset',
-    'MultiRAWDataset', 'MultiRAWCarOnlyDataset', 'MultiRAWCompDataset'
+    'MultiRAWDataset', 'MultiRAWCarOnlyDataset', 'MultiRAWCompDataset',
+    'MultiRAWCityscapesDataset'
 ]

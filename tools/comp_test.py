@@ -29,6 +29,7 @@ def parse_args():
     parser.add_argument('checkpoint', help='checkpoint file')
     parser.add_argument('comp_config', help='compression config file path')
     parser.add_argument('comp_checkpoint', help='compression checkpoint file')
+    parser.add_argument('--prefix', type=str, default=None, help='compression checkpoint file')
     parser.add_argument(
         '--work-dir',
         help='the directory to save the file containing evaluation metrics')
@@ -240,6 +241,7 @@ def main():
     cfg.data.test['pipeline'] = cfg.data.test['pipeline'][1:]
     cfg.data.test['comp_config'] = args.comp_config
     cfg.data.test['comp_checkpoint'] = args.comp_checkpoint
+    cfg.data.test['prefix'] = args.prefix
     dataset = build_dataset(cfg.data.test)
     data_loader = build_dataloader(
         dataset,
